@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jak łączyć akordy w gamie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+
+    --bg:#0a0a10;
+    --bg2:#101019;
+    --surface:#16161f;
+    --surface2:#1d1d29;
+    --line:#2a2a38;
+    --text:#e9e9f0;
+    --muted:#8f8fa3;
+    --faint:#5f5f72;
+
+    /* funkcje harmoniczne */
+    --tonic:#f472b6;      --tonic-dim:#7c2751;   --tonic-glow:rgba(244,114,182,.35);
+    --sub:#2dd4bf;        --sub-dim:#155e57;     --sub-glow:rgba(45,212,191,.32);
+    --dom:#fbbf24;        --dom-dim:#7a5610;     --dom-glow:rgba(251,191,36,.32);
+  }
+  *{box-sizing:inherit}
+  html{-webkit-text-size-adjust:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 700px at 20% -10%, #15101f 0%, transparent 60%),
+      radial-gradient(900px 600px at 95% 0%, #101a1c 0%, transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:940px;margin:0 auto;padding:clamp(20px,4vw,44px) clamp(16px,4vw,28px) 80px}
+
+  /* ---- nagłówek ---- */
+  header{margin-bottom:26px}
+  .kicker{font-size:.82rem;color:var(--muted);letter-spacing:.02em;margin:0 0 6px}
+  h1{
+    font-family:Fraunces,serif;font-weight:900;
+    font-size:clamp(1.9rem,6vw,3rem);line-height:1.02;letter-spacing:-.02em;
+    margin:0 0 10px;
+  }
+  h1 em{font-style:italic;color:var(--tonic);font-weight:900}
+  .lead{color:var(--muted);max-width:60ch;margin:0}
+
+  /* ---- wybór gamy ---- */
+  .keybar{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:26px 0 4px}
+  .keybar .lbl{font-family:Fraunces,serif;font-size:1rem;color:var(--faint);margin-right:4px}
+  .key{
+    font-family:JetBrains Mono,monospace;font-weight:600;font-size:1rem;
+    min-width:44px;padding:9px 12px;border-radius:11px;cursor:pointer;
+    background:var(--surface);color:var(--text);border:1px solid var(--line);
+    transition:transform .12s ease,border-color .15s ease,background .15s ease;
+  }
+  .key:hover{transform:translateY(-1px);border-color:#3b3b4d}
+  .key[aria-pressed="true"]{
+    background:linear-gradient(180deg,#2a1830,#1b1322);
+    border-color:var(--tonic);color:#fff;
+    box-shadow:0 0 0 1px var(--tonic),0 6px 22px var(--tonic-glow);
+  }
+
+  /* ---- pasek zasady ---- */
+  .rule{
+    margin:30px 0 8px;padding:16px 18px;border-radius:16px;
+    background:linear-gradient(180deg,var(--surface),var(--bg2));
+    border:1px solid var(--line);
+  }
+  .rule h2{font-family:Fraunces,serif;font-weight:600;font-size:1.05rem;margin:0 0 4px}
+  .rule p{margin:0 0 14px;color:var(--muted);font-size:.94rem}
+  .flow{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+  .flow .pill{
+    padding:7px 13px;border-radius:999px;font-size:.86rem;font-weight:600;
+    border:1px solid transparent;white-space:nowrap;
+  }
+  .flow .arrow{color:var(--faint);font-size:1.1rem}
+  .pill.t{color:var(--tonic);background:rgba(244,114,182,.10);border-color:var(--tonic-dim)}
+  .pill.s{color:var(--sub);background:rgba(45,212,191,.10);border-color:var(--sub-dim)}
+  .pill.d{color:var(--dom);background:rgba(251,191,36,.10);border-color:var(--dom-dim)}
+  .rule .loop{color:var(--faint);font-size:.8rem;margin-left:2px}
+
+  /* ---- sekcje ---- */
+  section{margin-top:34px}
+  .sechead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px}
+  .sechead h2{font-family:Fraunces,serif;font-weight:600;font-size:1.25rem;margin:0}
+  .sechead .hint{color:var(--faint);font-size:.82rem}
+
+  /* ---- grupy funkcyjne z akordami ---- */
+  .group{margin-bottom:16px}
+  .grouptag{
+    display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:600;
+    letter-spacing:.01em;margin-bottom:9px;
+  }
+  .grouptag .dot{width:9px;height:9px;border-radius:50%}
+  .grouptag small{color:var(--faint);font-weight:400}
+  .t .dot{background:var(--tonic)} .s .dot{background:var(--sub)} .d .dot{background:var(--dom)}
+  .t .grouptag{color:var(--tonic)} .s .grouptag{color:var(--sub)} .d .grouptag{color:var(--dom)}
+
+  .nodes{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px}
+  .node{
+    position:relative;text-align:left;cursor:pointer;color:var(--text);
+    padding:13px 14px 12px;border-radius:14px;border:1px solid var(--line);
+    background:var(--surface);
+    transition:transform .12s ease,box-shadow .18s ease,border-color .15s ease;
+  }
+  .node:hover{transform:translateY(-2px)}
+  .node .rn{font-family:JetBrains Mono,monospace;font-size:.72rem;color:var(--faint);letter-spacing:.06em}
+  .node .name{font-family:Fraunces,serif;font-size:1.5rem;font-weight:600;line-height:1;margin:3px 0 8px}
+  .node .notes{display:flex;flex-wrap:wrap;gap:4px}
+  .node .notes span{
+    font-family:JetBrains Mono,monospace;font-size:.72rem;color:var(--muted);
+    padding:2px 6px;border-radius:6px;background:var(--surface2);
+  }
+  .node.t{border-color:var(--tonic-dim)} .node.t .name{color:var(--tonic)}
+  .node.s{border-color:var(--sub-dim)}   .node.s .name{color:var(--sub)}
+  .node.d{border-color:var(--dom-dim)}   .node.d .name{color:var(--dom)}
+  .node.t.ring{box-shadow:0 0 0 2px var(--tonic),0 8px 30px var(--tonic-glow)}
+  .node.s.ring{box-shadow:0 0 0 2px var(--sub),0 8px 30px var(--sub-glow)}
+  .node.d.ring{box-shadow:0 0 0 2px var(--dom),0 8px 30px var(--dom-glow)}
+
+  /* ---- progresje ---- */
+  .prog{
+    display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;
+    padding:14px 14px 14px 16px;border-radius:14px;border:1px solid var(--line);
+    background:var(--surface);margin-bottom:10px;
+  }
+  .prog .pname{font-weight:600;font-size:.98rem}
+  .prog .pdesc{color:var(--muted);font-size:.84rem;margin-top:2px}
+  .prog .seq{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+  .prog .seq b{
+    font-family:JetBrains Mono,monospace;font-weight:600;font-size:.82rem;
+    padding:4px 9px;border-radius:8px;background:var(--surface2);border:1px solid var(--line);
+    color:var(--text);transition:box-shadow .15s ease,transform .15s ease;
+  }
+  .prog .seq b .deg{color:var(--faint);font-weight:500;font-size:.72rem;margin-left:5px}
+  .prog .seq b.lit{transform:translateY(-2px)}
+  .prog .seq b.lit.t{box-shadow:0 0 0 2px var(--tonic),0 6px 18px var(--tonic-glow);color:var(--tonic)}
+  .prog .seq b.lit.s{box-shadow:0 0 0 2px var(--sub),0 6px 18px var(--sub-glow);color:var(--sub)}
+  .prog .seq b.lit.d{box-shadow:0 0 0 2px var(--dom),0 6px 18px var(--dom-glow);color:var(--dom)}
+  .play{
+    flex:none;width:46px;height:46px;border-radius:50%;cursor:pointer;
+    border:1px solid var(--line);background:var(--surface2);color:var(--text);
+    font-size:1.05rem;display:grid;place-items:center;
+    transition:transform .12s ease,border-color .15s ease;
+  }
+  .play:hover{transform:scale(1.06);border-color:var(--tonic)}
+  .play.on{border-color:var(--tonic);color:var(--tonic);box-shadow:0 0 18px var(--tonic-glow)}
+
+  /* ---- łączenie gam ---- */
+  .bridge{padding:16px 18px;border-radius:16px;background:var(--surface);border:1px solid var(--line)}
+  .bridge p{margin:0 0 14px;color:var(--muted);font-size:.92rem}
+  .bridge p:last-child{margin-bottom:0}
+  .neigh{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:14px}
+  .neigh .card{flex:1 1 240px;background:var(--bg2);border:1px solid var(--line);border-radius:12px;padding:13px 14px}
+  .neigh .card .top{display:flex;align-items:baseline;gap:8px;margin-bottom:8px}
+  .neigh .card .kn{font-family:Fraunces,serif;font-size:1.35rem;font-weight:600}
+  .neigh .card .role{color:var(--faint);font-size:.78rem}
+  .neigh .card .shared{display:flex;flex-wrap:wrap;gap:5px}
+  .neigh .card .shared span{
+    font-family:JetBrains Mono,monospace;font-size:.78rem;padding:3px 8px;border-radius:7px;
+    background:rgba(45,212,191,.10);color:var(--sub);border:1px solid var(--sub-dim);cursor:pointer;
+  }
+  .neigh .card .shared span:hover{background:rgba(45,212,191,.2)}
+  .neigh .card.empty .msg{color:var(--faint);font-size:.82rem}
+
+  footer{margin-top:44px;color:var(--faint);font-size:.8rem;line-height:1.6}
+  a{color:var(--sub)}
+
+  @media (max-width:520px){
+    .node .name{font-size:1.35rem}
+    .prog{grid-template-columns:1fr;gap:10px}
+    .play{justify-self:start}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none!important}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="kicker">harmonia do grania, nie do wkuwania</p>
+    <h1>Które akordy pasują do <em id="h1key">gamy C</em> i jak między nimi chodzić</h1>
+    <p class="lead">Klikaj — usłyszysz każdy akord. Wszystko pokolorowane według roli, jaką gra w gamie. Ta rola mówi Ci, dokąd akord chce iść dalej.</p>
+  </header>
+
+  <div class="keybar" role="group" aria-label="Wybór gamy">
+    <span class="lbl">gama</span>
+    <!-- pills injected -->
+  </div>
+
+  <div class="rule">
+    <h2>Jedna zasada, na której stoi cała reszta</h2>
+    <p>Akordy dzielą się na trzy role. Idziesz od domu, przez ruch, do napięcia — a napięcie ciągnie z powrotem do domu. Możesz kręcić to w kółko.</p>
+    <div class="flow">
+      <span class="pill t">Tonika · dom</span>
+      <span class="arrow">→</span>
+      <span class="pill s">Subdominanta · ruch</span>
+      <span class="arrow">→</span>
+      <span class="pill d">Dominanta · napięcie</span>
+      <span class="arrow">→</span>
+      <span class="pill t">Tonika · powrót</span>
+      <span class="loop">↻ w kółko</span>
+    </div>
+  </div>
+
+  <section>
+    <div class="sechead">
+      <h2 id="chordshead">Akordy gamy C</h2>
+      <span class="hint">kliknij, żeby usłyszeć</span>
+    </div>
+    <div id="groups"></div>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <h2>Gotowe przejścia</h2>
+      <span class="hint">▶ zagra całą sekwencję</span>
+    </div>
+    <div id="progs"></div>
+  </section>
+
+  <section>
+    <div class="sechead">
+      <h2>Przechodzenie między gamami</h2>
+      <span class="hint">C · G · D to sąsiedzi</span>
+    </div>
+    <div class="bridge">
+      <p>Sąsiednie gamy mają prawie te same akordy. Żeby przejść z jednej do drugiej, zagraj akord, który jest w obu (most), a zaraz po nim <b>dominantę nowej gamy</b> — to ona mówi uchu „jesteśmy już gdzie indziej". Poniżej mosty dla wybranej gamy.</p>
+      <div class="neigh" id="neigh"></div>
+      <p>Twój przykład: z <b>C</b> do <b>G</b> — zagraj wspólne C albo Am, potem <b>D</b> (dominanta G), i już jesteś w G. Tak samo z G do D przez wspólne G/Em, potem A.</p>
+    </div>
+  </section>
+
+  <footer>
+    Kolor = rola akordu: <span style="color:var(--tonic)">tonika (dom)</span>,
+    <span style="color:var(--sub)">subdominanta (ruch)</span>,
+    <span style="color:var(--dom)">dominanta (napięcie)</span>.
+    Dźwięk to prosty syntezator — chodzi o ruch harmonii, nie o brzmienie fortepianu.
+  </footer>
+</div>
+
+<script>
+/* ---------------- teoria ---------------- */
+const KEYS = {
+  'C':  ['C','D','E','F','G','A','B'],
+  'G':  ['G','A','B','C','D','E','F#'],
+  'D':  ['D','E','F#','G','A','B','C#'],
+  'A':  ['A','B','C#','D','E','F#','G#'],
+  'E':  ['E','F#','G#','A','B','C#','D#'],
+  'F':  ['F','G','A','Bb','C','D','E'],
+  'Bb': ['Bb','C','D','Eb','F','G','A'],
+  'Eb': ['Eb','F','G','Ab','Bb','C','D'],
+};
+const ORDER = ['C','G','D','A','E','F','Bb','Eb'];
+
+// degree index -> roman numeral, quality suffix, function, quality tag for audio
+const DEG = [
+  {rn:'I',    suf:'',   fn:'t'},
+  {rn:'ii',   suf:'m',  fn:'s'},
+  {rn:'iii',  suf:'m',  fn:'t'},
+  {rn:'IV',   suf:'',   fn:'s'},
+  {rn:'V',    suf:'',   fn:'d'},
+  {rn:'vi',   suf:'m',  fn:'t'},
+  {rn:'vii°', suf:'°',  fn:'d'},
+];
+const FN_NAME = {t:'Tonika', s:'Subdominanta', d:'Dominanta'};
+const FN_SUB  = {t:'dom, odpoczynek', s:'ruch od domu', d:'napięcie, chce do domu'};
+
+const PC = {'C':0,'B#':0,'C#':1,'Db':1,'D':2,'D#':3,'Eb':3,'E':4,'Fb':4,'E#':5,'F':5,
+  'F#':6,'Gb':6,'G':7,'G#':8,'Ab':8,'A':9,'A#':10,'Bb':10,'B':11,'Cb':11};
+
+// zbuduj akordy dla gamy: {rn, name, fn, notes[3], pcs[3]}
+function chordsFor(keyName){
+  const sc = KEYS[keyName];
+  return DEG.map((d,i)=>{
+    const notes=[sc[i%7], sc[(i+2)%7], sc[(i+4)%7]];
+    const name = notes[0] + d.suf;
+    return {rn:d.rn, name, fn:d.fn, notes, pcs:notes.map(n=>PC[n])};
+  });
+}
+
+/* ---------------- dźwięk ---------------- */
+let ctx, master;
+function audio(){
+  if(ctx) return;
+  ctx = new (window.AudioContext||window.webkitAudioContext)();
+  const lp = ctx.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=3400; lp.Q.value=.4;
+  master = ctx.createGain(); master.gain.value=.9;
+  master.connect(lp); lp.connect(ctx.destination);
+}
+// voice a triad: bass + root/3rd/5th ascending in a mid octave
+function voicing(pcs){
+  let root = 60 + pcs[0];
+  if(pcs[0] > 6) root -= 12;               // trzymaj podstawy w wąskim paśmie
+  const third = root + ((pcs[1]-pcs[0]+12)%12);
+  const fifth = root + ((pcs[2]-pcs[0]+12)%12);
+  return [root-12, root, third, fifth];
+}
+const f = m => 440*Math.pow(2,(m-69)/12);
+function strike(pcs, dur=1.0, when=0){
+  if(!ctx) return;
+  const t = ctx.currentTime + when;
+  voicing(pcs).forEach((m,idx)=>{
+    const freq=f(m);
+    [['triangle',.15],['sine',.11]].forEach(([type,amp])=>{
+      const o=ctx.createOscillator(); o.type=type; o.frequency.value=freq;
+      const g=ctx.createGain();
+      const a = idx===0?amp*.9:amp;        // bas trochę ciszej
+      g.gain.setValueAtTime(0,t);
+      g.gain.linearRampToValueAtTime(a,t+0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+      o.connect(g); g.connect(master);
+      o.start(t); o.stop(t+dur+0.05);
+    });
+  });
+}
+
+/* ---------------- render ---------------- */
+let current='C';
+let timers=[];
+function clearTimers(){ timers.forEach(clearTimeout); timers=[]; }
+
+const keybar = document.querySelector('.keybar');
+ORDER.forEach(k=>{
+  const b=document.createElement('button');
+  b.className='key'; b.textContent=k; b.setAttribute('aria-pressed', k===current);
+  b.onclick=()=>{ audio(); setKey(k); };
+  keybar.appendChild(b);
+});
+
+function setKey(k){
+  current=k;
+  document.querySelectorAll('.key').forEach(b=>b.setAttribute('aria-pressed', b.textContent===k));
+  const label = k+'-dur';
+  document.getElementById('h1key').textContent='gamy '+k;
+  document.getElementById('chordshead').textContent='Akordy gamy '+label;
+  renderGroups();
+  renderProgs();
+  renderNeigh();
+}
+
+function makeNode(ch){
+  const el=document.createElement('button');
+  el.className='node '+ch.fn;
+  el.innerHTML =
+    `<div class="rn">${ch.rn}</div>`+
+    `<div class="name">${ch.name}</div>`+
+    `<div class="notes">${ch.notes.map(n=>`<span>${n}</span>`).join('')}</div>`;
+  el.setAttribute('aria-label', `${ch.name}, ${FN_NAME[ch.fn]}`);
+  el.onclick=()=>{ audio(); strike(ch.pcs); ring(el); };
+  return el;
+}
+function ring(el){
+  el.classList.add('ring');
+  setTimeout(()=>el.classList.remove('ring'), 620);
+}
+
+function renderGroups(){
+  const chords=chordsFor(current);
+  const box=document.getElementById('groups'); box.innerHTML='';
+  ['t','s','d'].forEach(fn=>{
+    const grp=document.createElement('div'); grp.className='group '+fn;
+    grp.innerHTML=`<div class="grouptag"><span class="dot"></span>${FN_NAME[fn]} <small>· ${FN_SUB[fn]}</small></div>`;
+    const nodes=document.createElement('div'); nodes.className='nodes';
+    chords.filter(c=>c.fn===fn).forEach(c=>nodes.appendChild(makeNode(c)));
+    grp.appendChild(nodes); box.appendChild(grp);
+  });
+}
+
+/* progresje jako indeksy stopni (0 = I) */
+const PROGS = [
+  {name:'Podstawowa', deg:[0,3,4,0], desc:'Dom, ruch, napięcie, powrót. Od tego zacznij.'},
+  {name:'Popowa („cztery akordy")', deg:[0,4,5,3], desc:'Słychać ją w połowie piosenek z radia.'},
+  {name:'Nostalgiczna', deg:[5,3,0,4], desc:'Startuje z molowego vi, brzmi bardziej rzewnie.'},
+  {name:'Kadencja ii–V–I', deg:[1,4,0], desc:'Serce jazzu. Bardzo mocne rozwiązanie na koniec.'},
+  {name:'Doo-wop (lata 50.)', deg:[0,5,3,4], desc:'Klasyka, którą znasz, nawet jeśli nie wiesz skąd.'},
+];
+
+function renderProgs(){
+  const chords=chordsFor(current);
+  const box=document.getElementById('progs'); box.innerHTML='';
+  PROGS.forEach(p=>{
+    const row=document.createElement('div'); row.className='prog';
+    const left=document.createElement('div');
+    left.innerHTML=`<div class="pname">${p.name}</div><div class="pdesc">${p.desc}</div>`;
+    const seq=document.createElement('div'); seq.className='seq';
+    p.deg.forEach(di=>{
+      const c=chords[di];
+      const b=document.createElement('b'); b.className=c.fn;
+      b.innerHTML=`${c.name}<span class="deg">${c.rn}</span>`;
+      seq.appendChild(b);
+    });
+    left.appendChild(seq); row.appendChild(left);
+
+    const btn=document.createElement('button'); btn.className='play'; btn.textContent='▶';
+    btn.setAttribute('aria-label','Zagraj: '+p.name);
+    btn.onclick=()=>{ audio(); playProg(p, seq, btn); };
+    row.appendChild(btn);
+    box.appendChild(row);
+  });
+}
+
+function playProg(p, seq, btn){
+  clearTimers();
+  document.querySelectorAll('.play').forEach(b=>{b.classList.remove('on');b.textContent='▶';});
+  document.querySelectorAll('.seq b').forEach(b=>b.classList.remove('lit'));
+  btn.classList.add('on'); btn.textContent='■';
+  const chords=chordsFor(current);
+  const step=0.78, dur=0.95;
+  p.deg.forEach((di,i)=>{
+    strike(chords[di].pcs, dur, i*step);
+    const chip=seq.children[i];
+    timers.push(setTimeout(()=>{
+      document.querySelectorAll('.seq b').forEach(b=>b.classList.remove('lit'));
+      chip.classList.add('lit');
+    }, i*step*1000));
+  });
+  timers.push(setTimeout(()=>{
+    seq.querySelectorAll('b').forEach(b=>b.classList.remove('lit'));
+    btn.classList.remove('on'); btn.textContent='▶';
+  }, (p.deg.length*step+0.3)*1000));
+}
+
+/* ---------------- sąsiednie gamy ---------------- */
+function sharedWith(keyA, keyB){
+  const A=chordsFor(keyA), B=chordsFor(keyB);
+  const bset=new Set(B.map(c=>c.pcs[0]+'|'+c.name.replace(/[A-G#b]+/,'')));
+  // dopasuj po podstawie + jakości (m / '' / °)
+  const qual=n=>n.replace(/^[A-G][#b]?/,'');
+  const bkey=B.map(c=>c.pcs[0]+'|'+qual(c.name));
+  return A.filter(c=>bkey.includes(c.pcs[0]+'|'+qual(c.name)));
+}
+function renderNeigh(){
+  const sc=KEYS[current];
+  const subRoot=sc[3], domRoot=sc[4];      // IV i V to podstawy sąsiednich gam
+  const box=document.getElementById('neigh'); box.innerHTML='';
+  [[subRoot,'w dół (subdominanta)'],[domRoot,'w górę (dominanta)']].forEach(([root,role])=>{
+    const card=document.createElement('div'); card.className='card';
+    if(KEYS[root]){
+      const shared=sharedWith(current, root);
+      card.innerHTML=`<div class="top"><span class="kn">${root}</span><span class="role">${role}</span></div>`;
+      const sh=document.createElement('div'); sh.className='shared';
+      shared.forEach(c=>{
+        const s=document.createElement('span'); s.textContent=c.name;
+        s.title='wspólny most'; s.onclick=()=>{audio();strike(c.pcs);};
+        sh.appendChild(s);
+      });
+      card.appendChild(sh);
+    }else{
+      card.classList.add('empty');
+      card.innerHTML=`<div class="top"><span class="kn">${root}</span><span class="role">${role}</span></div>`+
+        `<div class="msg">Tej gamy nie ma na liście, ale zasada ta sama: wspólny akord, potem V nowej gamy.</div>`;
+    }
+    box.appendChild(card);
+  });
+}
+
+/* start */
+setKey('C');
+</script>
+</body>
+</html>
