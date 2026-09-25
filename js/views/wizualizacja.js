@@ -1,7 +1,7 @@
 /* Zakładka „Wizualizacja" — świecące węzły na czarnym tle.
    Dwa widoki: drzewo ruchów (dokąd akord może iść) i koło kwintowe. */
 
-const FN_COLOR = {t:'#f472b6', s:'#2dd4bf', d:'#fbbf24', o:'#9ca3af'};
+const FN_COLOR = {t:'#f472b6', s:'#2dd4bf', d:'#fbbf24', o:'#9ca3af', x:'#f87171'};
 const SVGNS='http://www.w3.org/2000/svg';
 function sv(tag, attrs, parent){ const e=document.createElementNS(SVGNS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
 function glowDefs(svg){
@@ -12,7 +12,7 @@ function glowDefs(svg){
   const f2 = sv('filter',{id:'glow2',x:'-50%',y:'-50%',width:'200%',height:'200%'},defs);
   sv('feGaussianBlur',{stdDeviation:'3',result:'b'},f2);
   const m2 = sv('feMerge',{},f2); sv('feMergeNode',{in:'b'},m2); sv('feMergeNode',{in:'SourceGraphic'},m2);
-  ['t','s','d','o'].forEach(fn=>{
+  ['t','s','d','o','x'].forEach(fn=>{
     const g = sv('radialGradient',{id:'rg-'+fn},defs);
     sv('stop',{offset:'0%','stop-color':FN_COLOR[fn],'stop-opacity':'.55'},g);
     sv('stop',{offset:'70%','stop-color':FN_COLOR[fn],'stop-opacity':'.12'},g);
@@ -192,7 +192,7 @@ const ViewWizualizacja = {
       h('header',{style:'margin-bottom:10px'},
         h('p',{class:'kicker'},'zobacz harmonię'),
         h('h1',null,'Mapa ', h('em',null,'akordów')),
-        h('p',{class:'lead'},'Każdy węzeł to akord, kolor to jego rola. Klikaj — węzły grają.')),
+        h('p',{class:'lead'},'Każdy węzeł to akord, kolor to jego rola. Klikaj — węzły grają. Chcesz ułożyć własne akordy i zobaczyć, jak przejść do innej gamy? ', h('a',{href:'#przejscia'},'Zakładka Przejścia →'))),
       h('div',{class:'row',style:'margin:16px 0 4px'}, seg),
       kb, hold, info, pathEl,
       h('div',{class:'legend'}, h('span',{class:'t-c'},'tonika · dom'), h('span',{class:'s-c'},'subdominanta · ruch'), h('span',{class:'d-c'},'dominanta · napięcie'), h('span',{style:'color:var(--out)'},'poza gamą')));

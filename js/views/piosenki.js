@@ -233,7 +233,7 @@ const ViewPiosenki = {
             h('div',null,h('label',{class:'f'},'Tempo (uderzeń na minutę)'),fBpm),
             h('div',null,h('label',{class:'f'},'Jeden akord trwa'),fBeats))),
         h('section',{style:'margin-top:18px'},
-          h('div',{class:'sechead'}, h('h2',null,'Akordy'), h('div',{class:'row'}, playAll, h('a',{class:'btn',href:'#druk/song/'+s.id},'🖨 Drukuj'))),
+          h('div',{class:'sechead'}, h('h2',null,'Akordy'), h('div',{class:'row'}, playAll, h('a',{class:'btn',href:'#druk/song/'+s.id},'🖨 Drukuj'), h('button',{class:'btn',title:'Pokaż drzewo i koło dla akordów tej piosenki',onclick:()=>{ const toks=parseSongText(s.chords).flatMap(l=>l.tokens.filter(t=>t.chord).map(t=>t.chord.text)); prefs.set('przejscia.seq',toks); prefs.set('przejscia.start',s.key); location.hash='#przejscia'; }},'🌳 Drzewo przejść'))),
           h('div',{class:'card'}, sheet, analysis)),
         h('section',{style:'margin-top:18px'},
           h('h2',null,'Edytuj akordy'),

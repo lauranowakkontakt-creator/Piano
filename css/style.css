@@ -151,9 +151,12 @@ label.f{display:block;font-size:.82rem;color:var(--muted);margin:12px 0 5px}
 .node.s{border-color:var(--sub-dim)}   .node.s .name{color:var(--sub)}
 .node.d{border-color:var(--dom-dim)}   .node.d .name{color:var(--dom)}
 .node.o{border-color:var(--out-dim)}   .node.o .name{color:var(--out)}
+.node.x{border-color:#7f1d1d;background:rgba(248,113,113,.06)} .node.x .name{color:var(--bad)}
+.node .to{font-size:.7rem;color:var(--faint);margin-top:4px}
 .ring.t,.lit.t{box-shadow:0 0 0 2px var(--tonic),0 8px 30px var(--tonic-glow)!important}
 .ring.s,.lit.s{box-shadow:0 0 0 2px var(--sub),0 8px 30px var(--sub-glow)!important}
 .ring.d,.lit.d{box-shadow:0 0 0 2px var(--dom),0 8px 30px var(--dom-glow)!important}
+.ring.x,.lit.x{box-shadow:0 0 0 2px var(--bad),0 8px 30px rgba(248,113,113,.35)!important}
 .ring.o,.lit.o{box-shadow:0 0 0 2px var(--out),0 8px 30px rgba(156,163,175,.25)!important}
 
 /* ---------- progresje ---------- */
@@ -174,6 +177,7 @@ label.f{display:block;font-size:.82rem;color:var(--muted);margin:12px 0 5px}
 .seq b.s,.chord-chip.s{color:var(--sub);border-color:var(--sub-dim)}
 .seq b.d,.chord-chip.d{color:var(--dom);border-color:var(--dom-dim)}
 .seq b.o,.chord-chip.o{color:var(--out);border-color:var(--out-dim)}
+.seq b.x,.chord-chip.x{color:var(--bad);border-color:#7f1d1d;background:rgba(248,113,113,.08)}
 .seq b.lit,.chord-chip.lit{transform:translateY(-2px)}
 .chord-chip{cursor:pointer}
 .bar-sep{color:var(--faint);font-family:"JetBrains Mono",monospace;align-self:center}
@@ -368,3 +372,20 @@ footer.site{margin-top:50px;color:var(--faint);font-size:.8rem}
   .sheet:last-child{break-after:auto;page-break-after:auto}
   *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
 }
+
+/* ---------- przejścia ---------- */
+.seqbox{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:44px;padding:10px;border-radius:12px;border:1px dashed var(--line2);background:var(--bg2)}
+.seqbox .chord-chip{display:inline-flex;align-items:center;gap:4px}
+.seqbox .chord-chip .rm{margin-left:4px;color:var(--faint);font-weight:400;cursor:pointer;padding:0 2px}
+.seqbox .chord-chip .rm:hover{color:var(--bad)}
+.keymark{font-size:.72rem;font-weight:600;color:var(--tonic);padding:2px 8px;border-radius:999px;border:1px dashed var(--tonic-dim)}
+.palette .nodes{grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:6px}
+.palette .node{padding:7px 8px 6px;text-align:center}
+.palette .node .name{font-size:1.1rem;margin:0}
+.fix{padding:14px 16px;border-radius:14px;border:1px solid #7f1d1d;background:rgba(248,113,113,.05);margin-top:10px}
+.fix.okmod{border-color:var(--tonic-dim);background:rgba(244,114,182,.04)}
+.fix h3{margin:0 0 6px;font-size:1rem}
+.fix .opt{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:8px}
+.fix .opt .lbl{font-size:.82rem;color:var(--muted);min-width:100px}
+.scrollx{overflow-x:auto}
+.scrollx svg{min-width:640px}
