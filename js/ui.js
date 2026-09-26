@@ -73,11 +73,10 @@ function flashKey(svg, midi, cls='x'){
   r.classList.add(c); setTimeout(()=>{ if(!had) r.classList.remove(c); }, 350);
 }
 
-// pozycja zasadnicza akordu na klawiaturze C4–B5, zwraca {midi: fn}
+// akord na klawiaturze C4–B5 — dokładnie te dźwięki, które gra syntezator (voicing), zwraca {midi: fn}
 function chordMarks(pcs, fn, base=60){
   const out={};
-  let root = base + pcs[0];
-  pcs.forEach(p=>{ out[root + ((p-pcs[0]+12)%12)] = fn; });
+  voicing(pcs).slice(1).forEach(m=>{ out[m + base - 60] = fn; });
   return out;
 }
 // nazwy z pisownią gamy (np. E♯ zamiast F)
@@ -87,27 +86,72 @@ function chordNames(notes, pcs, base=60){
   return out;
 }
 
-/* ---------- odtwarzanie sekwencji z podświetleniem ---------- */
-let seqTimers=[];
+/* ---------- odtwarzanie sekwencji z podświetleniem ----------
+   Planowanie „z wyprzedzeniem": co 25 ms dokładamy do kolejki audio akordy na najbliższe
+   0,15 s, więc tempo jest równe także po wielu rundach pętli. */
+let seqTimers=new Set();
 let seqStopHook=null;
+let seqRun=null;
 function stopSeq(){
-  seqTimers.forEach(clearTimeout); seqTimers=[];
+  if(seqRun){ seqRun.stopped=true; clearInterval(seqRun.timer); seqRun=null; }
+  seqTimers.forEach(clearTimeout); seqTimers.clear();
   document.querySelectorAll('.lit').forEach(b=>b.classList.remove('lit'));
   if(seqStopHook){ const f=seqStopHook; seqStopHook=null; f(); }
 }
-/* items: [{pcs, bassPc, el, fn}], step w sekundach */
-function playChordSeq(items, step=0.78, onEnd){
+function isPlaying(){ return !!seqRun; }
+/* items: [{pcs, bassPc, voiced?, el?, onStart?(i, runda)}], step = sekundy na akord
+   opts: {loop, beats (uderzeń na akord), click (metronom), countIn (ile uderzeń odliczenia),
+          onBeat(i, uderzenie), onCount(ile zostało)} */
+function playChordSeq(items, step=0.78, onEnd, opts={}){
   stopSeq(); audio();
-  items.forEach((it,i)=>{
-    strike(it.pcs, Math.max(step*1.2, .95), i*step, it.bassPc);
-    seqTimers.push(setTimeout(()=>{
-      document.querySelectorAll('.lit').forEach(b=>b.classList.remove('lit'));
-      if(it.el){ it.el.classList.add('lit'); if(it.el.scrollIntoView && items.length>12) it.el.scrollIntoView({block:'nearest',behavior:'smooth'}); }
-      if(it.onStart) it.onStart();
-    }, i*step*1000));
-  });
+  if(!items || !items.length){ if(onEnd) onEnd(); return; }
+  const {loop=false, beats=1, click=false, countIn=0, onBeat=null, onCount=null} = opts;
+  const beat = step/beats;
+  const run = {stopped:false, timer:null};
+  seqRun = run;
   seqStopHook = onEnd || null;
-  seqTimers.push(setTimeout(stopSeq, (items.length*step+0.3)*1000));
+  const later = (at, fn)=>{
+    const id = setTimeout(()=>{ seqTimers.delete(id); if(!run.stopped) fn(); }, Math.max(0,(at-ctx.currentTime)*1000));
+    seqTimers.add(id);
+  };
+  let t = ctx.currentTime + 0.08, i = 0, cycle = 0;
+  for(let k=0;k<countIn;k++){
+    playClick(t-ctx.currentTime, k%beats===0);
+    const left = countIn-k; later(t, ()=>onCount && onCount(left));
+    t += beat;
+  }
+  function tick(){
+    while(!run.stopped && t < ctx.currentTime + 0.15){
+      if(i>=items.length){
+        if(!loop){ clearInterval(run.timer); later(t+0.25, stopSeq); return; }
+        i=0; cycle++;
+      }
+      const it=items[i], at=t, idx=i, cyc=cycle;
+      strike(it.pcs, it.dur ?? Math.max(step*1.04, .95), at-ctx.currentTime, it.bassPc, it.voiced);
+      if(click) for(let b=0;b<beats;b++) playClick(at+b*beat-ctx.currentTime, b===0);
+      later(at, ()=>{
+        document.querySelectorAll('.lit').forEach(b=>b.classList.remove('lit'));
+        if(it.el){ it.el.classList.add('lit'); if(it.el.scrollIntoView && items.length>12) it.el.scrollIntoView({block:'nearest',behavior:'smooth'}); }
+        if(it.onStart) it.onStart(idx, cyc);
+      });
+      if(onBeat) for(let b=0;b<beats;b++) later(at+b*beat, ()=>onBeat(idx,b));
+      t += step; i++;
+    }
+  }
+  run.timer = setInterval(tick, 25); tick();
+}
+/* przełącznik „w kółko" — wspólny dla wszystkich przycisków ▶ w appce */
+const loopPref = ()=>prefs.get('play.loop', false);
+function loopToggle(){
+  const b = h('button',{type:'button',class:'btn small ghost looptg','aria-pressed':String(loopPref()),title:'Graj w kółko, aż klikniesz stop'},'🔁 w kółko');
+  b.onclick=()=>{ const v=!loopPref(); prefs.set('play.loop',v); document.querySelectorAll('.looptg').forEach(x=>x.setAttribute('aria-pressed',String(v))); };
+  return b;
+}
+const clickPref = ()=>prefs.get('play.click', false);
+function clickToggle(){
+  const b = h('button',{type:'button',class:'btn small ghost clicktg','aria-pressed':String(clickPref()),title:'Metronom: stuka każde uderzenie, akcent na początku akordu'},'♩ metronom');
+  b.onclick=()=>{ const v=!clickPref(); prefs.set('play.click',v); document.querySelectorAll('.clicktg').forEach(x=>x.setAttribute('aria-pressed',String(v))); };
+  return b;
 }
 function playBtn(label, getItems, step){
   const btn = h('button',{class:'play','aria-label':'Zagraj: '+label},'▶');
@@ -116,7 +160,7 @@ function playBtn(label, getItems, step){
     stopSeq();
     btn.classList.add('on'); btn.textContent='■';
     const s = typeof step==='function'?step():step;
-    playChordSeq(getItems(), s, ()=>{ btn.classList.remove('on'); btn.textContent='▶'; });
+    playChordSeq(getItems(), s, ()=>{ btn.classList.remove('on'); btn.textContent='▶'; }, {loop:loopPref()});
   };
   return btn;
 }

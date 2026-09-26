@@ -37,7 +37,7 @@ const ViewGamy = {
         h('div',{class:'kbd-panel'}, kbdCap, kbdHold)
       ),
       h('section',null,
-        h('div',{class:'sechead'}, h('h2',null,'Gotowe przejścia'), h('span',{class:'hint'},'▶ zagra całą sekwencję')),
+        h('div',{class:'sechead'}, h('h2',null,'Gotowe przejścia'), h('div',{class:'row'}, h('span',{class:'hint'},'▶ zagra całą sekwencję'), loopToggle(), h('a',{class:'btn small',href:'#petla'},'Własna pętla →'))),
         progs
       ),
       h('section',null,

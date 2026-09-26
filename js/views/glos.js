@@ -300,7 +300,7 @@ function renderEmocje(main, getVoice){
     const names = PC_NAME_SHARP;
     const ch = [0,5,7,0].map((iv,i)=>{ const q = parseChord(names[(r+iv)%12]); return {pcs:q.pcs}; });
     playChordSeq(ch, 2.4);
-    setTimeout(()=>tone(v.start+12, 9.4, 0, .9), 0);
+    setTimeout(()=>padTone(v.start+12, 9.4, 0, .9), 0);
   });
 }
 

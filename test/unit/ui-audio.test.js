@@ -24,7 +24,7 @@ test('esc zabezpiecza HTML', () => {
 
 test('układ akordu: bas oktawę niżej, dźwięki w górę od podstawy', () => {
   assert.deepEqual(plain(voicing([0, 4, 7])), [48, 60, 64, 67]);
-  assert.deepEqual(plain(voicing([9, 0, 4])), [45, 57, 60, 64]);   // A: podstawa niżej, wąskie pasmo
+  assert.deepEqual(plain(voicing([9, 0, 4])), [45, 69, 72, 76]);   // A: tam, gdzie pokazuje klawiatura (A4)
   assert.deepEqual(plain(voicing([0, 4, 7], 4)), [52, 60, 64, 67]); // C/E: bas E
   for(const t of ['C', 'F#m', 'Bb7', 'B°', 'G/B']){
     const c = parseChord(t);
@@ -48,4 +48,14 @@ test('częstotliwości i nuty', () => {
   assert.equal(noteMidi('F', 4, '#'), 66);
   assert.equal(noteMidi('B', 3, 'b'), 58);
   assert.equal(noteKey('F', 4, '#'), 'f#/4');
+});
+
+test('klawiatura pokazuje dokładnie te dźwięki, które słychać', () => {
+  for(const t of ['C', 'A', 'Bb', 'B7', 'F#m', 'Cadd9', 'Gsus4', 'Bdim']){
+    const c = parseChord(t);
+    const shown = Object.keys(plain(chordMarks(c.pcs, 't'))).map(Number).sort((a, b) => a - b);
+    const heard = plain(voicing(c.pcs)).slice(1).sort((a, b) => a - b);
+    assert.deepEqual(shown, heard, t);
+    assert.ok(shown.every(m => m >= 60 && m <= 86), `${t}: ${shown}`);
+  }
 });

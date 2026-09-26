@@ -5,6 +5,7 @@ const ROUTES = {
   nuty: ViewNuty,
   piosenki: ViewPiosenki,
   wizualizacja: ViewWizualizacja,
+  petla: ViewPetla,
   przejscia: ViewPrzejscia,
   glos: ViewGlos,
   druk: ViewDruk,

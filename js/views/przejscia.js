@@ -276,7 +276,7 @@ const ViewPrzejscia = {
         h('p',{class:'lead'},'Ułóż akordy, których chcesz użyć. Appka pokaże, w jakiej gamie jesteś w każdym momencie. Akord, który nie pasuje, świeci na czerwono — a pod nim wyrasta gałązka: jak do niego płynnie dojść.')),
       h('div',{class:'card'},
         h('div',{class:'row'}, h('span',{class:'muted',style:'font-size:.9rem'},'gama startowa'), startSelect,
-          h('span',{style:'flex:1'}), playB,
+          h('span',{style:'flex:1'}), playB, loopToggle(),
           h('button',{class:'btn',onclick:()=>{ seq.pop(); save(); draw(); }},'⌫ cofnij'),
           h('button',{class:'btn ghost',onclick:()=>{ if(!seq.length||confirm('Wyczyścić wszystkie akordy?')){ seq=[]; save(); draw(); } }},'wyczyść')),
         h('div',{style:'height:10px'}),
@@ -414,7 +414,7 @@ const ViewPrzejscia = {
       playChordSeq(items.map((it,k)=>({pcs:it.c.pcs,bassPc:it.c.bassPc,el:it.chip,onStart:()=>{
         if(current.tree){ const g=current.tree.nodes[current.items.indexOf(it)]; if(g) pulse(g); }
         if(current.circle){ const g=current.circle.nodeFor(it.c); if(g) pulse(g); }
-      }})), 0.85, ()=>{ delete playB.dataset.on; playB.textContent='▶ Zagraj'; });
+      }})), 0.85, ()=>{ delete playB.dataset.on; playB.textContent='▶ Zagraj'; }, {loop:loopPref()});
     };
     draw();
   }

@@ -1,7 +1,9 @@
 /* Zakładka „Wizualizacja" — świecące węzły na czarnym tle.
    Dwa widoki: drzewo ruchów (dokąd akord może iść) i koło kwintowe. */
 
-const FN_COLOR = {t:'#f472b6', s:'#2dd4bf', d:'#fbbf24', o:'#9ca3af', x:'#f87171'};
+// kolory ról (t/s/d/o/x) + kolory rodzajów akordów z zakładki Pętla (mj, mn, d7, au, di, su)
+const FN_COLOR = {t:'#f472b6', s:'#2dd4bf', d:'#fbbf24', o:'#9ca3af', x:'#f87171',
+  ...Object.fromEntries(Object.entries(CHORD_TYPES).map(([k,v])=>[k,v.color]))};
 const SVGNS='http://www.w3.org/2000/svg';
 function sv(tag, attrs, parent){ const e=document.createElementNS(SVGNS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
 function glowDefs(svg){
@@ -12,7 +14,7 @@ function glowDefs(svg){
   const f2 = sv('filter',{id:'glow2',x:'-50%',y:'-50%',width:'200%',height:'200%'},defs);
   sv('feGaussianBlur',{stdDeviation:'3',result:'b'},f2);
   const m2 = sv('feMerge',{},f2); sv('feMergeNode',{in:'b'},m2); sv('feMergeNode',{in:'SourceGraphic'},m2);
-  ['t','s','d','o','x'].forEach(fn=>{
+  Object.keys(FN_COLOR).forEach(fn=>{
     const g = sv('radialGradient',{id:'rg-'+fn},defs);
     sv('stop',{offset:'0%','stop-color':FN_COLOR[fn],'stop-opacity':'.55'},g);
     sv('stop',{offset:'70%','stop-color':FN_COLOR[fn],'stop-opacity':'.12'},g);
@@ -114,7 +116,7 @@ function drawTree(hold, key, info, pathEl){
     const seq=h('div',{class:'seq',style:'margin:0'});
     path.forEach(c=>seq.appendChild(h('b',{class:c.fn,html:`${fmt(c.name)}<span class="deg">${c.rn}</span>`})));
     pathEl.append(seq,
-      h('button',{class:'btn small',onclick:()=>playChordSeq(path.map((c,i)=>({pcs:c.pcs,el:seq.children[i]})),0.8)},'▶ zagraj ścieżkę'),
+      h('button',{class:'btn small',onclick:()=>isPlaying()?stopSeq():playChordSeq(path.map((c,i)=>({pcs:c.pcs,el:seq.children[i]})),0.8,null,{loop:loopPref()})},'▶ zagraj / ■ stop'), loopToggle(),
       h('button',{class:'btn small ghost',onclick:()=>{ path=[]; drawPath(); }},'wyczyść'),
       h('button',{class:'btn small ghost',title:'Skopiuj akordy — wkleisz je w zakładce Piosenki',onclick:(e)=>{ const txt=path.map(c=>c.name.replace('°','dim')).join(' '); navigator.clipboard&&navigator.clipboard.writeText(txt).then(()=>{e.target.textContent='skopiowano ✓';}); }},'kopiuj'));
   }

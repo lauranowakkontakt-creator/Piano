@@ -177,3 +177,52 @@ test('Druk: ściągawki dla zaznaczonych gam', async () => {
   assert.deepEqual(errors, []);
   await close();
 });
+
+test('Pętla: baza akordów, układanie, granie w kółko i stop', async () => {
+  const {page, errors, close} = await open('#petla');
+  await page.waitForSelector('.dbtbl');
+  await page.click('text=wyczyść');
+  for(const name of ['G7', 'Dm7', 'Cmaj7']) await page.click(`.dbc[aria-label="dodaj ${name}"]`);
+  let chips = await page.$$eval('.seqbox .chord-chip', els => els.map(e => e.firstChild.textContent));
+  assert.deepEqual(chips, ['G7', 'Dm7', 'Cmaj7']);
+  await page.click('text=✨ Ułóż w pętlę');
+  chips = await page.$$eval('.seqbox .chord-chip', els => els.map(e => e.firstChild.textContent));
+  assert.deepEqual(chips, ['Cmaj7', 'Dm7', 'G7']);
+  assert.match(await page.textContent('.seqbox + .row + p'), /C-dur/);
+  // koło: 3 węzły i 3 strzałki (ostatnia wraca na początek)
+  assert.equal(await page.locator('svg[aria-label="Twoja pętla akordów"] .vnode').count(), 3);
+  // jak grać: tabela z przewrotami
+  assert.equal(await page.locator('.howtbl tr[data-i]').count(), 3);
+  // granie w kółko: po ok. 1,5 rundy nadal gra i liczy rundy
+  await page.selectOption('#petla-beats', '1');
+  await page.evaluate(() => { const r = document.getElementById('petla-bpm'); r.value = 160; r.dispatchEvent(new Event('input')); });
+  await page.click('button[aria-pressed="true"]:has-text("odliczanie")');   // bez odliczania
+  await page.click('text=▶ Graj w kółko');
+  await page.waitForFunction(() => /runda 2/.test(document.querySelector('svg[aria-label="Twoja pętla akordów"]').textContent), null, {timeout: 5000});
+  await page.click('text=■ Stop');
+  assert.equal(await page.evaluate(() => isPlaying()), false);
+  // podpowiedzi i gotowe pętle
+  await page.click('.nextlist .chord-chip >> nth=0');
+  assert.equal(await page.locator('.seqbox .chord-chip').count(), 4);
+  await page.click('.preset:has-text("Koło dominant")');
+  chips = await page.$$eval('.seqbox .chord-chip', els => els.map(e => e.firstChild.textContent));
+  assert.deepEqual(chips, ['C', 'A7', 'D7', 'G7']);
+  // transpozycja
+  await page.click('text=♯ +½');
+  chips = await page.$$eval('.seqbox .chord-chip', els => els.map(e => e.firstChild.textContent));
+  assert.deepEqual(chips, ['D♭', 'B♭7', 'E♭7', 'A♭7']);
+  assert.deepEqual(errors, []);
+  await close();
+});
+
+test('Gamy: przełącznik „w kółko" gra progresję dalej po końcu', async () => {
+  const {page, errors, close} = await open('#gamy');
+  await page.click('.looptg');
+  await page.click('.prog .play >> nth=3');          // ii–V–I, 3 akordy × 0,78 s
+  await page.waitForTimeout(3000);
+  assert.equal(await page.evaluate(() => isPlaying()), true, 'po końcu progresji dalej gra');
+  await page.click('.prog .play.on');
+  assert.equal(await page.evaluate(() => isPlaying()), false);
+  assert.deepEqual(errors, []);
+  await close();
+});
