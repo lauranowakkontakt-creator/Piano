@@ -53,7 +53,7 @@ także na innym komputerze. Nagrań audio nie ma w kopii, bo trzymasz je jako os
 
 - Czysty HTML, CSS i JS, bez budowania. Skrypty ładowane po kolei w `index.html`.
 - `js/theory.js` to logika teorii przeniesiona 1:1 z prototypu (`docs/akordy-prototyp.html`), plus parser akordów i funkcje w tonacji.
-- `js/audio.js` to syntezator fortepianu na Web Audio (trzy rozstrojone struny, filtr, młoteczek, pogłos), `js/staff.js` rysuje nuty przez VexFlow 4.2.5 (`vendor/`, licencja MIT).
+- `js/audio.js` gra prawdziwy fortepian: nagrania Salamander Grand Piano (`vendor/piano-samples.js`, CC BY 3.0, Alexander Holm) co trzy półtony, wbudowane w plik JS, żeby działały też z dysku bez internetu. Zanim się wczytają, gra zapasowy syntezator. `js/staff.js` rysuje nuty przez VexFlow 4.2.5 (`vendor/`, licencja MIT).
 - `js/loop.js` to logika pętli (rodzaje akordów, relacje, prowadzenie głosów, układanie w pętlę), bez rysowania.
 - Przycisk „🔁 w kółko” przy ▶ (Gamy, Piosenki, Przejścia, Wizualizacja) gra sekwencję w pętli. Planowanie dźwięku „z wyprzedzeniem” trzyma równe tempo.
 - `js/db.js` to IndexedDB (piosenki i audio), a `prefs` w `js/ui.js` to localStorage na drobne ustawienia.

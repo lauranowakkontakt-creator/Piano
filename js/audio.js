@@ -1,8 +1,10 @@
 /* ============================================================
-   Dźwięk — syntezator fortepianu na Web Audio (zero zależności, działa offline).
-   Każdy dźwięk to trzy lekko rozstrojone „struny" z widmem jak w pianinie,
-   filtr, który ciemnieje w czasie (jak wybrzmiewający młoteczek), krótki stuk
-   młoteczka i pogłos. Niskie dźwięki wybrzmiewają dłużej niż wysokie.
+   Dźwięk — prawdziwy fortepian na Web Audio (działa offline).
+   Grają nagrania fortepianu koncertowego (vendor/piano-samples.js, co trzy
+   półtony); dźwięki pomiędzy to najbliższa próbka lekko podciągnięta.
+   Ciszej = ciemniej, jak przy lżejszym uderzeniu. Puszczenie klawisza
+   tłumi strunę. Zanim próbki się wczytają (ułamek sekundy), gra zapasowy
+   syntezator: trzy rozstrojone „struny", filtr, stuk młoteczka i pogłos.
    ============================================================ */
 let ctx, master, dryBus, wetBus;
 function audio(){
@@ -14,10 +16,54 @@ function audio(){
   comp.connect(ctx.destination);
   master = ctx.createGain(); master.gain.value = .9;
   dryBus = ctx.createGain(); dryBus.gain.value = 1;
-  wetBus = ctx.createGain(); wetBus.gain.value = .22;
+  wetBus = ctx.createGain(); wetBus.gain.value = .16;
   const verb = ctx.createConvolver(); verb.buffer = roomImpulse(2.2);
   master.connect(dryBus); dryBus.connect(comp);
   master.connect(verb); verb.connect(wetBus); wetBus.connect(comp);
+  if(!samplesLoading) loadSamples(ctx);
+}
+
+/* próbki: base64 → AudioBuffer, raz, w tle. Dekodujemy od razu po wczytaniu strony
+   (w kontekście offline, który nie potrzebuje kliknięcia), żeby już pierwszy
+   dźwięk był z nagrania. AudioBuffer da się potem grać w zwykłym kontekście. */
+const sampleBufs = {};
+let sampleKeys = [], samplesLoading = false;
+function loadSamples(dec){
+  if(typeof PIANO_SAMPLES === 'undefined' || !dec) return;
+  samplesLoading = true;
+  const ctx = dec;
+  Object.keys(PIANO_SAMPLES).forEach(k=>{
+    const bin = atob(PIANO_SAMPLES[k]), bytes = new Uint8Array(bin.length);
+    for(let i=0;i<bin.length;i++) bytes[i] = bin.charCodeAt(i);
+    const done = buf=>{ sampleBufs[k] = buf; sampleKeys = Object.keys(sampleBufs).map(Number).sort((a,b)=>a-b); };
+    const fail = ()=>{ samplesLoading = false; };   // spróbuj jeszcze raz w zwykłym kontekście
+    try{ const p = ctx.decodeAudioData(bytes.buffer, done, fail); if(p && p.catch) p.catch(fail); }catch(e){ fail(); }
+  });
+}
+// najbliższa wczytana próbka
+function nearestSample(midi){
+  let best = null;
+  for(const k of sampleKeys) if(best==null || Math.abs(k-midi) < Math.abs(best-midi)) best = k;
+  return best;
+}
+/* dźwięk z nagrania: nagranie ma już naturalne wybrzmiewanie, my dokładamy
+   siłę uderzenia (głośność + barwa) i tłumik po puszczeniu klawisza */
+function sampleNote(midi, dur, t, vel){
+  const k = nearestSample(midi);
+  const src = ctx.createBufferSource(); src.buffer = sampleBufs[k];
+  src.playbackRate.value = Math.pow(2, (midi-k)/12);
+  const lp = ctx.createBiquadFilter(); lp.type='lowpass'; lp.Q.value=.5;
+  lp.frequency.value = Math.min(18000, 1800 + 16000*vel*vel);   // lżej = ciemniej
+  const env = ctx.createGain();
+  const g = .5*Math.pow(vel, 1.3);
+  env.gain.setValueAtTime(g, t);
+  const off = t + Math.max(.08, dur);
+  const f = midiToFreq(midi);
+  const damp = Math.min(.35, Math.max(.06, .12*Math.pow(261.6/f, .5)));  // basy gasną wolniej
+  env.gain.setTargetAtTime(0, off, damp);
+  src.connect(lp); lp.connect(env); env.connect(master);
+  src.start(t);
+  src.stop(Math.min(off + damp*8, t + src.buffer.duration/src.playbackRate.value));
 }
 const midiToFreq = m => 440*Math.pow(2,(m-69)/12);
 
@@ -55,6 +101,7 @@ function hammerNoise(){
 /* jeden dźwięk fortepianu. when = za ile sekund od teraz, dur = kiedy puszczasz klawisz, vel 0..1 */
 function pianoNote(midi, dur, when=0, vel=.7){
   const t = ctx.currentTime + Math.max(0, when);
+  if(sampleKeys.length) return sampleNote(midi, dur, t, vel);
   const f = midiToFreq(midi);
   const sustain = Math.min(7, Math.max(.7, 3.2*Math.pow(261.6/f, .55)));  // ile brzmi, gdy trzymasz klawisz
   const peak = .19*vel*Math.min(1.25, Math.pow(261.6/f, .12));
@@ -143,4 +190,11 @@ function playClick(when, accent){
   g.gain.exponentialRampToValueAtTime(accent?.08:.05,t+0.002);
   g.gain.exponentialRampToValueAtTime(0.0001,t+0.05);
   o.connect(g); g.connect(dryBus); o.start(t); o.stop(t+0.06);
+}
+
+if(typeof window !== 'undefined'){
+  try{
+    const Off = window.OfflineAudioContext || window.webkitOfflineAudioContext;
+    if(Off) loadSamples(new Off(2, 1, 44100));
+  }catch(e){}
 }

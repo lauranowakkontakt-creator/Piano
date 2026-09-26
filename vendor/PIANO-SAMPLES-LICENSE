@@ -1,0 +1,10 @@
+Próbki fortepianu w vendor/piano-samples.js
+
+Salamander Grand Piano V3 — Alexander Holm
+https://archive.org/details/SalamanderGrandPianoV3
+Licencja: Creative Commons Attribution 3.0 (CC BY 3.0)
+https://creativecommons.org/licenses/by/3.0/
+
+Pliki MP3 pochodzą z paczki npm @audio-samples/piano-mp3-velocity10 (Jan Forst, MIT).
+Zmiany: wybrano co trzeci półton od C1 do C7, przycięto długość, dodano wyciszenie
+na końcu i ponownie skompresowano do MP3 64 kb/s.

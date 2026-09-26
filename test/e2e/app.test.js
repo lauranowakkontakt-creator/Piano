@@ -226,3 +226,26 @@ test('Gamy: przełącznik „w kółko" gra progresję dalej po końcu', async (
   assert.deepEqual(errors, []);
   await close();
 });
+
+test('dźwięk: nagrania fortepianu się wczytują i grają (nie syntezator)', async () => {
+  const {page, errors, close} = await open('#gamy');
+  await page.waitForFunction(() => sampleKeys.length === Object.keys(PIANO_SAMPLES).length, null, {timeout: 15000});
+  // wyrenderuj C4 i Fis4 (podciągnięta próbka) offline i sprawdź, że słychać
+  const peaks = await page.evaluate(async () => {
+    const out = [];
+    for(const m of [60, 61]){
+      const off = new OfflineAudioContext(2, 44100, 44100);
+      const saved = {ctx, master};
+      ctx = off; master = off.destination;
+      pianoNote(m, .5, 0, .7);
+      ctx = saved.ctx; master = saved.master;
+      const d = (await off.startRendering()).getChannelData(0);
+      let p = 0; for(const x of d) p = Math.max(p, Math.abs(x));
+      out.push(p);
+    }
+    return out;
+  });
+  for(const p of peaks) assert.ok(p > .05 && p < 1, `szczyt ${p}`);
+  assert.deepEqual(errors, []);
+  await close();
+});
