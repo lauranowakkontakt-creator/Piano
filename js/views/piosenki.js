@@ -20,6 +20,72 @@ function guessKey(chords){
   return scores.sort((a,b)=>b.s-a.s).slice(0,3);
 }
 
+
+/* Piosenki Laury — akordy przepisane z jej PDF-ów (bez tekstu: tekst możesz
+   dołączyć jako PDF w piosence). */
+const SEED_SONGS = [
+{ id:'seed-widze-dom', title:'Widzę dom', artist:'K. Kukier, O. Juraszus, Z. Muzalewska', key:'D', bpm:76, beats:2,
+  chords:`[Intro] Bm7 Asus4 A | G | Bm7 Asus4 A | G
+[Zwrotka — 1. linia] D G/D D Bm7 A Gadd4
+[Zwrotka — 2. linia] D G/D D Bm7 A Gadd4
+[Tag] Bm7 A Gadd4
+[Refren] D G/D D Bm7 | Em7 G | D | Dsus4 D
+[Interludium] D | G/D | D
+[Instrumental] D | D | Em7 | Em7 | Gsus2 | Gsus2 | D | D
+[Bridge 1] D Em7 G D
+[Bridge 2] D Em7 G D
+[Bridge 2 — powtórka, bas w górę] D/A Em7/B G D
+[Refren — ostatni] D G/D D Bm7 | Em7 G Bm7 A
+[Outro] Em7 G D`,
+  notes:`Tonacja D-dur · metrum 6/8 · 76 BPM (liczymy „RAZ dwa trzy CZTE-ry pięć sześć", akcent na 1 i 4).
+Jeden akord w appce = 2 uderzenia (jeden takt 6/8).
+
+KOLEJNOŚĆ: Intro → Zwrotka → Tag → Refren → Interludium → Zwrotka → Tag → Refren → Instrumental → Bridge 1 → Bridge 2 ×2 → Refren (ostatni) → Outro.
+
+HARMONIA (zobacz kolory): cała piosenka stoi na akordach D-dur: D (I, dom), G (IV, ruch), Em7 (ii, ruch), Bm7 (vi, dom smutniejszy), A (V, napięcie).
+• Asus4 → A w intro: „zawieszone" napięcie, które się rozwiązuje — zagraj powoli i posłuchaj.
+• G/D = akord G z D w basie: lewa ręka zostaje na D, zmienia się tylko prawa. Brzmi jak „oddech" w domu.
+• Refren kończy się Dsus4 → D: mały „amen" na koniec.
+• Bridge 2 powtórka: bas idzie w górę D/A → Em7/B — ta sama harmonia, ale czuć wznoszenie. Idealne miejsce na crescendo.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotka — spokojna opowieść, jak do jednej osoby. Ciszej, ciepło, legato, trochę powietrza w głosie.
+• Tag — lekkie zmęczenie, wspomnienie trudu: ciemniejsza barwa, wolniej końcówki fraz.
+• Refren — radość i pewność: pełniejszy głos na podparciu (nie krzyk), jaśniejsza barwa, wyraźne spółgłoski, lekko do przodu w rytmie.
+• Bridge 1 — odwaga, deklaracja: rytmicznie, zdecydowanie, prosty dźwięk bez vibrato.
+• Bridge 2 — wdzięczność, która rośnie: 1. raz ciszej i miękko, 2. raz pełniej (crescendo przez całą frazę).
+• Outro — wyciszenie, pokój: decrescendo, ostatni dźwięk trzymaj i puszczaj powoli.
+
+Tekst: dołącz swój PDF w sekcji „Tekst i nuty (PDF)" niżej.`},
+{ id:'seed-blizej', title:'Bliżej (Closer)', artist:'tł. muz. A. Cook', key:'E', bpm:70, beats:4,
+  chords:`[Intro] Asus2 | Asus2 | Bsus4 | Bsus4 | C#m7 | C#m7 | Bsus4 | Bsus4
+[Zwrotka — 1. linia] C#m7 Bsus4 E/G# Asus2
+[Zwrotka — 2. linia] C#m7 Bsus4 E/G# Asus2
+[Refren — 1. linia] E B C#m7 Asus2 E
+[Refren — 2. linia] B C#m7 Asus2
+[Tag — powtarzaj] F#m7 E/G# | Asus2 | F#m7 E/G# | Asus2
+[Bridge 1] A E Bsus4 C#m7 A
+[Bridge 1] E Bsus4 C#m7
+[Bridge 2] A E Bsus4 C#m7 A E Bsus4 C#m7`,
+  notes:`Tonacja E-dur · metrum 4/4 · 70 BPM. Jeden akord w appce = 4 uderzenia (cały takt).
+
+HARMONIA: E (I, dom), A/Asus2 (IV, ruch), B/Bsus4 (V, napięcie), C#m7 (vi, dom — ale smutniejszy, tęskny), F#m7 (ii, ruch).
+• Zwrotka zaczyna się od C#m7, a nie od E — dlatego brzmi tęsknie, jakby „jeszcze nie w domu". Dom (E/G#) pojawia się dopiero w środku linii.
+• E/G# = akord E z G# w basie: bas idzie schodkami w górę (C# → B → G# → A), bardzo miękkie przejście.
+• sus2 i sus4 to akordy „otwarte", bez tercji — brzmią przestrzennie, niedopowiedzianie. Bsus4 to dominanta, która się waha.
+• Tag F#m7 → E/G# → Asus2 to schodki basu w górę F# → G# → A — jak wchodzenie coraz bliżej.
+• Appka może podpowiadać „c♯-moll" — bo zwrotka i bridge kończą się na C♯m7. To równoległa molowa E-dur (te same akordy, inny „dom"). Ta piosenka właśnie tak gra: między jasnym E a tęsknym C♯m7.
+
+EMOCJE W GŁOSIE (plan):
+• Intro/Zwrotka — intymnie, blisko: cicho, dużo miękkości, trochę powietrza, miękkie spółgłoski. Jakbyś mówiła szeptem, ale czysto.
+• Refren — prośba i tęsknota: każda fraza rośnie do środka (crescendo) i łagodnie opada. Otwarte samogłoski na długich nutach.
+• Tag — ta sama fraza wiele razy: za każdym razem inaczej (raz ciszej, raz pełniej, raz prawie mówiąc). Powtórzenie nie może być nudne.
+• Bridge 1 — nadzieja, budowanie: coraz więcej energii, jaśniejsza barwa.
+• Bridge 2 („o-o") — kulminacja: pełny głos na podparciu, szeroko otwarte „o", potem wyciszenie do refrenu/tagu.
+
+Tekst: dołącz swój PDF w sekcji „Tekst i nuty (PDF)" niżej.`},
+];
+
 const EXAMPLE_SONG = {
   title:'Przykład: pętla popowa', artist:'', key:'C', bpm:90, beats:4,
   chords:'[Zwrotka] C G Am F | C G F F\n[Refren] F G C Am | F G C C\n[Koniec] Dm G C',
@@ -40,6 +106,15 @@ const ViewPiosenki = {
     catch(e){
       root.append(h('div',{class:'card'},h('p',null,'Ta przeglądarka nie pozwala zapisywać danych (IndexedDB). Otwórz appkę w Chrome, Edge albo Firefox. Jeśli otwierasz plik bezpośrednio z dysku w Safari — uruchom ją przez start (patrz README).')));
       return;
+    }
+    { // piosenki Laury — dodaj raz (nie wracają, jeśli je usuniesz)
+      const done = prefs.get('songs.seedIds',[]);
+      for(const seed of SEED_SONGS){
+        if(done.includes(seed.id)) continue;
+        if(!songs.find(x=>x.id===seed.id)){ const s={...seed}; await DB.putSong(s); songs.unshift(s); }
+        done.push(seed.id);
+      }
+      prefs.set('songs.seedIds',done); prefs.set('songs.seeded',true);
     }
     if(!songs.length && !prefs.get('songs.seeded',false)){
       const s = {...EXAMPLE_SONG, id:uid()}; await DB.putSong(s); prefs.set('songs.seeded',true); songs=[s];
@@ -115,6 +190,7 @@ const ViewPiosenki = {
       fBeats.onchange=()=>{ s.beats=+fBeats.value; save(); };
       fChords.oninput=()=>{ s.chords=fChords.value; save(); drawSheet(); };
       fNotes.oninput=()=>{ s.notes=fNotes.value; save(); };
+      fNotes.style.minHeight = Math.min(600, 90 + (s.notes||'').split('\n').length*22)+'px';
 
       /* --- arkusz z akordami --- */
       const sheet = h('div',{class:'song-sheet'});
@@ -200,6 +276,29 @@ const ViewPiosenki = {
             })));
       }
 
+      /* --- PDF z tekstem / nutami --- */
+      const pdfBox = h('div');
+      async function drawPdf(){
+        pdfBox.innerHTML='';
+        const rec = await DB.getPdf(s.id).catch(()=>null);
+        const input = h('input',{type:'file',accept:'application/pdf,image/*',style:'display:none'});
+        input.onchange=async()=>{ const f=input.files[0]; if(!f) return; await DB.putPdf(s.id,f,f.name); drawPdf(); };
+        if(rec && rec.blob){
+          const url = URL.createObjectURL(rec.blob);
+          const isImg = (rec.blob.type||'').startsWith('image/');
+          pdfBox.append(h('div',{class:'row'},
+            h('a',{class:'btn primary',href:url,target:'_blank',rel:'noopener'},'📄 Otwórz: '+(rec.name||'plik')),
+            h('label',{class:'btn small ghost'},'zmień plik',input),
+            h('button',{class:'btn small ghost danger',onclick:async()=>{ if(confirm('Usunąć plik z tej piosenki?')){ await DB.delPdf(s.id); drawPdf(); } }},'usuń')),
+            isImg ? h('img',{src:url,alt:'nuty',style:'max-width:100%;margin-top:10px;border-radius:10px'}) :
+              h('object',{data:url,type:'application/pdf',style:'width:100%;height:70vh;margin-top:10px;border-radius:10px;border:1px solid var(--line)'},
+                h('p',{class:'hint'},'Podgląd niedostępny w tej przeglądarce — użyj przycisku „Otwórz".')));
+        }else{
+          pdfBox.append(h('label',{class:'btn'},'⤒ Dołącz PDF albo zdjęcie z tekstem / nutami',input),
+            h('div',{class:'hint',style:'margin-top:6px'},'Plik zostaje tylko u Ciebie, w przeglądarce. Będziesz mieć tekst obok akordów.'));
+        }
+      }
+
       /* --- audio --- */
       const audioBox = h('div');
       async function drawAudio(){
@@ -243,11 +342,13 @@ const ViewPiosenki = {
         h('section',{style:'margin-top:18px'},
           h('h2',null,'Nagranie'), h('div',{class:'card'},audioBox)),
         h('section',{style:'margin-top:18px'},
+          h('h2',null,'Tekst i nuty (PDF)'), h('div',{class:'card'},pdfBox)),
+        h('section',{style:'margin-top:18px'},
           h('h2',null,'Notatki'), fNotes),
         h('div',{class:'row',style:'margin-top:22px'},
           h('button',{class:'btn danger',onclick:async()=>{ if(!confirm(`Usunąć „${s.title}"? Tego nie da się cofnąć.`)) return; await DB.delSong(s.id); songs=songs.filter(x=>x.id!==s.id); currentId=songs[0]&&songs[0].id; drawList(); drawSong(); }},'Usuń piosenkę'))
       );
-      drawSheet(); drawBuilder(); drawAudio();
+      drawSheet(); drawBuilder(); drawAudio(); drawPdf();
       if(focusTitle){ fTitle.focus(); fTitle.select(); }
     }
 

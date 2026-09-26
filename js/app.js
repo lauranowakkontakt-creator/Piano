@@ -6,11 +6,12 @@ const ROUTES = {
   piosenki: ViewPiosenki,
   wizualizacja: ViewWizualizacja,
   przejscia: ViewPrzejscia,
+  glos: ViewGlos,
   druk: ViewDruk,
   zrodla: ViewZrodla,
 };
 async function route(){
-  stopSeq();
+  stopSeq(); if(typeof Ladder!=='undefined') Ladder.stop();
   const [name, ...rest] = (location.hash.replace(/^#/,'') || 'gamy').split('/');
   const view = ROUTES[name] || ViewGamy;
   const sub = rest.join('/') || null;
