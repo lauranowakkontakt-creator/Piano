@@ -343,12 +343,15 @@ audio{width:100%;margin-top:6px}
 footer.site{margin-top:50px;color:var(--faint);font-size:.8rem}
 
 @media (max-width:760px){
-  .lesson-layout,.songs-layout{grid-template-columns:1fr}
+  .lesson-layout,.songs-layout{grid-template-columns:minmax(0,1fr)}
   .lesson-nav{position:static;flex-direction:row;overflow-x:auto;scrollbar-width:none}
   .lesson-nav button{white-space:nowrap}
   .lesson-nav button .ck{margin-left:4px}
   .grid2{grid-template-columns:1fr}
   .brand{display:none}
+}
+@media screen and (max-width:760px){
+  .lesson table,.sheet table{display:block;overflow-x:auto}
 }
 @media (max-width:520px){
   .node .name{font-size:1.35rem}

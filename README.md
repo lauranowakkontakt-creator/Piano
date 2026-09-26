@@ -11,6 +11,12 @@ Nic nie trzeba instalować, działa też bez internetu (bez internetu tylko czci
 > użyj Chrome'a albo uruchom w terminalu w tym folderze: `python3 -m http.server 8000`
 > i wejdź na http://localhost:8000
 
+### Strona w internecie
+
+Appka jest też pod adresem **https://lauranowakkontakt-creator.github.io/Piano/** — aktualizuje się sama po każdej zmianie w `main`.
+Za pierwszym razem trzeba raz włączyć: w repozytorium **Settings → Pages → Source: GitHub Actions**.
+Dane (piosenki, nagrania) na stronie są osobne od tych w pliku otwieranym z dysku — przenosisz je Kopią zapasową.
+
 ## Zakładki
 
 | Zakładka | Co tam jest |

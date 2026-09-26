@@ -2,7 +2,7 @@ name: Strona
 
 on:
   push:
-    branches: [main, claude/eloquent-bell-lk0p03]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -23,8 +23,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/configure-pages@v5
+      - name: Tylko pliki appki (bez testów i narzędzi)
+        run: |
+          mkdir _site
+          cp -r index.html css js vendor _site/
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
       - id: deployment
         uses: actions/deploy-pages@v4
