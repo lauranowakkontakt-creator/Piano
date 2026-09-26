@@ -246,7 +246,10 @@ const ViewPrzejscia = {
   title:'Przejścia',
   render(root){
     let seq = prefs.get('przejscia.seq', ['C','Am','F','G','C','Eb','F','G']);
+    if(!Array.isArray(seq)) seq = [];
+    seq = seq.filter(t=>typeof t==='string');
     let startSel = prefs.get('przejscia.start','auto');
+    if(!KEY_CANDS.includes(startSel)) startSel = 'auto';
     let mode = prefs.get('przejscia.mode','tree');
     const save=()=>{ prefs.set('przejscia.seq',seq); prefs.set('przejscia.start',startSel); prefs.set('przejscia.mode',mode); };
 
@@ -296,7 +299,7 @@ const ViewPrzejscia = {
       const bad = toks.filter(t=>!parseChord(t));
       toks.filter(t=>parseChord(t)).forEach(t=>seq.push(t));
       input.value = bad.join(' ');
-      if(bad.length) input.setCustomValidity && (input.title='Nie rozpoznano: '+bad.join(', '));
+      input.title = bad.length ? 'Nie rozpoznano: '+bad.join(', ') : '';
       save(); draw();
     }
     function addChord(name){ seq.push(cname(name)); const c=parseChord(cname(name)); if(c) strike(c.pcs); save(); draw(); }
@@ -328,7 +331,7 @@ const ViewPrzejscia = {
         const fn = it.status==='bad'||it.status==='none'||it.status==='junk' ? 'x' : it.fn;
         const chip = h('span',{class:'chord-chip '+fn,title: it.status==='bad'?'nie pasuje do '+keyNameLabel(it.from):FN_NAME[fn]||''},
           fmt(it.text), it.rn?h('span',{class:'deg'},it.rn):null,
-          h('span',{class:'rm',title:'usuń',role:'button',onclick:(e)=>{ e.stopPropagation(); seq.splice(i,1); save(); draw(); }},'×'));
+          h('button',{type:'button',class:'rm',title:'usuń','aria-label':'usuń '+it.text,onclick:(e)=>{ e.stopPropagation(); seq.splice(i,1); save(); draw(); }},'×'));
         chip.onclick=()=>{ if(it.c){ strike(it.c.pcs,1.1,0,it.c.bassPc); ring(chip,'lit'); } };
         it.chip=chip;
         seqBox.append(chip);

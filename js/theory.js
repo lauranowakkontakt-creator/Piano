@@ -75,60 +75,93 @@ function fmt(s){
 function keyLabel(k){ return fmt(k)+'-dur'; }
 
 /* ---------- parser akordów do piosenek ----------
-   Obsługuje: C, Cm, C7, Cmaj7, Cm7, Cdim, C°, Csus2, Csus4, Cadd9, C/E (bas ignorowany w funkcji)
-   Zwraca {root, rootPc, q:'maj'|'min'|'dim'|'aug'|'sus2'|'sus4', ext:'7'|'maj7'|'', text, pcs[]} */
+   Obsługuje m.in.: C, Cm, Cmaj, C7, Cmaj7, CM7, Cm7, Cm(maj7), C6, Cm6, C9, C6/9, C5,
+   Cdim, C°, Cdim7, Cm7b5, Cø, Caug, C+, Csus2, Csus4, Csus, C7sus4, C2, Cadd9, Gadd4, C/E.
+   Nieznana końcówka (np. „Every", „Cxyz") = null, żeby słowa nie udawały akordów.
+   Zwraca {root, rootPc, q:'maj'|'min'|'dim'|'aug'|'sus2'|'sus4'|'pow', ext, bass, bassPc, text, iv[], pcs[]}
+   iv = odstępy od podstawy w półtonach (9 = 14, nie 2), pcs = klasy dźwięków (0–11), pcs[0] = podstawa. */
+const CHORD_SUFFIX = new RegExp('^(?:' +
+  '(?<maj>maj|M|Δ)(?<majN>7|9|11|13)?' +
+  '|(?<hdim>m7b5|min7b5|-7b5|ø7?)' +
+  '|(?<dim>dim|°|o)(?<dim7>7)?' +
+  '|(?<aug>aug|\\+)(?<aug7>7)?' +
+  '|(?<min>min|mi|m|-)(?:(?<mmaj>maj7|M7|Δ7?)|(?<minN>6|7|9|11|13))?' +
+  '|(?<pow>5)' +
+  '|(?<six9>6\\/9|69)' +
+  '|(?<num>6|7|9|11|13)' +
+  '|(?<two>2)|(?<four>4)' +
+')?(?<sus>sus2|sus4|sus)?(?:add(?<add>2|4|9|11))?$');
+const TRIAD_IV = {maj:[0,4,7],min:[0,3,7],dim:[0,3,6],aug:[0,4,8],sus2:[0,2,7],sus4:[0,5,7],pow:[0,7]};
+
 function parseChord(txt){
-  const raw = String(txt).trim().replace(/♯/g,'#').replace(/♭/g,'b');
+  const raw = String(txt??'').trim().replace(/♯/g,'#').replace(/♭/g,'b');
   const m = raw.match(/^([A-Ga-g])([#b]?)(.*)$/);
   if(!m) return null;
   const root = m[1].toUpperCase()+m[2];
   if(PC[root]===undefined) return null;
-  let rest = m[3];
+  let rest = m[3].replace(/[()]/g,'');
   let bass = null;
   const sl = rest.match(/\/([A-Ga-g][#b]?)$/);
   if(sl){ bass = sl[1][0].toUpperCase()+sl[1].slice(1); rest = rest.slice(0, sl.index); }
+  const g = (rest.match(CHORD_SUFFIX)||{}).groups;
+  if(!g) return null;
   let q='maj', ext='';
-  const r = rest;
-  if(/^(maj7|M7|Δ7?)/.test(r)){ ext='maj7'; }
-  else if(/^(m7b5|ø)/.test(r)){ q='dim'; ext='m7b5'; }
-  else if(/^(dim|°|o)/.test(r)){ q='dim'; if(/7/.test(r)) ext='dim7'; }
-  else if(/^(aug|\+)/.test(r)){ q='aug'; }
-  else if(/^(m|min|-)/.test(r)){ q='min'; if(/maj7/.test(r)) ext='mmaj7'; else if(/7/.test(r)) ext='7'; }
-  else if(/^sus2/.test(r)){ q='sus2'; }
-  else if(/^sus4|^sus/.test(r)){ q='sus4'; if(/7/.test(r)) ext='7'; }
-  else if(/^(7|9|11|13)/.test(r)){ ext='7'; }
-  if(/add9|^9|m9/.test(r) && !ext) ext = 'add9';
+  const extra=[];
+  const upper = n => { extra.push(10); if(n!=='7') extra.push(14); ext='7'; };   // 9/11/13 = septyma + nona
+  if(g.maj){ if(g.majN){ extra.push(11); if(g.majN!=='7') extra.push(14); ext='maj7'; } }
+  else if(g.hdim){ q='dim'; extra.push(10); ext='m7b5'; }
+  else if(g.dim){ q='dim'; if(g.dim7){ extra.push(9); ext='dim7'; } }
+  else if(g.aug){ q='aug'; if(g.aug7){ extra.push(10); ext='7'; } }
+  else if(g.min){
+    q='min';
+    if(g.mmaj){ extra.push(11); ext='mmaj7'; }
+    else if(g.minN==='6'){ extra.push(9); ext='6'; }
+    else if(g.minN) upper(g.minN);
+  }
+  else if(g.pow){ q='pow'; }
+  else if(g.six9){ extra.push(9,14); ext='6'; }
+  else if(g.num==='6'){ extra.push(9); ext='6'; }
+  else if(g.num) upper(g.num);
+  else if(g.two){ q='sus2'; }
+  else if(g.four){ q='sus4'; }
+  if(g.sus) q = g.sus==='sus2' ? 'sus2' : 'sus4';
+  if(g.add==='2'||g.add==='9'){ extra.push(14); if(!ext) ext='add9'; }
+  if(g.add==='4'||g.add==='11'){ extra.push(17); if(!ext) ext='add4'; }
   const rp = PC[root];
-  const iv = {maj:[0,4,7],min:[0,3,7],dim:[0,3,6],aug:[0,4,8],sus2:[0,2,7],sus4:[0,5,7]}[q].slice();
-  if(ext==='7') iv.push(10);
-  if(ext==='maj7' || ext==='mmaj7') iv.push(11);
-  if(ext==='m7b5') iv.push(10);
-  if(ext==='dim7') iv.push(9);
-  if(ext==='add9') iv.push(14);
-  const pcs = iv.map(i=>(rp+i)%12);
-  return {root, rootPc:rp, q, ext, bass, bassPc: bass && PC[bass]!==undefined ? PC[bass] : null, text:raw, pcs};
+  const iv = [...TRIAD_IV[q], ...extra];
+  const pcs = [...new Set(iv.map(i=>(rp+i)%12))];
+  return {root, rootPc:rp, q, ext, bass, bassPc: bass && PC[bass]!==undefined ? PC[bass] : null, text:raw, iv, pcs};
 }
 
 /* Funkcja akordu w tonacji.
    keyName: 'C' (dur) albo 'Am' (moll — używa akordów równoległej gamy durowej,
-   plus durowa dominanta V, typowa w moll). Zwraca {fn, rn} albo {fn:'o', rn:''}. */
+   plus durowa dominanta V i zmniejszony vii°, typowe w moll). Zwraca {fn, rn} albo {fn:'o', rn:''}. */
+function isMinorKeyName(keyName){ return /m$/.test(String(keyName||'')); }
+// gama durowa, na której akordach stoi tonacja (a-moll → C, d♯-moll/e♭-moll → F♯).
+// Nieznana nazwa → 'C', żeby nic się nie wysypało na złych danych (np. z importu).
 function majorOfKey(keyName){
-  if(keyName.endsWith('m')){
-    const minRoot = keyName.slice(0,-1);
-    return Object.keys(REL_MINOR).find(k=>REL_MINOR[k]===minRoot) || 'C';
-  }
-  return keyName;
+  const k = String(keyName||'');
+  if(Object.hasOwn(KEYS,k)) return k;
+  const byPc = pc => pc===undefined ? null : ALL_KEYS.find(x=>PC[x]===pc%12) || null;
+  if(isMinorKeyName(k)){ const pc=PC[k.slice(0,-1)]; const maj = pc===undefined ? null : byPc(pc+3); if(maj) return maj; }
+  return byPc(PC[k]) || 'C';
+}
+// czy to tonacja, którą appka umie obsłużyć (dur z KEYS albo moll od dowolnego dźwięku)
+function isKnownKey(keyName){
+  const k = String(keyName||'');
+  if(Object.hasOwn(KEYS,k)) return true;
+  return isMinorKeyName(k) && PC[k.slice(0,-1)]!==undefined;
 }
 const MINOR_RN = ['III','iv','v','VI','VII','i','ii°'];
 const MINOR_FN = ['t','s','d','s','d','t','s']; // funkcje w moll (względem i)
 function functionIn(chord, keyName){
   if(!chord) return {fn:'o', rn:''};
   const major = majorOfKey(keyName);
-  const isMinor = keyName.endsWith('m');
+  const isMinor = isMinorKeyName(keyName);
   const chords = chordsFor(major);
   const qOf = c => c.name.endsWith('°') ? 'dim' : c.name.endsWith('m') ? 'min' : 'maj';
   let qq = chord.q;
-  if(qq==='sus2'||qq==='sus4') qq = null; // sus: dopasuj tylko po podstawie
+  if(qq==='sus2'||qq==='sus4'||qq==='pow') qq = null; // sus i „5": bez tercji, dopasuj tylko po podstawie
   for(const c of chords){
     if(c.pcs[0]===chord.rootPc && (qq===null || qOf(c)===qq)){
       if(isMinor) return {fn:MINOR_FN[c.deg], rn:MINOR_RN[c.deg]};
@@ -137,11 +170,13 @@ function functionIn(chord, keyName){
   }
   if(isMinor){
     // durowa dominanta w moll (np. E w a-moll)
-    const tonicPc = PC[keyName.slice(0,-1)];
+    const tonicPc = (PC[major]+9)%12;
     if(chord.rootPc===(tonicPc+7)%12 && chord.q==='maj') return {fn:'d', rn:'V'};
+    // zmniejszony na dźwięku prowadzącym (np. G♯° w a-moll) — też dominanta
+    if(chord.rootPc===(tonicPc+11)%12 && chord.q==='dim') return {fn:'d', rn:'vii°'};
   }else{
     // dominanta wtrącona do V (np. D w C) — też napięcie
-    const tonicPc = PC[keyName];
+    const tonicPc = PC[major];
     if(chord.rootPc===(tonicPc+2)%12 && chord.q==='maj') return {fn:'o', rn:'V/V'};
   }
   return {fn:'o', rn:''};

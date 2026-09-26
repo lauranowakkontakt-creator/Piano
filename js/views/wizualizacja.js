@@ -95,14 +95,14 @@ function drawTree(hold, key, info, pathEl){
     const c=ch(i);
     strike(c.pcs); pulse(g);
     edges.forEach(e=>{
-      const on = e.a===i || (i===7 && false);
+      const on = e.a===i;
       e.p.setAttribute('opacity', on? .95 : .12);
       e.p.setAttribute('stroke-width', on? 2.6 : 1.4);
       e.p.setAttribute('filter', on? 'url(#glow2)':'');
     });
     const nexts = edges.filter(e=>e.a===i).map(e=>ch(e.b));
     info.innerHTML = `<b style="color:${FN_COLOR[c.fn]}">${fmt(c.name)}</b> (${c.rn}, ${FN_NAME[c.fn].toLowerCase()}) — ` +
-      (i===7||i===0&&path.length>1 ? 'jesteś w domu. Stąd możesz iść <b>wszędzie</b>.' :
+      (i===7 || (i===0 && path.length>1) ? 'jesteś w domu. Stąd możesz iść <b>wszędzie</b>.' :
        nexts.length ? 'naturalnie idzie dalej do: ' + nexts.map(n=>`<b style="color:${FN_COLOR[n.fn]}">${fmt(n.name)}</b>`).join(', ') : '');
     if(i===4) info.innerHTML += ' · przerywana linia do vi to <i>kadencja zwodnicza</i> — niespodzianka zamiast domu.';
     path.push(c); if(path.length>12) path.shift();

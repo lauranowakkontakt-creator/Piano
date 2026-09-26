@@ -16,11 +16,11 @@ const midiToFreq = m => 440*Math.pow(2,(m-69)/12);
 function voicing(pcs, bassPc){
   let root = 60 + pcs[0];
   if(pcs[0] > 6) root -= 12;               // trzymaj podstawy w wąskim paśmie
-  const up = pcs.map(p=>{
-    let m = root + ((p-pcs[0]+12)%12);
-    return m;
-  });
-  // 9 (add9) ma być nad oktawą
+  const rel = pcs.map(p=>(p-pcs[0]+12)%12);
+  // nona (add9, 9) i kwarta dodana (add4) idą nad oktawę — obok tercji brzmiałyby jak zgrzyt;
+  // w sus2/sus4 (bez tercji) zostają na miejscu
+  const hasThird = rel.includes(3) || rel.includes(4);
+  const up = rel.map(r=> root + r + (hasThird && (r===2 || r===5) ? 12 : 0));
   const bass = (bassPc!=null ? (48 + bassPc - (bassPc>6?12:0)) : root-12);
   return [bass, ...up];
 }

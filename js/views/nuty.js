@@ -89,7 +89,7 @@ const NUTY_LESSONS = [
 <p>Żeby nie pisać ♯ przed każdym F, gama zapisuje swoje czarne klawisze <b>raz, na początku</b> każdej linijki, zaraz po kluczu. To <b>znaki przykluczowe</b> i od razu mówią Ci, w jakiej gamie jest utwór:</p>
 <div class="grid2">
   <div><div class="staff-box" data-staff="ks-G"></div><p class="muted" style="font-size:.86rem">1♯ (F♯) → <b>G-dur</b> (albo e-moll)</p></div>
-  <div><div class="staff-box" data-staff="ks-D"></div><p class="muted" style="font-size:.86rem">2♯ (F♯ C♯) → <b>D-dur</b> (albo h-moll)</p></div>
+  <div><div class="staff-box" data-staff="ks-D"></div><p class="muted" style="font-size:.86rem">2♯ (F♯ C♯) → <b>D-dur</b> (albo b-moll)</p></div>
   <div><div class="staff-box" data-staff="ks-F"></div><p class="muted" style="font-size:.86rem">1♭ (B♭) → <b>F-dur</b> (albo d-moll)</p></div>
   <div><div class="staff-box" data-staff="ks-Bb"></div><p class="muted" style="font-size:.86rem">2♭ (B♭ E♭) → <b>B♭-dur</b> (albo g-moll)</p></div>
 </div>
@@ -152,7 +152,7 @@ const TRAINER_RANGES = {
 function renderTrainer(root){
   const st = prefs.get('nuty.trainer',{clef:'treble',range:'staff'});
   const stats = prefs.get('nuty.stats',{}); // key -> {h,m}
-  let cur=null, answered=false, sessOk=0, sessTot=0, streak=0;
+  let cur=null, answered=false, sessOk=0, sessTot=0, streak=0, qNo=0;
   const staffEl = h('div',{class:'staff-box',style:'min-height:150px'});
   const fb = h('div',{class:'fb muted',style:'min-height:1.5em'});
   const statsEl = h('div',{class:'stats'});
@@ -190,7 +190,7 @@ function renderTrainer(root){
     return {clef, k, L, oct, midi:noteMidi(L,oct)};
   }
   function next(){
-    cur = pick(); answered=false;
+    cur = pick(); answered=false; qNo++;
     drawStaff(staffEl,{clef:cur.clef, notes:[{keys:[cur.k],d:'w'}], width:190, height:150, top:26});
     answers.querySelectorAll('button').forEach(b=>b.className='');
     fb.textContent = 'Jaka to nuta? Kliknij literę, klawisz na klawiaturze albo wciśnij literę na klawiaturze komputera.';
@@ -214,7 +214,8 @@ function renderTrainer(root){
       const octMsg = (midi!=null && midi!==cur.midi) ? ` (dobra nazwa — ten dźwięk leży w innej oktawie: ${fmt(cur.L)}${cur.oct})` : '';
       fb.innerHTML = `✓ <b>${cur.L}${cur.oct}</b>${octMsg}. Kliknij dowolną literę albo Enter — następna.`;
       drawKbd({[cur.midi]:'t'});
-      setTimeout(()=>{ if(answered && fb.isConnected) next(); }, 1300);
+      const thisQ = qNo;   // przejdź dalej tylko, jeśli nikt nie przeszedł wcześniej ręcznie
+      setTimeout(()=>{ if(answered && qNo===thisQ && fb.isConnected) next(); }, 1300);
     }else{
       s.m++; sessTot++; streak=0;
       btn.classList.add('wrong');

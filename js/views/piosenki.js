@@ -4,6 +4,22 @@
 const SONG_KEYS = [...ALL_KEYS.map(k=>({v:k,l:keyLabel(k)})), ...ALL_KEYS.map(k=>({v:REL_MINOR[k]+'m', l:fmt(REL_MINOR[k]).toLowerCase()+'-moll'}))];
 function keyNameLabel(v){ const f=SONG_KEYS.find(k=>k.v===v); return f?f.l:v; }
 
+/* Piosenka z pliku kopii: bierzemy tylko znane pola i właściwe typy.
+   Zła tonacja → C (inaczej coś by się wysypało albo pokazało obcy tekst jako HTML). */
+function sanitizeSong(raw){
+  if(!raw || typeof raw!=='object' || Array.isArray(raw)) return null;
+  const id = typeof raw.id==='string' || typeof raw.id==='number' ? String(raw.id).trim() : '';
+  if(!id) return null;
+  const str = v => typeof v==='string' ? v : '';
+  const num = (v,min,max,d) => { const n=Number(v); return Number.isFinite(n) && n>=min && n<=max ? n : d; };
+  const key = SONG_KEYS.some(k=>k.v===raw.key) ? raw.key : 'C';
+  const out = {id, title:str(raw.title), artist:str(raw.artist), key,
+    bpm:num(raw.bpm,20,300,90), beats:num(raw.beats,1,16,4), chords:str(raw.chords), notes:str(raw.notes)};
+  if(typeof raw.audioName==='string') out.audioName = raw.audioName;
+  if(Number.isFinite(raw.updated)) out.updated = raw.updated;
+  return out;
+}
+
 /* zgadnij tonację: ile akordów pasuje + premia za ostatni / pierwszy akord jako tonikę */
 function guessKey(chords){
   if(!chords.length) return [];
@@ -86,12 +102,6 @@ EMOCJE W GŁOSIE (plan):
 Tekst: dołącz swój PDF w sekcji „Tekst i nuty (PDF)" niżej.`},
 ];
 
-const EXAMPLE_SONG = {
-  title:'Przykład: pętla popowa', artist:'', key:'C', bpm:90, beats:4,
-  chords:'[Zwrotka] C G Am F | C G F F\n[Refren] F G C Am | F G C C\n[Koniec] Dm G C',
-  notes:'To jest przykład. Zmień go albo usuń i dodaj swoją piosenkę.\n\nZwróć uwagę: refren kończy się G → C, czyli dominantą wracającą do domu.',
-};
-
 const ViewPiosenki = {
   title:'Piosenki',
   async render(root, sub){
@@ -114,10 +124,7 @@ const ViewPiosenki = {
         if(!songs.find(x=>x.id===seed.id)){ const s={...seed}; await DB.putSong(s); songs.unshift(s); }
         done.push(seed.id);
       }
-      prefs.set('songs.seedIds',done); prefs.set('songs.seeded',true);
-    }
-    if(!songs.length && !prefs.get('songs.seeded',false)){
-      const s = {...EXAMPLE_SONG, id:uid()}; await DB.putSong(s); prefs.set('songs.seeded',true); songs=[s];
+      prefs.set('songs.seedIds',done);
     }
 
     const list = h('div',{class:'song-list'});
@@ -152,6 +159,7 @@ const ViewPiosenki = {
       const blob = new Blob([JSON.stringify({app:'harmonia',version:1,exported:new Date().toISOString(),songs:all},null,2)],{type:'application/json'});
       const a=h('a',{href:URL.createObjectURL(blob),download:'harmonia-piosenki-'+new Date().toISOString().slice(0,10)+'.json'});
       document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(()=>URL.revokeObjectURL(a.href), 1000);
     }
     async function importAll(e){
       const f=e.target.files[0]; if(!f) return;
@@ -159,20 +167,28 @@ const ViewPiosenki = {
         const data = JSON.parse(await f.text());
         const arr = Array.isArray(data)?data:data.songs;
         let n=0;
-        for(const s of arr||[]){ if(s && s.id){ await DB.putSong(s); n++; } }
+        if(!Array.isArray(arr)) throw new Error('brak listy piosenek');
+        for(const raw of arr){ const s=sanitizeSong(raw); if(s){ await DB.putSong(s); n++; } }
         songs = await DB.allSongs(); drawList(); drawSong();
         alert(`Wczytano piosenek: ${n}. (Nagrania audio nie są w kopii — dodaj je ponownie.)`);
       }catch(err){ alert('To nie wygląda na plik kopii z tej appki.'); }
       e.target.value='';
     }
 
-    let saveT=null;
+    let saveT=null, saveFor=null;   // opóźniony zapis i piosenka, której dotyczy
+    let blobUrls={};   // podglądy audio/PDF — zwalniamy stary URL, kiedy rysujemy nowy
+    const blobUrl = (slot, blob)=>{ if(blobUrls[slot]) URL.revokeObjectURL(blobUrls[slot]); return blobUrls[slot]=URL.createObjectURL(blob); };
     function drawSong(focusTitle){
       stopSeq();
       main.innerHTML='';
       const s = songs.find(x=>x.id===currentId);
       if(!s){ main.append(h('div',{class:'empty'},'Wybierz piosenkę z listy albo dodaj nową.')); return; }
-      const save = ()=>{ clearTimeout(saveT); saveT=setTimeout(()=>{ DB.putSong(s); drawList(); },400); };
+      // opóźniony zapis; jeśli czeka zapis innej piosenki — zapisz go od razu, żeby nie przepadł
+      const save = ()=>{
+        if(saveFor && saveFor!==s) DB.putSong(saveFor);
+        clearTimeout(saveT); saveFor=s;
+        saveT=setTimeout(()=>{ saveFor=null; DB.putSong(s); drawList(); },400);
+      };
 
       /* --- pola --- */
       const fTitle = h('input',{value:s.title||'',placeholder:'Tytuł','aria-label':'Tytuł',style:'font-family:Fraunces,serif;font-size:1.5rem;font-weight:600;padding:8px 12px'});
@@ -249,7 +265,8 @@ const ViewPiosenki = {
         const major = majorOfKey(s.key);
         const isMin = s.key.endsWith('m');
         let chords = chordsFor(major).map(c=>({...c, ...functionIn(parseChord(c.name.replace('°','dim')), s.key)}));
-        if(isMin){ chords = [...chords.slice(5), ...chords.slice(0,5)]; const V = parseChord((PC_NAME_SHARP[(PC[s.key.slice(0,-1)]+7)%12])); chords.push({name:V.root, pcs:V.pcs, fn:'d', rn:'V', notes:[]}); }
+        const minorV = ()=>{ const pc=(PC[s.key.slice(0,-1)]+7)%12; return (KEYS[major].some(n=>n.includes('b'))?PC_NAME_FLAT:PC_NAME_SHARP)[pc]; };
+        if(isMin){ chords = [...chords.slice(5), ...chords.slice(0,5)]; const V = parseChord(minorV()); chords.push({name:V.root, pcs:V.pcs, fn:'d', rn:'V', notes:[]}); }
         const nodes = h('div',{class:'nodes'});
         chords.forEach(c=>{
           const b=h('button',{class:'node '+c.fn,title:'dodaj do piosenki',html:`<div class="rn">${c.rn}</div><div class="name">${fmt(c.name)}</div>`});
@@ -269,7 +286,8 @@ const ViewPiosenki = {
           h('div',{class:'row',style:'margin-top:10px'},
             ...[['T→S→D→T',[0,3,4,0]],['I–V–vi–IV',[0,4,5,3]],['vi–IV–I–V',[5,3,0,4]],['ii–V–I',[1,4,0]]].map(([l,deg])=>{
               const b=h('button',{class:'btn small'},'+ '+l);
-              b.onclick=()=>{ const cs=chordsFor(major); const names = deg.map(d=>cs[isMin? (d+5)%7 : d].name.replace('°','dim'));
+              // w moll dominanta (V) jest durowa: w a-moll E, nie Em
+              b.onclick=()=>{ const cs=chordsFor(major); const names = deg.map(d=>isMin && d===4 ? minorV() : cs[isMin? (d+5)%7 : d].name.replace('°','dim'));
                 fChords.value = (fChords.value.trim()? fChords.value.replace(/\s*$/,'')+'\n':'') + names.join(' ');
                 s.chords=fChords.value; save(); drawSheet(); };
               return b;
@@ -284,7 +302,7 @@ const ViewPiosenki = {
         const input = h('input',{type:'file',accept:'application/pdf,image/*',style:'display:none'});
         input.onchange=async()=>{ const f=input.files[0]; if(!f) return; await DB.putPdf(s.id,f,f.name); drawPdf(); };
         if(rec && rec.blob){
-          const url = URL.createObjectURL(rec.blob);
+          const url = blobUrl('pdf', rec.blob);
           const isImg = (rec.blob.type||'').startsWith('image/');
           pdfBox.append(h('div',{class:'row'},
             h('a',{class:'btn primary',href:url,target:'_blank',rel:'noopener'},'📄 Otwórz: '+(rec.name||'plik')),
@@ -307,7 +325,7 @@ const ViewPiosenki = {
         const input = h('input',{type:'file',accept:'audio/*',style:'display:none'});
         input.onchange=async()=>{ const f=input.files[0]; if(!f) return; await DB.putAudio(s.id,f,f.name); s.audioName=f.name; save(); drawAudio(); };
         if(rec && rec.blob){
-          const url = URL.createObjectURL(rec.blob);
+          const url = blobUrl('audio', rec.blob);
           const player = h('audio',{controls:true,src:url,preload:'metadata'});
           const rates = h('div',{class:'seg',role:'group','aria-label':'Tempo odsłuchu'});
           [0.5,0.75,1].forEach(r=>{ const b=h('button',{'aria-pressed':String(r===1)}, r===1?'normalnie':'×'+r); b.onclick=()=>{ player.playbackRate=r; player.preservesPitch=true; rates.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b))); }; rates.appendChild(b); });
@@ -346,7 +364,7 @@ const ViewPiosenki = {
         h('section',{style:'margin-top:18px'},
           h('h2',null,'Notatki'), fNotes),
         h('div',{class:'row',style:'margin-top:22px'},
-          h('button',{class:'btn danger',onclick:async()=>{ if(!confirm(`Usunąć „${s.title}"? Tego nie da się cofnąć.`)) return; await DB.delSong(s.id); songs=songs.filter(x=>x.id!==s.id); currentId=songs[0]&&songs[0].id; drawList(); drawSong(); }},'Usuń piosenkę'))
+          h('button',{class:'btn danger',onclick:async()=>{ if(!confirm(`Usunąć „${s.title}"? Tego nie da się cofnąć.`)) return; if(saveFor===s){ clearTimeout(saveT); saveFor=null; } await DB.delSong(s.id); songs=songs.filter(x=>x.id!==s.id); currentId=songs[0]&&songs[0].id; drawList(); drawSong(); }},'Usuń piosenkę'))
       );
       drawSheet(); drawBuilder(); drawAudio(); drawPdf();
       if(focusTitle){ fTitle.focus(); fTitle.select(); }

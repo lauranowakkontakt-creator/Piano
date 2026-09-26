@@ -39,7 +39,8 @@ także na innym komputerze. Nagrań audio nie ma w kopii, bo trzymasz je jako os
 ```
 
 - akordy oddzielone spacją, `|` to kreska taktowa, `[Nazwa]` na początku linii to etykieta
-- rozumie: `C  Am  F#m  Bb  G7  Cmaj7  Bdim  B°  Gsus4  Cadd9  C/E`
+- rozumie: `C  Am  F#m  Bb  G7  Cmaj7  Cm7  C6  C9  C5  Bdim  B°  Bm7b5  Caug  Gsus4  C7sus4  D2  Cadd9  Gadd4  C/E`
+- słowo, które nie jest akordem (np. `Every`), zostaje na szaro jako „nie rozpoznano" — appka go nie gra
 
 ## Dla programisty (Claude Code)
 
@@ -49,3 +50,18 @@ także na innym komputerze. Nagrań audio nie ma w kopii, bo trzymasz je jako os
 - `js/db.js` to IndexedDB (piosenki i audio), a `prefs` w `js/ui.js` to localStorage na drobne ustawienia.
 - Widoki są w `js/views/*.js`, a router (`#zakladka/podstrona`) w `js/app.js`.
 - Pełny opis wymagań: `docs/BRIEF.md`.
+
+### Testy
+
+Sama appka nie potrzebuje instalacji — `package.json` jest tylko do testów.
+
+```
+npm install                 # raz: Playwright (testy w przeglądarce)
+npx playwright install chromium   # raz, jeśli nie masz jeszcze przeglądarki Playwrighta
+npm test                    # testy logiki: teoria, parser akordów, tonacje, przejścia, dźwięk
+npm run test:e2e            # testy w prawdziwym Chromium: wszystkie zakładki, piosenki, kopia, przejścia, trener, druk
+npm run check               # czy każdy skrypt z index.html istnieje i się parsuje
+```
+
+- `test/unit/` ładuje zwykłe skrypty appki do `node:vm` (jak w przeglądarce, bez modułów), więc testy sprawdzają dokładnie ten kod, który działa u Laury.
+- `test/e2e/` otwiera `index.html` z dysku (jak dwuklik) i łapie każdy błąd JS na każdej zakładce.

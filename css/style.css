@@ -376,7 +376,7 @@ footer.site{margin-top:50px;color:var(--faint);font-size:.8rem}
 /* ---------- przejścia ---------- */
 .seqbox{display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:44px;padding:10px;border-radius:12px;border:1px dashed var(--line2);background:var(--bg2)}
 .seqbox .chord-chip{display:inline-flex;align-items:center;gap:4px}
-.seqbox .chord-chip .rm{margin-left:4px;color:var(--faint);font-weight:400;cursor:pointer;padding:0 2px}
+.seqbox .chord-chip .rm{margin-left:4px;color:var(--faint);font-weight:400;cursor:pointer;padding:0 2px;background:none;border:0;font:inherit;line-height:1}
 .seqbox .chord-chip .rm:hover{color:var(--bad)}
 .keymark{font-size:.72rem;font-weight:600;color:var(--tonic);padding:2px 8px;border-radius:999px;border:1px dashed var(--tonic-dim)}
 .palette .nodes{grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:6px}
