@@ -93,7 +93,19 @@ const CHORD_SUFFIX = new RegExp('^(?:' +
 ')?(?<sus>sus2|sus4|sus)?(?:add(?<add>2|4|9|11))?$');
 const TRIAD_IV = {maj:[0,4,7],min:[0,3,7],dim:[0,3,6],aug:[0,4,8],sus2:[0,2,7],sus4:[0,5,7],pow:[0,7]};
 
+/* Polski zapis: H to nasze B. Próbujemy najpierw zwykłego odczytu, a dopiero
+   gdy nic z niego nie wyjdzie — z H zamienionym na B. Dzięki temu „Hm" to Bm,
+   „C/H" to C/B, a „Hello" dalej jest zwykłym słowem, nie akordem.
+   Uwaga: „B" zostaje międzynarodowym B (czyli polskim H), bo tak zapisane są
+   piosenki w appce i w większości śpiewników online. */
 function parseChord(txt){
+  const s = String(txt??'').trim();
+  const direct = parseChordStrict(s);
+  if(direct) return direct;
+  const alt = s.replace(/^H/,'B').replace(/\/H$/,'/B');   // tylko wielkie H: „hm" to wtrącenie, nie akord
+  return alt===s ? null : parseChordStrict(alt);
+}
+function parseChordStrict(txt){
   const raw = String(txt??'').trim().replace(/♯/g,'#').replace(/♭/g,'b');
   const m = raw.match(/^([A-Ga-g])([#b]?)(.*)$/);
   if(!m) return null;
@@ -205,3 +217,8 @@ function majorScalePcs(rootPc){
   for(let i=0;i<6;i++){ p=(p+MAJOR_STEPS[i])%12; out.push(p); }
   return out;
 }
+
+/* ---------- tonacje piosenek: 12 durowych + 12 molowych ----------
+   Mieszka tu (a nie w widoku Piosenki), bo korzystają z tego także Pętla i Przejścia. */
+const SONG_KEYS = [...ALL_KEYS.map(k=>({v:k,l:keyLabel(k)})), ...ALL_KEYS.map(k=>({v:REL_MINOR[k]+'m', l:fmt(REL_MINOR[k]).toLowerCase()+'-moll'}))];
+function keyNameLabel(v){ const f=SONG_KEYS.find(k=>k.v===v); return f?f.l:v; }

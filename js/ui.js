@@ -30,7 +30,16 @@ function ring(el, cls='ring'){
 const WHITE_PCS = [0,2,4,5,7,9,11];
 function isBlack(m){ return !WHITE_PCS.includes(((m%12)+12)%12); }
 function kbdSVG(opts){
-  const from = opts.from ?? 60, to = opts.to ?? 83;
+  let from = opts.from ?? 60, to = opts.to ?? 83;
+  // klawiatura musi pokazać wszystko, o co ją poprosiliśmy: akordy z dodaną kwartą
+  // albo noną (np. Gadd4) wychodzą ponad domyślne C4–B5, a bez tego dźwięk znikał z obrazka
+  const zaznaczone = Object.keys(opts.marks || {}).map(Number).filter(Number.isFinite);
+  if(zaznaczone.length){
+    from = Math.min(from, ...zaznaczone);
+    to = Math.max(to, ...zaznaczone);
+    while(isBlack(from)) from--;        // skrajne klawisze muszą być białe, inaczej czarny nie ma się o co oprzeć
+    while(isBlack(to)) to++;
+  }
   const W=22, H=92, BW=13, BH=56;
   const whites=[]; for(let m=from;m<=to;m++) if(!isBlack(m)) whites.push(m);
   const width = whites.length*W+1;

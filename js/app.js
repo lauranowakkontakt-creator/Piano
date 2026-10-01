@@ -3,6 +3,8 @@ const ROUTES = {
   teoria: ViewTeoria,
   gamy: ViewGamy,
   nuty: ViewNuty,
+  trening: ViewTrening,
+  klawisze: ViewKlawisze,
   piosenki: ViewPiosenki,
   wizualizacja: ViewWizualizacja,
   petla: ViewPetla,

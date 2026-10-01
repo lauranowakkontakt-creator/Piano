@@ -167,6 +167,217 @@ test('Nuty: trener liczy poprawne odpowiedzi', async () => {
   await close();
 });
 
+test('Trening: runda do końca, licznik serii i zapis postępów', async () => {
+  const {page, errors, close} = await open('#trening');
+  await page.waitForSelector('.tr-scena');
+  // krótka runda, żeby test nie trwał wiecznie
+  await page.click('.tr-scena .seg button:has-text("8 pytań")');
+  await page.click('button:has-text("Zaczynam rundę")');
+
+  let dobre = 0;
+  for(let n=1; n<=8; n++){
+    await page.waitForSelector('.tr-prompt');
+    assert.match(await page.textContent('.tr-pasek'), new RegExp(`^\\s*${n} / 8`));
+    if(await page.locator('.tr-answers button').count()){
+      await page.click('.tr-answers button');                       // pierwsza z brzegu
+    }else{
+      await page.click('.kbd rect[data-midi="60"]');                // ćwiczenie „zagraj akord"
+      await page.click('button:has-text("sprawdzam")');
+    }
+    const fb = await page.textContent('.tr-fb');
+    assert.ok(/Dobrze|To było/.test(fb), 'brak oceny odpowiedzi: '+fb);
+    if(/Dobrze/.test(fb)) dobre++;
+    await page.click('.tr-fb button');                              // dalej / podsumowanie
+  }
+  const koniec = await page.textContent('.tr-scena');
+  assert.match(koniec, new RegExp(`${dobre} z 8`));
+  // seria dni i dzisiejszy licznik policzyły 8 odpowiedzi
+  assert.match(await page.textContent('.tr-top'), /8\/20/);
+  assert.match(await page.textContent('.tr-top'), /1\s*dzień z rzędu/);
+
+  // postępy przeżywają przeładowanie appki
+  await page.reload();
+  await page.waitForSelector('.tr-top');
+  assert.match(await page.textContent('.tr-top'), /8\/20/);
+  assert.equal(await page.evaluate(() => {
+    const s = JSON.parse(localStorage.getItem('harmonia.trening.srs'));
+    return s.totals.asked;
+  }), 8);
+  assert.deepEqual(errors, []);
+  await close();
+});
+
+test('Trening: zły stan w pamięci przeglądarki nie wywraca zakładki', async () => {
+  const {page, errors, close} = await open('#gamy');
+  await page.evaluate(() => {
+    localStorage.setItem('harmonia.trening.srs', '{"items":"bzdura","streak":7}');
+    localStorage.setItem('harmonia.trening.opts', '{"kinds":["nie-ma-takiego"],"key":"Xyz","dlugosc":"dużo"}');
+  });
+  await page.reload();
+  await go(page, '#trening');
+  await page.waitForSelector('.tr-scena');
+  await page.click('button:has-text("Zaczynam rundę")');
+  await page.waitForSelector('.tr-prompt');
+  assert.ok(await page.locator('.tr-answers button, .kbd').count());
+  assert.deepEqual(errors, []);
+  await close();
+});
+
+test('Trening: wyłączone rodzaje znikają z puli, a statystyki można wyczyścić', async () => {
+  const {page, errors, close} = await open('#trening');
+  await page.waitForSelector('.tr-kind');
+  const ile = await page.locator('.tr-kind').count();
+  // zostaw tylko interwały
+  for(let i=0; i<ile; i++){
+    const b = page.locator('.tr-kind').nth(i);
+    if(!/Interwał/.test(await b.textContent()) && await b.getAttribute('aria-pressed')==='true') await b.click();
+  }
+  assert.equal(await page.locator('.tr-kind[aria-pressed="true"]').count(), 1);
+  assert.equal(await page.locator('.tr-row').count(), 1, 'statystyki pokazują tylko włączone rodzaje');
+  await page.click('button:has-text("Zaczynam rundę")');
+  await page.waitForSelector('.tr-prompt');
+  assert.match(await page.textContent('.tr-kind-tag'), /Interwał/);
+  await page.click('.tr-answers button');
+  await page.click('button:has-text("wyczyść postępy")');
+  assert.match(await page.textContent('.tr-top'), /0\/20/);
+  assert.deepEqual(errors, []);
+  await close();
+});
+
+test('Klawisze: wyklikany akord dostaje nazwę, przewrót i rolę w tonacji', async () => {
+  const {page, errors, close} = await open('#klawisze');
+  await page.waitForSelector('.kl-kbd svg');
+  for(const m of [64, 67, 72]) await page.click(`.kl-kbd svg rect[data-midi="${m}"]`);
+  const txt = await page.textContent('.kl-tablica');
+  assert.match(txt, /C\/E/);
+  assert.match(txt, /1\. przewrót/);
+  assert.match(txt, /stopień I/);
+  assert.match(txt, /tonika/);
+  assert.equal(await page.locator('.kl-kbd svg rect.on-x').count(), 3, 'trzy klawisze podświetlone');
+
+  // drugi klik na ten sam klawisz puszcza dźwięk
+  await page.click('.kl-kbd svg rect[data-midi="72"]');
+  assert.equal(await page.locator('.kl-kbd svg rect.on-x').count(), 2);
+  await page.click('button:has-text("wyczyść")');
+  assert.equal(await page.locator('.kl-kbd svg rect.on-x').count(), 0);
+  assert.match(await page.textContent('.kl-tablica'), /Zagraj coś/);
+
+  // ta sama rzecz widziana z innej tonacji
+  for(const m of [67, 71, 74]) await page.click(`.kl-kbd svg rect[data-midi="${m}"]`);
+  assert.match(await page.textContent('.kl-tablica'), /stopień V/, 'G w C-dur to V');
+  await page.click('.kl-status ~ .card .seg button[data-v="G"]');
+  assert.match(await page.textContent('.kl-tablica'), /stopień I/, 'to samo G w G-dur to I');
+  // dominanta wtrącona: spoza gamy, ale z nazwą
+  await page.click('button:has-text("wyczyść")');
+  await page.click('.kl-status ~ .card .seg button[data-v="C"]');
+  for(const m of [62, 66, 69]) await page.click(`.kl-kbd svg rect[data-midi="${m}"]`);
+  assert.match(await page.textContent('.kl-tablica'), /spoza gamy.*V\/V|V\/V/, 'D w C-dur to dominanta do dominanty');
+  assert.deepEqual(errors, []);
+  await close();
+});
+
+test('Klawisze: gra się też klawiaturą komputera, a Shift działa jak pedał', async () => {
+  const {page, errors, close} = await open('#klawisze');
+  await page.waitForSelector('.kl-kbd svg');
+  await page.keyboard.down('z');
+  assert.equal(await page.locator('.kl-kbd svg rect.on-x').count(), 1);
+  await page.keyboard.up('z');
+  assert.equal(await page.locator('.kl-kbd svg rect.on-x').count(), 0, 'puszczenie klawisza zdejmuje dźwięk');
+
+  await page.keyboard.down('Shift');
+  for(const k of ['z','c','b']){ await page.keyboard.down(k); await page.keyboard.up(k); }
+  await page.keyboard.up('Shift');
+  assert.match(await page.textContent('.kl-tablica'), /\bC\b/, 'pedał utrzymał cały akord C');
+  assert.equal(await page.locator('.kl-kbd svg rect.on-x').count(), 3);
+  assert.deepEqual(errors, []);
+  await close();
+});
+
+test('Klawisze: pianino przez MIDI gra na ekranie', async () => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', e => errors.push(e.message));
+  await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+  // udawane pianino: podstawiamy samo Web MIDI, reszta appki działa normalnie
+  await page.addInitScript(() => {
+    const input = {name:'Udawane pianino', onmidimessage:null};
+    window.__midi = d => input.onmidimessage && input.onmidimessage({data:d});
+    navigator.requestMIDIAccess = async () => ({inputs:new Map([['a', input]]), onstatechange:null});
+  });
+  await page.goto(APP + '#klawisze');
+  await page.waitForSelector('.kl-kbd svg');
+  await page.click('button:has-text("Podłącz pianino")');
+  await page.waitForSelector('button:has-text("Podłączone")');
+  assert.match(await page.textContent('.kl-status'), /Udawane pianino/);
+
+  for(const n of [57, 60, 64, 67]) await page.evaluate(n => window.__midi([0x90, n, 100]), n);
+  assert.match(await page.textContent('.kl-tablica'), /Am7/);
+  assert.equal(await page.locator('.kl-kbd svg rect.on-x').count(), 4);
+
+  await page.evaluate(() => { [57,60,64,67].forEach(n => window.__midi([0x80, n, 0])); });
+  assert.equal(await page.locator('.kl-kbd svg rect.on-x').count(), 0, 'puszczone klawisze gasną');
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
+test('Klawisze: gama z palcowaniem i ćwiczenie „zagraj gamę"', async () => {
+  const {page, errors, close} = await open('#klawisze');
+  await page.waitForSelector('.kl-scale svg');
+  await page.click('.kl-scale, .kl-scaleinfo');   // nic nie robi, ale upewnia się, że sekcja jest
+  assert.match(await page.textContent('.kl-scaleinfo'), /kciuk podkłada się pod dłoń na F/);
+
+  // F-dur: kciuk omija B♭
+  await page.click('.card:has(.kl-scale) .seg button[data-v="F"]');
+  const info = await page.textContent('.kl-scaleinfo');
+  assert.match(info, /start palcem 1/);
+  assert.equal((await page.locator('.kl-palec').allTextContents()).join(' '), '1F 2G 3A 4B♭ 1C 2D 3E 4F');
+
+  // ćwiczenie: zagraj całą gamę w górę i w dół bez pomyłki
+  await page.click('button:has-text("zagraj gamę")');
+  assert.match(await page.textContent('.kl-run'), /Teraz: F/);
+  const seq = await page.evaluate(() => scaleRunSequence('F', 'rh'));
+  for(const m of seq) await page.click(`.kl-scale svg rect[data-midi="${m}"]`);
+  assert.match(await page.textContent('.kl-run'), /bez pomyłki/);
+  assert.deepEqual(errors, []);
+  await close();
+});
+
+test('Trening: akord zagrany na pianinie MIDI sam odpowiada na zadanie', async () => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', e => errors.push(e.message));
+  await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+  await page.addInitScript(() => {
+    const input = {name:'Udawane pianino', onmidimessage:null};
+    window.__midi = d => input.onmidimessage && input.onmidimessage({data:d});
+    navigator.requestMIDIAccess = async () => ({inputs:new Map([['a', input]]), onstatechange:null});
+  });
+  // podłączamy pianino w zakładce Klawisze — połączenie ma przeżyć zmianę zakładki
+  await page.goto(APP + '#klawisze');
+  await page.click('button:has-text("Podłącz pianino")');
+  await page.waitForSelector('button:has-text("Podłączone")');
+
+  await go(page, '#trening');
+  await page.waitForSelector('.tr-scena');
+  // zostaw tylko ćwiczenie „zagraj akord", żeby na pewno takie wypadło
+  for(const b of await page.locator('.tr-kind').all())
+    if(!/Zagraj akord/.test(await b.textContent()) && await b.getAttribute('aria-pressed') === 'true') await b.click();
+  await page.click('button:has-text("Zaczynam rundę")');
+  await page.waitForSelector('.kbd');
+  assert.match(await page.textContent('.tr-scena'), /Pianino podłączone/);
+
+  const cel = await page.evaluate(() => {
+    const nazwa = document.querySelector('.tr-prompt b').textContent.replace('♯','#').replace('♭','b');
+    return parseChord(nazwa).pcs.map(p => 60 + p);
+  });
+  for(const n of cel) await page.evaluate(n => window.__midi([0x90, n, 100]), n);
+  assert.match(await page.textContent('.tr-fb'), /Dobrze/, 'zagrany akord zalicza zadanie');
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
 test('Druk: ściągawki dla zaznaczonych gam', async () => {
   const {page, errors, close} = await open('#druk');
   await page.waitForSelector('.sheet');
@@ -176,6 +387,57 @@ test('Druk: ściągawki dla zaznaczonych gam', async () => {
   assert.match(await page.textContent('#view'), /Gama D♭-dur/);
   assert.deepEqual(errors, []);
   await close();
+});
+
+test('Klawiatura pokazuje wszystkie dźwięki akordu, także te ponad C6', async () => {
+  const {page, errors, close} = await open('#gamy');
+  const wynik = await page.evaluate(() => ['Gadd4','C9','Cadd9','Bm7','C','Fmaj7','C6/9'].map(txt => {
+    const c = parseChord(txt);
+    const marks = chordMarks(c.pcs, 't');
+    const svg = kbdSVG({from:60, to:83, marks});
+    return {txt, chcemy:Object.keys(marks).length, mamy:svg.querySelectorAll('rect.on-t').length};
+  }));
+  for(const w of wynik) assert.equal(w.mamy, w.chcemy, `${w.txt}: narysowano ${w.mamy} z ${w.chcemy} dźwięków`);
+  assert.deepEqual(errors, []);
+  await close();
+});
+
+test('Gamy i Druk pokazują palcowanie wybranej gamy', async () => {
+  const {page, errors, close} = await open('#gamy');
+  await page.waitForSelector('.kl-palce');
+  assert.match(await page.textContent('#view'), /kciuk podkłada się pod dłoń na F/);
+  await page.click('.keybar button[data-k="Bb"]');
+  const txt = await page.textContent('#view');
+  assert.match(txt, /start palcem 4/, 'B♭ w prawej zaczyna się palcem 4');
+  // B♭ ma dwa przełożenia w prawej (na C i F) i dwa w lewej
+  assert.equal(await page.locator('.kl-palec.pod').count(), 4, 'podświetlone przełożenia w obu rękach');
+
+  await go(page, '#druk');
+  await page.waitForSelector('.sheet');
+  const arkusz = await page.textContent('.sheet:has-text("Gama C-dur")');
+  assert.match(arkusz, /Palcowanie gamy/);
+  assert.match(arkusz, /kciuk podkłada się pod dłoń na F/);
+  assert.equal(await page.locator('.sheet:has-text("Gama C-dur") .fing-k').count(), 16, 'osiem palców na rękę');
+  assert.deepEqual(errors, []);
+  await close();
+});
+
+test('Na telefonie żadna zakładka nie przewija się w bok', async () => {
+  const context = await browser.newContext({viewport:{width:390, height:844}});
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', e => errors.push(e.message));
+  await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+  await page.goto(APP);
+  for(const hsh of await page.evaluate(() => Object.keys(ROUTES))){
+    await go(page, '#' + hsh);
+    await page.waitForFunction(() => document.getElementById('view').children.length > 0);
+    await page.waitForTimeout(150);
+    const w = await page.evaluate(() => ({doc:document.documentElement.scrollWidth, win:window.innerWidth}));
+    assert.ok(w.doc <= w.win + 1, `#${hsh}: strona szeroka na ${w.doc} px przy ekranie ${w.win} px`);
+  }
+  assert.deepEqual(errors, []);
+  await context.close();
 });
 
 test('Pętla: baza akordów, układanie, granie w kółko i stop', async () => {

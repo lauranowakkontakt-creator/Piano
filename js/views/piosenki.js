@@ -1,8 +1,7 @@
 /* Zakładka „Piosenki" — własne utwory: akordy, tonacja, notatki, audio.
    Dane w IndexedDB (u Ciebie w przeglądarce). */
 
-const SONG_KEYS = [...ALL_KEYS.map(k=>({v:k,l:keyLabel(k)})), ...ALL_KEYS.map(k=>({v:REL_MINOR[k]+'m', l:fmt(REL_MINOR[k]).toLowerCase()+'-moll'}))];
-function keyNameLabel(v){ const f=SONG_KEYS.find(k=>k.v===v); return f?f.l:v; }
+/* SONG_KEYS i keyNameLabel są w js/theory.js — korzysta z nich też Pętla i Przejścia. */
 
 /* Piosenka z pliku kopii: bierzemy tylko znane pola i właściwe typy.
    Zła tonacja → C (inaczej coś by się wysypało albo pokazało obcy tekst jako HTML). */

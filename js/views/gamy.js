@@ -12,6 +12,7 @@ const ViewGamy = {
     const neigh = h('div',{class:'neigh'});
     const kbdCap = h('div',{class:'cap'});
     const kbdHold = h('div');
+    const fingBox = h('div');
 
     root.append(
       h('header',null,
@@ -37,6 +38,11 @@ const ViewGamy = {
         h('div',{class:'kbd-panel'}, kbdCap, kbdHold)
       ),
       h('section',null,
+        h('div',{class:'sechead'}, h('h2',null,'Sama gama — którym palcem'),
+          h('div',{class:'row'}, h('span',{class:'hint'},'standardowe palcowanie'),
+            h('a',{class:'btn small',href:'#klawisze'},'Poćwicz na klawiaturze →'))),
+        h('div',{class:'card'}, fingBox)),
+      h('section',null,
         h('div',{class:'sechead'}, h('h2',null,'Gotowe przejścia'), h('div',{class:'row'}, h('span',{class:'hint'},'▶ zagra całą sekwencję'), loopToggle(), h('a',{class:'btn small',href:'#petla'},'Własna pętla →'))),
         progs
       ),
@@ -58,6 +64,31 @@ const ViewGamy = {
       kbdHold.innerHTML='';
       kbdHold.appendChild(kbdSVG({from:60,to:83,marks:chordMarks(ch.pcs,ch.fn),names:chordNames(ch.notes,ch.pcs),
         onKey:(m,r)=>{ playMidi(m); flashKey(r.ownerSVGElement,m); }}));
+    }
+
+    // palcowanie gamy: te same dane co w zakładce Klawisze i na wydruku
+    function drawFingering(){
+      fingBox.innerHTML='';
+      if(!FINGERING[current]){
+        fingBox.append(h('p',{class:'hint'},'Dla tej gamy nie mam jeszcze palcowania.'));
+        return;
+      }
+      [['rh','Prawa ręka'],['lh','Lewa ręka']].forEach(([hand,label])=>{
+        const kroki = scaleFingering(current, hand);
+        fingBox.append(
+          h('div',{class:'row',style:'gap:10px;align-items:center;margin-bottom:4px'},
+            h('b',{style:'min-width:92px'},label),
+            h('p',{class:'kl-palce',style:'flex:1'}, ...kroki.map(k=>
+              h('span',{class:'kl-palec'+(k.thumbUnder?' pod':''),role:'button',tabindex:'0',
+                title:`${fmt(k.note)} — palec ${k.finger} (${k.fingerName})`,
+                onclick:()=>playMidi(k.midi)},
+                h('b',null,String(k.finger)), h('small',null,fmt(k.note))))),
+            h('button',{class:'play','aria-label':'Zagraj gamę '+label.toLowerCase(),
+              onclick:()=>playSeq(scaleRunSequence(current, hand), .26, .4)},'▶')),
+          h('p',{class:'hint',style:'margin:0 0 12px'}, fingeringTip(current, hand)));
+      });
+      fingBox.append(h('p',{class:'faint',style:'font-size:.84rem;margin:0'},
+        'Żółty palec to miejsce przełożenia ręki — kciuk podchodzi pod dłoń (albo palec przechodzi nad kciukiem). Tam gra się najwolniej.'));
     }
 
     function update(){
@@ -87,6 +118,8 @@ const ViewGamy = {
           playBtn(p.name, ()=>p.deg.map((di,i)=>({pcs:chords[di].pcs, el:seq.children[i], onStart:()=>showKbd(chords[di])})), 0.78)
         ));
       });
+
+      drawFingering();
 
       const sc=KEYS[current];
       neigh.innerHTML='';

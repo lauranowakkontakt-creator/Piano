@@ -28,6 +28,18 @@ function sheetForKey(k){
       kb));
   });
   sheet.append(tb);
+  // palcowanie gamy — po to, żeby kartka stojąca na pianinie mówiła też, czym grać
+  if(FINGERING[k]){
+    const rzad = (hand, label) => h('div',{class:'fing-row'},
+      h('b',null, label),
+      ...scaleFingering(k, hand).map(x => h('span',{class:'fing-k' + (x.thumbUnder ? ' pod' : '')},
+        h('i',null, String(x.finger)), fmt(x.note))));
+    sheet.append(
+      h('h3',{style:'margin:16px 0 4px;font-family:Fraunces,serif;color:#111'},'Palcowanie gamy'),
+      h('div',{class:'fing'}, rzad('rh','Prawa'), rzad('lh','Lewa'),
+        h('p',{class:'foot',style:'margin-top:6px'}, fingeringTip(k,'rh') + ' ' + fingeringTip(k,'lh') +
+          ' Obramowany palec to miejsce przełożenia ręki.')));
+  }
   const progs = h('div',{class:'progs'});
   PROGS.forEach(p=>{
     progs.append(h('div',null, h('span',{class:'pn'},p.name), h('b',null,p.deg.map(d=>fmt(chords[d].name)).join('  →  '))));

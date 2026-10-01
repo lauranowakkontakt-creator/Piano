@@ -73,7 +73,7 @@ function spellChord(c){
   return out;
 }
 const LETTER_PC_L = {C:0,D:2,E:4,F:5,G:7,A:9,B:11};
-function chordLabel(txt){ return fmt(String(txt).replace(/dim$/,'°')); }
+function chordLabel(txt){ return fmt(String(txt).replace(/dim(?=7?$)/,'°')); }
 
 /* transpozycja zapisu akordu o n półtonów (zachowuje końcówkę i bas) */
 function transposeChord(txt, n){

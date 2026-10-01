@@ -125,7 +125,7 @@ test('parseChord: bas po ukośniku', () => {
 });
 
 test('parseChord: słowa i śmieci to nie akordy', () => {
-  for(const t of ['', ' ', 'Every', 'Hello', 'H', 'Cxyz', 'Am7x', 'X7', '|', '[Refren]', 'C/X', null, undefined]){
+  for(const t of ['', ' ', 'Every', 'Hello', 'Hej', 'hm', 'Cxyz', 'Am7x', 'X7', '|', '[Refren]', 'C/X', null, undefined]){
     assert.equal(parseChord(t), null, `„${t}" nie powinno być akordem`);
   }
 });
@@ -201,4 +201,14 @@ test('parseSongText: etykiety, kreski taktowe, nierozpoznane słowa', () => {
 test('majorScalePcs: gama z dowolnego dźwięku', () => {
   assert.deepEqual(plain(majorScalePcs(0)), [0, 2, 4, 5, 7, 9, 11]);
   for(const k of ALL_KEYS) assert.deepEqual(plain(majorScalePcs(PC[k])), plain(KEYS[k].map(n => PC[n])), k);
+});
+
+test('parseChord: polskie H to międzynarodowe B', () => {
+  for(const [pl, intl] of [['H','B'], ['Hm','Bm'], ['H7','B7'], ['Hmaj7','Bmaj7'], ['Hm7b5','Bm7b5'], ['C/H','C/B']]){
+    assert.deepEqual(plain(parseChord(pl)), plain(parseChord(intl)), pl);
+    assert.equal(parseChord(pl).text, intl, `${pl} zapisuje się dalej jako ${intl}`);
+  }
+  // „B" zostaje B (polskie H), a nie B-flat — tak jak w śpiewnikach międzynarodowych
+  assert.equal(parseChord('B').rootPc, 11);
+  assert.equal(parseChord('Bb').rootPc, 10);
 });

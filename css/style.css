@@ -316,6 +316,9 @@ audio{width:100%;margin-top:6px}
 .sheet{
   background:#fff;color:#111;border-radius:10px;padding:26px 28px;margin-top:18px;
   font-family:Inter,sans-serif;box-shadow:0 10px 40px rgba(0,0,0,.4);
+  /* podgląd wydruku bywa szerszy niż telefon — niech przewija się sam arkusz,
+     a nie cała strona (na papierze i tak liczy się @media print) */
+  max-width:100%;overflow-x:auto;
 }
 .sheet h2{font-family:Fraunces,serif;font-size:1.7rem;margin:0 0 2px;color:#111}
 .sheet .sub{color:#555;font-size:.85rem;margin:0 0 12px}
@@ -336,6 +339,14 @@ audio{width:100%;margin-top:6px}
 .sheet .progs{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;margin-top:14px;font-size:.9rem}
 .sheet .progs div b{font-family:"JetBrains Mono",monospace}
 .sheet .progs .pn{color:#666;font-size:.78rem;display:block}
+.sheet .fing{font-size:.85rem;color:#333}
+.sheet .fing-row{display:flex;align-items:center;gap:4px;margin:4px 0}
+.sheet .fing-row > b{min-width:52px;font-size:.8rem}
+.sheet .fing-k{display:inline-flex;flex-direction:column;align-items:center;min-width:34px;
+  padding:2px 0;border:1px solid #ddd;border-radius:6px;font-size:.72rem;color:#555}
+.sheet .fing-k i{font-style:normal;font-family:"JetBrains Mono",monospace;font-size:.95rem;color:#111}
+.sheet .fing-k.pod{border-color:#a16207;border-width:2px}
+.sheet .fing-k.pod i{color:#a16207}
 .sheet .foot{margin-top:12px;font-size:.75rem;color:#777}
 .sheet .song-line{font-family:"JetBrains Mono",monospace;font-size:1.05rem;margin:6px 0;display:flex;flex-wrap:wrap;gap:10px}
 .sheet .song-line .ll{font-family:Inter,sans-serif;font-size:.72rem;color:#777;width:100%;margin-bottom:-6px}
@@ -343,15 +354,12 @@ audio{width:100%;margin-top:6px}
 footer.site{margin-top:50px;color:var(--faint);font-size:.8rem}
 
 @media (max-width:760px){
-  .lesson-layout,.songs-layout{grid-template-columns:minmax(0,1fr)}
+  .lesson-layout,.songs-layout{grid-template-columns:1fr}
   .lesson-nav{position:static;flex-direction:row;overflow-x:auto;scrollbar-width:none}
   .lesson-nav button{white-space:nowrap}
   .lesson-nav button .ck{margin-left:4px}
   .grid2{grid-template-columns:1fr}
   .brand{display:none}
-}
-@media screen and (max-width:760px){
-  .lesson table,.sheet table{display:block;overflow-x:auto}
 }
 @media (max-width:520px){
   .node .name{font-size:1.35rem}
@@ -368,6 +376,7 @@ footer.site{margin-top:50px;color:var(--faint);font-size:.8rem}
 /* ---------- wydruk ---------- */
 @media print{
   @page{size:A4;margin:12mm}
+  .sheet{overflow:visible}
   body{background:#fff!important;color:#111}
   .topbar,.no-print,footer.site{display:none!important}
   .wrap{padding:0;max-width:none}
@@ -447,3 +456,92 @@ footer.site{margin-top:50px;color:var(--faint);font-size:.8rem}
 .preset:hover{border-color:var(--line2)}
 .preset .pname{font-weight:600}
 @media (max-width:860px){ .loop-layout{grid-template-columns:minmax(0,1fr)} }
+
+/* ---------- trening ---------- */
+.tr-top{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.tr-kafel{display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:14px;border:1px solid var(--line);background:var(--bg2)}
+.tr-kafel .ic{font-size:1.5rem;line-height:1}
+.tr-kafel b{font-family:"JetBrains Mono",monospace;font-size:1.35rem;display:block;line-height:1.1}
+.tr-kafel .lbl{color:var(--muted);font-size:.82rem}
+.tr-kafel .sub{display:block;color:var(--faint);font-size:.74rem}
+.tr-bar{grid-column:1/-1;height:5px;border-radius:3px;background:var(--surface2);overflow:hidden}
+.tr-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--sub),var(--tonic));transition:width .35s}
+
+.tr-scena{min-height:260px}
+.tr-pasek{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:.86rem;margin-bottom:10px}
+.tr-pasek .btn{margin-left:auto}
+.tr-dots{display:flex;gap:4px}
+.tr-dots i{width:7px;height:7px;border-radius:50%;background:var(--line2);display:block}
+.tr-dots i.done{background:var(--sub)}
+.tr-dots i.now{background:var(--tonic);box-shadow:0 0 10px var(--tonic-glow)}
+.tr-kind-tag{margin:0;color:var(--faint);font-size:.76rem;text-transform:uppercase;letter-spacing:.09em}
+.tr-prompt{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:1.5rem;margin:2px 0 14px}
+.tr-prompt b{font-family:"JetBrains Mono",monospace;color:var(--tonic)}
+.trainer .tr-answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-top:14px}
+.tr-answers button{font-family:Inter,sans-serif!important;font-size:.98rem!important;padding:14px 10px!important}
+.tr-answers button:disabled{cursor:default;opacity:.75}
+.tr-answers button:disabled.good{opacity:1}
+.tr-fb{margin-top:14px;min-height:1px}
+.tr-fb.good .tr-verdict{color:var(--ok)}
+.tr-fb.bad .tr-verdict{color:var(--bad)}
+.tr-verdict{font-weight:700;margin:0 0 4px}
+.tr-why{margin:0;color:var(--muted);font-size:.92rem}
+.tr-lista{margin:0;padding-left:20px;color:var(--muted);font-size:.9rem}
+
+.tr-kinds{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;margin-bottom:10px}
+.tr-kind{text-align:left;cursor:pointer;padding:9px 12px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--muted)}
+.tr-kind b{display:block;color:var(--text);font-size:.92rem}
+.tr-kind span{font-size:.78rem}
+.tr-kind[aria-pressed="true"]{border-color:var(--sub);background:var(--surface2)}
+.tr-kind[aria-pressed="false"]{opacity:.45}
+
+.tr-stats{margin-top:26px}
+.tr-rows{display:grid;gap:6px}
+.tr-row{display:grid;grid-template-columns:150px 1fr 54px 48px;gap:10px;align-items:center;font-size:.86rem}
+.tr-row .nm{color:var(--muted)}
+.tr-row .ba{height:7px;border-radius:4px;background:var(--surface2);overflow:hidden}
+.tr-row .ba i{display:block;height:100%;background:var(--sub)}
+.tr-row .num{text-align:right;font-size:.8rem}
+
+@media (max-width:720px){
+  .tr-top{grid-template-columns:1fr 1fr}
+  .tr-row{grid-template-columns:110px 1fr 48px 42px}
+  .tr-prompt{font-size:1.25rem}
+}
+.tr-hint{margin:8px 0 0;color:var(--sub);font-size:.88rem}
+
+/* ---------- klawisze (żywe pianino) ---------- */
+.kl-status{margin-bottom:12px}
+.kl-kbd{padding:10px 2px 2px}
+.kl-kbd .kbd{min-width:720px}
+.kl-tablica{min-height:116px;margin:12px 0 4px}
+.kl-nuty{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.kl-nuta{font-family:"JetBrains Mono",monospace;font-size:1rem;padding:3px 9px;border-radius:9px;
+  border:1px solid var(--line2);background:var(--surface2)}
+.kl-nuta small{color:var(--faint);margin-left:3px;font-size:.72rem}
+.kl-akord{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.kl-akord b{font-family:Fraunces,Georgia,serif;font-size:2rem;line-height:1.1}
+.kl-opis{color:var(--muted);font-size:.88rem}
+.kl-rola{margin:6px 0 0;font-size:.95rem;color:var(--muted)}
+.kl-rola b{color:var(--text)}
+.kl-scaleinfo{margin:12px 0 0}
+.kl-palce{display:flex;gap:4px;flex-wrap:wrap;margin:0}
+.kl-palec{display:flex;flex-direction:column;align-items:center;min-width:40px;padding:5px 2px;
+  border-radius:9px;border:1px solid var(--line);background:var(--bg2)}
+.kl-palec b{font-family:"JetBrains Mono",monospace;font-size:1.05rem}
+.kl-palec small{color:var(--muted);font-size:.74rem}
+.kl-palec.pod{border-color:var(--dom);color:var(--dom)}
+.kl-palec.pod b{color:var(--dom)}
+.kl-run{margin-top:12px}
+.kl-runbar{height:5px;border-radius:3px;background:var(--surface2);overflow:hidden;margin-bottom:8px}
+.kl-runbar i{display:block;height:100%;background:var(--sub);transition:width .2s}
+.kl-next{margin:0;font-size:.95rem}
+.kl-next .hint{margin-left:10px}
+.kl-miss{color:var(--bad)}
+.kl-verdict{font-weight:700;margin:0 0 8px}
+.kl-verdict.good{color:var(--ok)}
+.kl-verdict.bad{color:var(--dom)}
+.kl-scale{display:flex;justify-content:center}
+.kl-scale .kbd{min-width:0;max-width:600px}
+.kbd rect.cel{stroke:var(--sub);stroke-width:3}
