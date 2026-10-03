@@ -422,6 +422,69 @@ test('Gamy i Druk pokazują palcowanie wybranej gamy', async () => {
   await close();
 });
 
+test('Na telefonie wszystkie zakładki są w zasięgu jednego dotknięcia', async () => {
+  const context = await browser.newContext({viewport:{width:390, height:844}, isMobile:true, hasTouch:true});
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', e => errors.push(e.message));
+  await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+  await page.goto(APP + '#petla');
+  await page.waitForSelector('.navbtn');
+
+  // w pasku mieści się tylko kilka zakładek — menu musi pokazywać wszystkie
+  const wPasku = await page.evaluate(() => {
+    const bar = document.querySelector('.tabs').getBoundingClientRect();
+    return [...document.querySelectorAll('.tabs a')]
+      .filter(a => { const r = a.getBoundingClientRect(); return r.left >= bar.left - 1 && r.right <= bar.right + 1; }).length;
+  });
+  const wszystkich = await page.locator('.tabs a').count();
+  assert.ok(wPasku < wszystkich, 'test ma sens tylko wtedy, gdy pasek nie mieści wszystkiego');
+
+  await page.click('.navbtn');
+  assert.equal(await page.locator('.navmenu').isVisible(), true);
+  assert.equal(await page.locator('.navgrupa a').count(), wszystkich, 'menu pokazuje każdą zakładkę');
+  // każda pozycja ma opis
+  for(const a of await page.locator('.navgrupa a').all()) assert.ok((await a.locator('span').textContent()).length > 15);
+  // zaznaczona jest ta, na której jesteśmy
+  assert.equal(await page.locator('.navgrupa a[aria-current="true"]').getAttribute('data-id'), 'petla');
+
+  await page.click('.navgrupa a[data-id="trening"]');
+  await page.waitForSelector('.tr-scena');
+  assert.equal(await page.locator('.navmenu').isVisible(), false, 'menu zamyka się po wyborze');
+  // pasek sam przewinął się do aktywnej zakładki
+  await page.waitForTimeout(500);
+  assert.equal(await page.evaluate(() => {
+    const a = document.querySelector('.tabs a[aria-current="page"]'), bar = document.querySelector('.tabs').getBoundingClientRect();
+    const r = a.getBoundingClientRect();
+    return r.left >= bar.left - 2 && r.right <= bar.right + 2;
+  }), true, 'aktywna zakładka jest widoczna w pasku');
+
+  // Escape zamyka menu
+  await page.click('.navbtn');
+  await page.keyboard.press('Escape');
+  assert.equal(await page.locator('.navmenu').isVisible(), false);
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
+test('Pętla: na telefonie „Graj" widać bez przewijania', async () => {
+  const context = await browser.newContext({viewport:{width:390, height:844}, isMobile:true, hasTouch:true});
+  const page = await context.newPage();
+  const errors = [];
+  page.on('pageerror', e => errors.push(e.message));
+  await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+  await page.goto(APP + '#petla');
+  await page.waitForSelector('.player');
+  const y = await page.evaluate(() => document.querySelector('.player .btn.primary').getBoundingClientRect().top);
+  assert.ok(y > 0 && y < 700, `przycisk „Graj" na wysokości ${Math.round(y)} px — ma być widoczny od razu`);
+  // wybór stylu jest schowany na telefonie, ale po dotknięciu się otwiera
+  assert.equal(await page.evaluate(() => document.querySelector('.stylewrap').open), false);
+  await page.click('.stylewrap summary');
+  assert.equal(await page.locator('.stylebtn').first().isVisible(), true);
+  assert.deepEqual(errors, []);
+  await context.close();
+});
+
 test('Na telefonie żadna zakładka nie przewija się w bok', async () => {
   const context = await browser.newContext({viewport:{width:390, height:844}});
   const page = await context.newPage();
@@ -486,7 +549,7 @@ test('Pętla: gotowe pętle da się filtrować po kategoriach', async () => {
   // (zaznaczony chip ma jeszcze strzałki przesuwania, stąd czyszczenie tekstu)
   const chipy = (await page.locator('.seqbox .chord-chip').allTextContents()).map(t => t.replace(/[‹›×]/g, ''));
   assert.deepEqual(chipy, ['D','A','Bm','G']);
-  assert.match(await page.textContent('.card .hint'), /D-dur/);
+  assert.match(await page.textContent('.petla-status'), /D-dur/);
 
   await page.click('button:has-text("Wszystko")');
   assert.equal(await page.locator('.preset').count(), wszystkie);

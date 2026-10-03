@@ -34,9 +34,21 @@ Dane (piosenki, nagrania) na stronie są osobne od tych w pliku otwieranym z dys
 | **Druk** | Ściągawki A4 do postawienia na pianinie: jedna strona na gamę + ściąga ogólna. Każdą piosenkę też da się wydrukować. „Zapisz jako PDF” jest w oknie drukowania. |
 | **Źródła** | Strony i kanały do dalszej nauki, także po polsku. |
 
+## Na telefonie
+
+W pasku na górze mieści się tylko kilka zakładek — reszta jest pod przyciskiem **☰** (pełna lista z opisem, co gdzie jest).
+Pasek sam przewija się do zakładki, na której jesteś.
+
+W stopce widać **numer wersji** plików. Jeśli coś wygląda dziwnie, porównaj go z komputerem — jeśli się różni,
+telefon trzyma starą wersję w pamięci podręcznej (przytrzymaj przycisk odświeżania → „Wczytaj ponownie bez pamięci podręcznej").
+Przy publikacji każdy skrypt dostaje znacznik `?v=…`, więc normalnie nie powinno się to zdarzać.
+
 ## Twoje dane
 
 Piosenki i nagrania są zapisane **tylko w tej przeglądarce na tym komputerze**. Nie ma logowania ani chmury.
+Teksty piosenek objętych prawami autorskimi **nie są** w tym repozytorium — wklejasz je u siebie w zakładce Piosenki
+(albo wczytujesz z pliku `.json` przyciskiem „Wczytaj"). Zostają tylko w Twojej przeglądarce.
+
 Rób co jakiś czas **Kopię zapasową** (przycisk w zakładce Piosenki). Pobiera plik `.json`, a przyciskiem „Wczytaj” przywracasz piosenki,
 także na innym komputerze. Nagrań audio nie ma w kopii, bo trzymasz je jako osobne pliki.
 
@@ -87,6 +99,8 @@ albo klawiaturą komputera (`z s x d c v g b h n j m` to oktawa od C, `Shift` tr
 - `js/detect.js` rozpoznaje akord z granych dźwięków (odwrotność `parseChord`): wzór akordu, bas, przewrót, akordy bez kwinty.
 - `js/fingering.js` to standardowe palcowania 12 gam durowych (obie ręce) plus logika ćwiczenia „zagraj gamę".
 - `js/patterns.js` to style akompaniamentu: z chwytu i liczby uderzeń robi listę zdarzeń {dźwięki, kiedy, jak długo}; `playChordSeq` w `js/ui.js` umie je zagrać zamiast zwykłego uderzenia w akord.
+- `js/nav.js` to menu „wszystkie zakładki" i przewijanie paska — opisy zakładek są tam w jednym miejscu.
+- `scripts/wersja.js` dokleja `?v=<skrót treści>` do skryptów przy publikacji (workflow robi to na kopii, repo zostaje czyste).
 - `js/lyrics.js` to parser tekstu z akordami w nawiasach (plus transpozycja samych akordów).
 - `js/midi.js` to Web MIDI w dwóch warstwach: czysty `parseMidiMessage` i `HeldNotes` (z pedałem), a nad nimi `MidiIn`. `midiSubscribe` daje jedno połączenie z pianinem na całą appkę, więc zmiana zakładki go nie zrywa. Bez pianina wszystko działa jak wcześniej.
 - `js/drills.js` to generatory zadań do Treningu: każde zadanie opisuje, co zagrać, a dźwięk odpala dopiero widok. Dzięki temu całą zawartość ćwiczeń sprawdzają testy w node.

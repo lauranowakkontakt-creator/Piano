@@ -30,4 +30,19 @@ async function route(){
   else { const a=root.querySelector('article'); if(a && a.getBoundingClientRect().top<0) a.scrollIntoView({block:'start'}); }
 }
 window.addEventListener('hashchange', route);
+
+/* ---------- nawigacja: menu „wszystko", przewijanie paska ---------- */
+const tabsBar = document.querySelector('.tabs');
+const odswiezCienie = navShadows(tabsBar);
+const menu = navMenu();
+document.getElementById('nav-btn').replaceWith(menu.btn);
+document.querySelector('.topbar').append(menu.panel);
+window.addEventListener('hashchange', ()=>{ navScrollToCurrent(tabsBar); navMarkCurrent(menu.panel); });
+
+/* wersja plików — żeby dało się sprawdzić, co naprawdę siedzi w przeglądarce na telefonie */
+const metaW = document.querySelector('meta[name="harmonia-wersja"]');
+const polW = document.getElementById('wersja');
+if(metaW && polW) polW.textContent = '· wersja ' + metaW.content;
+
 route();
+requestAnimationFrame(()=>{ navScrollToCurrent(tabsBar); if(odswiezCienie) odswiezCienie(); });

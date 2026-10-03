@@ -5,7 +5,8 @@ const vm = require('node:vm');
 
 const ROOT = path.resolve(__dirname, '..');
 const html = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
-const scripts = [...html.matchAll(/<script src="([^"]+)"><\/script>/g)].map(m => m[1]);
+// ?v=… dokleja skrypt scripts/wersja.js przy publikacji — przy sprawdzaniu je pomijamy
+const scripts = [...html.matchAll(/<script src="([^"]+)"><\/script>/g)].map(m => m[1].split('?')[0]);
 let bad = 0;
 for(const src of scripts){
   const file = path.join(ROOT, src);

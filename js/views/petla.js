@@ -81,7 +81,7 @@ const ViewPetla = {
       prefs.set('petla.countIn',countIn); prefs.set('petla.style',style); prefs.set('petla.cat',presetCat); };
 
     const chipsBox = h('div',{class:'seqbox'});
-    const status = h('p',{class:'hint',style:'margin:10px 0 0'});
+    const status = h('p',{class:'hint petla-status',style:'margin:10px 0 0'});
     const ringHold = h('div',{class:'viz-wrap'});
     const nowEl = h('div',{class:'now'});
     const beatsEl = h('div',{class:'beats','aria-hidden':'true'});
@@ -94,6 +94,7 @@ const ViewPetla = {
     const catBox = h('div',{class:'row',style:'gap:6px;flex-wrap:wrap;margin-bottom:10px'});
     const styleBox = h('div',{class:'stylebar'});
     const styleInfo = h('p',{class:'hint',style:'margin:8px 0 0'});
+    const styleSummary = h('span');
     const input = h('input',{id:'petla-add',class:'mono',placeholder:'wpisz akord, np. F#m7, Bb, E7, C/E','aria-label':'Dopisz akord'});
 
     const playB = h('button',{class:'btn primary big'},'▶ Graj w kółko');
@@ -103,10 +104,20 @@ const ViewPetla = {
     const countB = h('button',{type:'button',class:'btn small ghost','aria-pressed':String(countIn),title:'Jeden takt odliczania przed startem'},'⏱ odliczanie');
 
     root.append(
-      h('header',{style:'margin-bottom:18px'},
+      h('header',{style:'margin-bottom:14px'},
         h('p',{class:'kicker'},'graj w kółko'),
         h('h1',null,'Twoja ', h('em',null,'pętla')),
-        h('p',{class:'lead'},'Wybierz akordy z bazy albo gotową pętlę. Appka ułoży je w koło, pokaże, jak trzymać ręce, żeby przejścia były gładkie, i będzie grać w kółko w Twoim tempie. Grasz razem z nią.')),
+        h('p',{class:'lead',style:'margin-bottom:0'},'Wciśnij ', h('b',null,'Graj w kółko'),' i graj razem z appką. Niżej zmienisz akordy, styl grania i tempo.')),
+      // najpierw duży przycisk i to, co teraz gra — żeby na telefonie nie trzeba było przewijać
+      h('div',{class:'player card'},
+        h('div',{class:'row'}, playB,
+          h('label',{class:'row',style:'gap:6px',for:'petla-bpm'}, h('span',{class:'muted'},'tempo'), bpmIn, bpmOut, h('span',{class:'hint'},'BPM')),
+          h('span',{class:'row',style:'gap:6px'}, h('span',{class:'muted'},'akord trwa'), beatsSel),
+          clickToggle(), countB),
+        h('div',{class:'nowrow'}, nowEl, beatsEl),
+        h('details',{class:'stylewrap',open:window.innerWidth > 720},
+          h('summary',null, h('b',null,'Jak to zagrać'), h('span',{class:'hint'}, styleSummary)),
+          styleBox, styleInfo)),
       h('div',{class:'card'},
         h('div',{class:'sechead',style:'margin-bottom:8px'}, h('h2',null,'Akordy w pętli'),
           h('div',{class:'row'},
@@ -118,15 +129,6 @@ const ViewPetla = {
         chipsBox,
         h('div',{class:'row',style:'margin-top:10px'}, input, h('button',{class:'btn',onclick:addFromInput},'+ dodaj')),
         status),
-      h('div',{class:'player card'},
-        h('div',{class:'sechead',style:'margin:0 0 8px'}, h('h2',{style:'font-size:1rem'},'Jak to zagrać'),
-          h('span',{class:'hint'},'ten sam akord, różny rytm')),
-        styleBox, styleInfo,
-        h('div',{class:'row',style:'margin-top:12px'}, playB,
-          h('label',{class:'row',style:'gap:6px',for:'petla-bpm'}, h('span',{class:'muted'},'tempo'), bpmIn, bpmOut, h('span',{class:'hint'},'BPM')),
-          h('span',{class:'row',style:'gap:6px'}, h('span',{class:'muted'},'akord trwa'), beatsSel),
-          clickToggle(), countB),
-        h('div',{class:'nowrow'}, nowEl, beatsEl)),
       h('div',{class:'loop-layout'},
         ringHold,
         h('div',null,
@@ -321,6 +323,7 @@ const ViewPetla = {
         styleBox.append(b);
       });
       const st = PLAY_STYLE_BY_ID[style];
+      styleSummary.textContent = st.name.toLowerCase();
       styleInfo.innerHTML='';
       styleInfo.append(h('b',null,st.reka), ' ', st.opis,
         st.lubiBeats && st.lubiBeats!==beats

@@ -27,6 +27,8 @@ jobs:
         run: |
           mkdir _site
           cp -r index.html css js vendor _site/
+      - name: Znacznik wersji przy plikach (przeglądarka nie pomiesza starych z nowymi)
+        run: node scripts/wersja.js _site
       - uses: actions/upload-pages-artifact@v3
         with:
           path: _site

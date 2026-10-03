@@ -48,7 +48,7 @@ button{font:inherit}
   padding-top:env(safe-area-inset-top,0px);
 }
 .topbar .in{max-width:1040px;margin:0 auto;padding:10px clamp(12px,3vw,24px);display:flex;align-items:center;gap:14px}
-.brand{font-family:Fraunces,serif;font-weight:900;font-size:1.25rem;letter-spacing:-.01em;white-space:nowrap}
+.brand{flex:0 0 auto;font-family:Fraunces,serif;font-weight:900;font-size:1.25rem;letter-spacing:-.01em;white-space:nowrap}
 .brand em{color:var(--tonic);font-style:italic}
 .tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1}
 .tabs::-webkit-scrollbar{display:none}
@@ -575,3 +575,41 @@ footer.site{margin-top:50px;color:var(--faint);font-size:.8rem}
 .sheet .lyr-label{color:#111;font-size:1rem}
 .sheet .lyr-ch{color:#444;font-size:.78rem}
 .sheet .lyr-ch.t{color:#be185d} .sheet .lyr-ch.s{color:#0f766e} .sheet .lyr-ch.d{color:#a16207}
+
+/* ---------- menu „wszystkie zakładki" ---------- */
+.navbtn{
+  flex:0 0 auto;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--text);
+  border-radius:10px;padding:6px 10px;font-size:1.05rem;line-height:1;
+}
+.navbtn[aria-expanded="true"]{background:var(--surface2);border-color:var(--line2)}
+.navmenu{
+  position:absolute;left:0;right:0;top:100%;z-index:30;
+  background:var(--bg2);border-bottom:1px solid var(--line2);box-shadow:0 20px 40px rgba(0,0,0,.5);
+  padding:14px clamp(12px,3vw,24px) 18px;max-height:78vh;overflow-y:auto;
+}
+.navsekcja + .navsekcja{margin-top:14px}
+.navsekcja h3{margin:0 0 6px;font-size:.74rem;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);font-weight:600}
+.navgrupa{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:6px}
+.navgrupa a{
+  display:block;text-decoration:none;color:var(--muted);padding:9px 12px;border-radius:11px;
+  border:1px solid var(--line);background:var(--surface);
+}
+.navgrupa a b{display:block;color:var(--text);font-size:.95rem;font-weight:600}
+.navgrupa a span{font-size:.78rem;line-height:1.35;display:block;margin-top:1px}
+.navgrupa a[aria-current="true"]{border-color:var(--tonic);background:var(--surface2)}
+.topbar{position:sticky}
+.tabs{position:relative}
+.tabs.ma-prawo{-webkit-mask-image:linear-gradient(90deg,#000 80%,transparent);mask-image:linear-gradient(90deg,#000 80%,transparent)}
+.tabs.ma-lewo.ma-prawo{-webkit-mask-image:linear-gradient(90deg,transparent,#000 12% 80%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12% 80%,transparent)}
+.tabs.ma-lewo:not(.ma-prawo){-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%);mask-image:linear-gradient(90deg,transparent,#000 12%)}
+@media (max-width:560px){
+  /* na telefonie liczy się nawigacja, nie logo */
+  .brand{display:none}
+  .topbar .in{gap:8px}
+}
+.stylewrap{margin-top:12px;border-top:1px solid var(--line);padding-top:10px}
+.stylewrap > summary{cursor:pointer;list-style:none;display:flex;gap:8px;align-items:baseline}
+.stylewrap > summary::-webkit-details-marker{display:none}
+.stylewrap > summary::before{content:'▸';color:var(--faint);font-size:.8rem}
+.stylewrap[open] > summary::before{content:'▾'}
+.stylewrap > summary b{font-size:.95rem}
