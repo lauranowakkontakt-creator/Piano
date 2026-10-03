@@ -39,13 +39,13 @@ test('guessKey: zgaduje tonację po akordach', () => {
 });
 
 test('sanitizeSong: przyjmuje poprawną piosenkę', () => {
-  const s = plain(sanitizeSong({id: 'x1', title: 'T', artist: 'A', key: 'Am', bpm: 120, beats: 2, chords: 'Am', notes: 'n', audioName: 'a.mp3', updated: 5, junk: 1}));
-  assert.deepEqual(s, {id: 'x1', title: 'T', artist: 'A', key: 'Am', bpm: 120, beats: 2, chords: 'Am', notes: 'n', audioName: 'a.mp3', updated: 5});
+  const s = plain(sanitizeSong({id: 'x1', title: 'T', artist: 'A', key: 'Am', bpm: 120, beats: 2, chords: 'Am', lyrics: '[Am]tekst', notes: 'n', audioName: 'a.mp3', updated: 5, junk: 1}));
+  assert.deepEqual(s, {id: 'x1', title: 'T', artist: 'A', key: 'Am', bpm: 120, beats: 2, chords: 'Am', lyrics: '[Am]tekst', notes: 'n', audioName: 'a.mp3', updated: 5});
 });
 
 test('sanitizeSong: odrzuca śmieci i naprawia złe pola', () => {
   for(const bad of [null, undefined, 5, 'x', [], {}, {id: ''}, {id: '  '}, {id: {}}]) assert.equal(sanitizeSong(bad), null, JSON.stringify(bad));
-  const s = plain(sanitizeSong({id: 7, title: 42, key: '<img src=x onerror=alert(1)>', bpm: 'szybko', beats: 99, chords: ['C'], notes: null}));
-  assert.deepEqual(s, {id: '7', title: '', artist: '', key: 'C', bpm: 90, beats: 4, chords: '', notes: ''});
+  const s = plain(sanitizeSong({id: 7, title: 42, key: '<img src=x onerror=alert(1)>', bpm: 'szybko', beats: 99, chords: ['C'], lyrics: {}, notes: null}));
+  assert.deepEqual(s, {id: '7', title: '', artist: '', key: 'C', bpm: 90, beats: 4, chords: '', lyrics: '', notes: ''});
   assert.equal(sanitizeSong({id: 'a', key: 'toString'}).key, 'C');
 });

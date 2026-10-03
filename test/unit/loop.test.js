@@ -4,7 +4,7 @@ const {load, plain} = require('../helpers/load');
 
 const L = load('js/theory.js', 'js/audio.js', 'js/ui.js', 'js/views/piosenki.js', 'js/loop.js');
 const {parseChord: P, chordType, relation, commonTones, smoothVoicing, loopVoicings, inversionName, suggestNext,
-  orderLoop, guessLoopKey, transposeChord, spellChord, LOOP_PRESETS, LOOP_ROOTS, LOOP_KINDS, CHORD_TYPES} = L;
+  orderLoop, guessLoopKey, transposeChord, spellChord, LOOP_PRESETS, LOOP_CATS, LOOP_ROOTS, LOOP_KINDS, CHORD_TYPES} = L;
 const chords = s => s.split(' ').map(P);
 
 test('rodzaje akordów (kolory jak na obrazkach)', () => {
@@ -104,8 +104,18 @@ test('transpozycja zachowuje rodzaj akordu i bas', () => {
 });
 
 test('gotowe pętle są poprawne', () => {
+  const kategorie = new Set(LOOP_CATS.map(c => c.id));
+  const nazwy = new Set();
   for(const p of LOOP_PRESETS){
-    assert.ok(p.chords.length >= 3, p.name);
-    for(const t of p.chords) assert.ok(P(t), `${p.name}: ${t}`);
+    assert.ok(p.chords.length >= 2, `${p.name}: pętla z jednego akordu to nie pętla`);
+    for(const t of p.chords) assert.ok(P(t), `${p.name}: nie rozumiem akordu ${t}`);
+    assert.ok(p.desc && p.desc.length > 10, `${p.name}: brak opisu`);
+    assert.ok(kategorie.has(p.cat), `${p.name}: nieznana kategoria ${p.cat}`);
+    assert.ok(!nazwy.has(p.name), `powtórzona nazwa: ${p.name}`);
+    nazwy.add(p.name);
   }
+  // każda kategoria z paska ma co pokazać (poza „wszystko")
+  for(const c of LOOP_CATS) if(c.id !== 'wszystko')
+    assert.ok(LOOP_PRESETS.some(p => p.cat === c.id), `pusta kategoria: ${c.name}`);
+  assert.ok(LOOP_PRESETS.length >= 30, 'baza gotowych pętli: ' + LOOP_PRESETS.length);
 });

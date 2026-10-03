@@ -101,9 +101,32 @@ async function sheetSong(id){
     });
     sheet.append(line);
   });
+  // tekst z akordami — to jest to, co stoi na pulpicie pianina
+  if(s.lyrics && s.lyrics.trim()){
+    sheet.append(h('h3',{style:'font-family:Fraunces,serif;color:#111;margin:16px 0 6px'},'Tekst'));
+    const box = h('div',{class:'lyr'});
+    parseLyrics(s.lyrics).forEach(l=>{
+      if(l.empty){ box.append(h('div',{class:'lyr-przerwa'})); return; }
+      if(l.label){ box.append(h('div',{class:'lyr-label'}, l.label)); return; }
+      const line = h('div',{class:'lyr-line'});
+      l.parts.forEach(part=>{
+        const kol = h('span',{class:'lyr-part'});
+        kol.append(part.chord
+          ? h('span',{class:'lyr-ch '+functionIn(part.chord, s.key).fn}, fmt(part.chord.text))
+          : h('span',{class:'lyr-ch pusty','aria-hidden':'true'}));
+        kol.append(h('span',{class:'lyr-tx'}, part.text || ' '));
+        line.append(kol);
+      });
+      box.append(line);
+    });
+    sheet.append(box);
+  }
+
   // chwyty użytych akordów
   const used=[]; const seen=new Set();
-  parseSongText(s.chords).forEach(l=>l.tokens.forEach(t=>{ if(t.chord && !seen.has(t.chord.text)){ seen.add(t.chord.text); used.push(t.chord); } }));
+  const dodaj = c => { if(c && !seen.has(c.text)){ seen.add(c.text); used.push(c); } };
+  parseSongText(s.chords).forEach(l=>l.tokens.forEach(t=>dodaj(t.chord)));
+  lyricsChords(s.lyrics).forEach(dodaj);
   if(used.length){
     sheet.append(h('h3',{style:'font-family:Fraunces,serif;color:#111;margin:16px 0 6px'},'Chwyty'));
     const grid = h('div',{style:'display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px 14px'});

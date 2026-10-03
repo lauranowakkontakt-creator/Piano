@@ -73,8 +73,12 @@ const ViewPetla = {
     let bpm = prefs.get('petla.bpm', 80);
     let beats = prefs.get('petla.beats', 4);
     let countIn = prefs.get('petla.countIn', true);
+    let style = prefs.get('petla.style', 'blok');
+    if(!PLAY_STYLE_BY_ID[style]) style = 'blok';
+    let presetCat = prefs.get('petla.cat', 'wszystko');
     let sel = 0;
-    const save = ()=>{ prefs.set('petla.seq',seq); prefs.set('petla.bpm',bpm); prefs.set('petla.beats',beats); prefs.set('petla.countIn',countIn); };
+    const save = ()=>{ prefs.set('petla.seq',seq); prefs.set('petla.bpm',bpm); prefs.set('petla.beats',beats);
+      prefs.set('petla.countIn',countIn); prefs.set('petla.style',style); prefs.set('petla.cat',presetCat); };
 
     const chipsBox = h('div',{class:'seqbox'});
     const status = h('p',{class:'hint',style:'margin:10px 0 0'});
@@ -87,6 +91,9 @@ const ViewPetla = {
     const nextBox = h('div');
     const dbBox = h('div',{class:'chorddb scrollx'});
     const presetBox = h('div',{class:'presets'});
+    const catBox = h('div',{class:'row',style:'gap:6px;flex-wrap:wrap;margin-bottom:10px'});
+    const styleBox = h('div',{class:'stylebar'});
+    const styleInfo = h('p',{class:'hint',style:'margin:8px 0 0'});
     const input = h('input',{id:'petla-add',class:'mono',placeholder:'wpisz akord, np. F#m7, Bb, E7, C/E','aria-label':'Dopisz akord'});
 
     const playB = h('button',{class:'btn primary big'},'▶ Graj w kółko');
@@ -112,7 +119,10 @@ const ViewPetla = {
         h('div',{class:'row',style:'margin-top:10px'}, input, h('button',{class:'btn',onclick:addFromInput},'+ dodaj')),
         status),
       h('div',{class:'player card'},
-        h('div',{class:'row'}, playB,
+        h('div',{class:'sechead',style:'margin:0 0 8px'}, h('h2',{style:'font-size:1rem'},'Jak to zagrać'),
+          h('span',{class:'hint'},'ten sam akord, różny rytm')),
+        styleBox, styleInfo,
+        h('div',{class:'row',style:'margin-top:12px'}, playB,
           h('label',{class:'row',style:'gap:6px',for:'petla-bpm'}, h('span',{class:'muted'},'tempo'), bpmIn, bpmOut, h('span',{class:'hint'},'BPM')),
           h('span',{class:'row',style:'gap:6px'}, h('span',{class:'muted'},'akord trwa'), beatsSel),
           clickToggle(), countB),
@@ -126,7 +136,7 @@ const ViewPetla = {
         h('span',{style:'color:#fff'},'biała obwódka = palec zostaje')),
       h('section',null, h('div',{class:'sechead'}, h('h2',null,'Co pasuje dalej'), h('span',{class:'hint'},'po zaznaczonym akordzie · kliknij, żeby dodać')), nextBox),
       h('section',null, h('div',{class:'sechead'}, h('h2',null,'Baza akordów'), h('span',{class:'hint'},'kolumny idą po kole kwintowym · kliknij, żeby dodać')), dbBox),
-      h('section',null, h('div',{class:'sechead'}, h('h2',null,'Gotowe pętle'), h('span',{class:'hint'},'kliknij, żeby wczytać')), presetBox),
+      h('section',null, h('div',{class:'sechead'}, h('h2',null,'Gotowe pętle'), h('span',{class:'hint'},'kliknij, żeby wczytać')), catBox, presetBox),
       h('div',{class:'box tip',style:'margin-top:26px'}, h('p',null,'Jak ćwiczyć: najpierw sama lewa ręka (bas), potem sama prawa w pokazanych przewrotach, potem razem. Zacznij od 60 BPM i 4 uderzeń na akord. Kiedy pętla idzie bez zatrzymania 4 razy pod rząd — przyspiesz o 5 BPM.')));
 
     input.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); addFromInput(); } });
@@ -165,6 +175,7 @@ const ViewPetla = {
       const step = 60/bpm*beats;
       playB.textContent='■ Stop'; playB.classList.add('on');
       playChordSeq(chords.map((c,i)=>({pcs:c.pcs, bassPc:c.bassPc, voiced:voices[i], el:chipsBox.querySelectorAll('.chord-chip')[i],
+        events: style==='blok' ? null : stylePattern(style, {right:voices[i], bass:voicing(c.pcs,c.bassPc)[0], beats}),
         onStart:(idx,cycle)=>{ showChord(idx); if(view.nodes[idx]) pulse(view.nodes[idx]); lightArrow(idx);
           if(view.center) view.center.textContent = `↻ runda ${cycle+1}`; }})), step,
         ()=>{ playB.textContent='▶ Graj w kółko'; playB.classList.remove('on'); lightArrow(-1); drawBeats(-1,-1);
@@ -301,9 +312,33 @@ const ViewPetla = {
       });
       dbBox.append(tb);
     }
+    function drawStyles(){
+      styleBox.innerHTML='';
+      PLAY_STYLES.forEach(st=>{
+        const b = h('button',{type:'button',class:'stylebtn','aria-pressed':String(st.id===style),title:st.opis},
+          h('b',null,st.name), h('span',null,st.krotko));
+        b.onclick=()=>{ style=st.id; save(); drawStyles(); if(isPlaying()) start(); };
+        styleBox.append(b);
+      });
+      const st = PLAY_STYLE_BY_ID[style];
+      styleInfo.innerHTML='';
+      styleInfo.append(h('b',null,st.reka), ' ', st.opis,
+        st.lubiBeats && st.lubiBeats!==beats
+          ? h('button',{class:'btn small',style:'margin-left:8px',onclick:()=>{ beats=st.lubiBeats; beatsSel.value=String(beats); save(); drawBeats(-1,-1); draw(); if(isPlaying()) start(); }},
+              `ustaw ${st.lubiBeats} uderzenia na akord`)
+          : null);
+    }
     function drawPresets(){
       presetBox.innerHTML='';
-      LOOP_PRESETS.forEach(p=>{
+      catBox.innerHTML='';
+      LOOP_CATS.forEach(c=>{
+        const ile = c.id==='wszystko' ? LOOP_PRESETS.length : LOOP_PRESETS.filter(p=>p.cat===c.id).length;
+        if(!ile) return;
+        const b = h('button',{type:'button',class:'btn small'+(c.id===presetCat?' primary':' ghost')}, c.name, h('small',{style:'opacity:.6;margin-left:5px'},String(ile)));
+        b.onclick=()=>{ presetCat=c.id; save(); drawPresets(); };
+        catBox.append(b);
+      });
+      LOOP_PRESETS.filter(p=>presetCat==='wszystko' || p.cat===presetCat).forEach(p=>{
         const row = h('div',{class:'seq',style:'margin:6px 0 0'}, ...p.chords.map(n=>{ const t=chordType(parseChord(n)); return h('b',{class:'ty-'+t},chordLabel(n)); }));
         const b=h('button',{type:'button',class:'preset card'}, h('div',{class:'pname'},p.name), h('div',{class:'hint'},p.desc), row);
         b.onclick=()=>{ seq=p.chords.slice(); sel=0; changed(); window.scrollTo({top:0,behavior:'smooth'}); };
@@ -317,6 +352,6 @@ const ViewPetla = {
     };
     document.addEventListener('keydown',onSpace);
 
-    drawDb(); drawPresets(); draw();
+    drawDb(); drawStyles(); drawPresets(); draw();
   }
 };

@@ -13,7 +13,8 @@ function sanitizeSong(raw){
   const num = (v,min,max,d) => { const n=Number(v); return Number.isFinite(n) && n>=min && n<=max ? n : d; };
   const key = SONG_KEYS.some(k=>k.v===raw.key) ? raw.key : 'C';
   const out = {id, title:str(raw.title), artist:str(raw.artist), key,
-    bpm:num(raw.bpm,20,300,90), beats:num(raw.beats,1,16,4), chords:str(raw.chords), notes:str(raw.notes)};
+    bpm:num(raw.bpm,20,300,90), beats:num(raw.beats,1,16,4), chords:str(raw.chords),
+    lyrics:str(raw.lyrics), notes:str(raw.notes)};
   if(typeof raw.audioName==='string') out.audioName = raw.audioName;
   if(Number.isFinite(raw.updated)) out.updated = raw.updated;
   return out;
@@ -39,6 +40,19 @@ function guessKey(chords){
 /* Piosenki Laury — akordy przepisane z jej PDF-ów (bez tekstu: tekst możesz
    dołączyć jako PDF w piosence). */
 const SEED_SONGS = [
+{ id:'seed-kotek', title:'Wlazł kotek na płotek', artist:'ludowa', key:'C', bpm:104, beats:2,
+  chords:`[Zwrotka] C G7 C | C G7 C
+[Refren] F C G7 C | C G7 C`,
+  lyrics:`[Zwrotka]
+[C]Wlazł kotek na [G7]płotek i [C]mruga,
+[C]ładna to [G7]piosenka, nie[C]długa.
+
+[Refren]
+Nie [F]długa, nie [C]krótka, lecz [G7]w sam [C]raz,
+[C]zaśpiewaj [G7]koteczku jeszcze [C]raz.`,
+  notes:`Przykład, jak działa tekst z akordami: akord w nawiasie kwadratowym staje nad następną sylabą.
+Trzy akordy — C, F i G7 — i cała piosenka. Dobra na pierwszy raz: lewa ręka sam bas, prawa akord.
+Możesz ją spokojnie usunąć, kiedy nie będzie już potrzebna.`},
 { id:'seed-widze-dom', title:'Widzę dom', artist:'K. Kukier, O. Juraszus, Z. Muzalewska', key:'D', bpm:76, beats:2,
   chords:`[Intro] Bm7 Asus4 A | G | Bm7 Asus4 A | G
 [Zwrotka — 1. linia] D G/D D Bm7 A Gadd4
@@ -150,7 +164,7 @@ const ViewPiosenki = {
     }
 
     async function newSong(){
-      const s={id:uid(), title:'Nowa piosenka', artist:'', key:'C', bpm:90, beats:4, chords:'', notes:''};
+      const s={id:uid(), title:'Nowa piosenka', artist:'', key:'C', bpm:90, beats:4, chords:'', lyrics:'', notes:''};
       await DB.putSong(s); songs.unshift(s); currentId=s.id; drawList(); drawSong(true);
     }
     async function exportAll(){
@@ -196,6 +210,8 @@ const ViewPiosenki = {
       const fBpm = h('input',{type:'number',min:40,max:200,value:s.bpm||90});
       const fBeats = h('select',null, ...[1,2,3,4,8].map(n=>h('option',{value:n,selected:(s.beats||4)==n}, n+' '+(n===1?'uderzenie':n<5?'uderzenia':'uderzeń'))));
       const fChords = h('textarea',{spellcheck:'false',class:'mono',style:'min-height:130px;font-size:.95rem',placeholder:'[Zwrotka] C G Am F\n[Refren] F G C C'}, s.chords||'');
+      const fLyrics = h('textarea',{spellcheck:'false',style:'min-height:150px',
+        placeholder:'[Zwrotka]\n[C]Wlazł kotek na [G7]płotek i mruga,\nładna to [C]piosenka nie[G7]długa.'}, s.lyrics||'');
       const fNotes = h('textarea',{placeholder:'Twoje notatki: co ćwiczyć, gdzie jest trudno, jak grać…'}, s.notes||'');
 
       fTitle.oninput=()=>{ s.title=fTitle.value; save(); };
@@ -204,7 +220,9 @@ const ViewPiosenki = {
       fBpm.oninput=()=>{ s.bpm=+fBpm.value||90; save(); };
       fBeats.onchange=()=>{ s.beats=+fBeats.value; save(); };
       fChords.oninput=()=>{ s.chords=fChords.value; save(); drawSheet(); };
+      fLyrics.oninput=()=>{ s.lyrics=fLyrics.value; save(); drawLyrics(); };
       fNotes.oninput=()=>{ s.notes=fNotes.value; save(); };
+      fLyrics.style.minHeight = Math.min(700, 120 + (s.lyrics||'').split('\n').length*22)+'px';
       fNotes.style.minHeight = Math.min(600, 90 + (s.notes||'').split('\n').length*22)+'px';
 
       /* --- arkusz z akordami --- */
@@ -255,6 +273,50 @@ const ViewPiosenki = {
           }
         }
         if(junk.length) analysis.append(h('div',{style:'margin-top:6px'},'Nie rozpoznano: '+junk.join(', ')+' — pisz akordy jak C, Am, F#m, Bb7, G/B.'));
+      }
+
+      /* --- tekst z akordami nad słowami --- */
+      const lyrBox = h('div',{class:'lyr'});
+      const playLyr = h('button',{class:'btn primary'},'▶ Zagraj z tekstu');
+      playLyr.onclick=()=>{
+        if(playLyr.dataset.on){ stopSeq(); return; }
+        const items=[];
+        lyrBox.querySelectorAll('.lyr-ch[data-c]').forEach(el=>{ const c=parseChord(el.dataset.c); if(c) items.push({pcs:c.pcs,bassPc:c.bassPc,el}); });
+        if(!items.length) return;
+        playLyr.dataset.on='1'; playLyr.textContent='■ Stop';
+        playChordSeq(items, (60/(s.bpm||90))*(s.beats||4), ()=>{ delete playLyr.dataset.on; playLyr.textContent='▶ Zagraj z tekstu'; },
+          {loop:loopPref(), beats:s.beats||4, click:clickPref()});
+      };
+      function transponujTekst(n){
+        if(!s.lyrics) return;
+        s.lyrics = transposeLyrics(s.lyrics, n);
+        fLyrics.value = s.lyrics; save(); drawLyrics();
+      }
+      function drawLyrics(){
+        lyrBox.innerHTML='';
+        const linie = parseLyrics(s.lyrics);
+        if(!s.lyrics || !s.lyrics.trim()){
+          lyrBox.append(h('div',{class:'empty'},'Tu wklej tekst piosenki. Akordy wpisz w nawiasach kwadratowych dokładnie tam, gdzie mają zabrzmieć — appka pokaże je nad sylabami.'));
+          return;
+        }
+        linie.forEach(l=>{
+          if(l.empty){ lyrBox.append(h('div',{class:'lyr-przerwa'})); return; }
+          if(l.label){ lyrBox.append(h('div',{class:'lyr-label'}, l.label)); return; }
+          const line = h('div',{class:'lyr-line'});
+          l.parts.forEach(part=>{
+            const kol = h('span',{class:'lyr-part'});
+            if(part.chord){
+              const f = functionIn(part.chord, s.key);
+              const b = h('button',{class:'lyr-ch '+f.fn,'data-c':part.chord.text,
+                title:FN_NAME[f.fn]+(f.rn?' · '+f.rn:'')+' — kliknij, żeby usłyszeć'}, fmt(part.chord.text));
+              b.onclick=()=>{ strike(part.chord.pcs,1.1,0,part.chord.bassPc); ring(b,'lit'); };
+              kol.append(b);
+            }else kol.append(h('span',{class:'lyr-ch pusty','aria-hidden':'true'}));
+            kol.append(h('span',{class:'lyr-tx'}, part.text || ' '));
+            line.append(kol);
+          });
+          lyrBox.append(line);
+        });
       }
 
       /* --- kreator: akordy tonacji do klikania --- */
@@ -357,6 +419,18 @@ const ViewPiosenki = {
           h('div',{class:'hint',style:'margin-top:6px'},'Jak pisać: akordy oddzielone spacją · „|" = kreska taktowa · [Zwrotka] na początku linii = etykieta · przykłady: C  Am  F#m  Bb7  Gsus4  C/E'),
           h('div',{class:'card',style:'margin-top:12px'}, builder)),
         h('section',{style:'margin-top:18px'},
+          h('div',{class:'sechead'}, h('h2',null,'Tekst z akordami'),
+            h('div',{class:'row'}, playLyr, loopToggle(),
+              h('button',{class:'btn small ghost',title:'Cały tekst pół tonu niżej',onclick:()=>transponujTekst(-1)},'♭ −½'),
+              h('button',{class:'btn small ghost',title:'Cały tekst pół tonu wyżej',onclick:()=>transponujTekst(1)},'♯ +½'))),
+          h('div',{class:'card'}, lyrBox),
+          h('details',{style:'margin-top:12px'},
+            h('summary',{class:'hint',style:'cursor:pointer'},'Edytuj tekst'),
+            fLyrics,
+            h('div',{class:'hint',style:'margin-top:6px'},'Akord w nawiasie kwadratowym staje nad następną sylabą: ',
+              h('span',{class:'mono'},'[C]Wlazł kotek na [G7]płotek'),'. Linia z samym ',
+              h('span',{class:'mono'},'[Zwrotka]'),' to nagłówek części. Reszta linii zostaje zwykłym tekstem.'))),
+        h('section',{style:'margin-top:18px'},
           h('h2',null,'Nagranie'), h('div',{class:'card'},audioBox)),
         h('section',{style:'margin-top:18px'},
           h('h2',null,'Tekst i nuty (PDF)'), h('div',{class:'card'},pdfBox)),
@@ -365,7 +439,7 @@ const ViewPiosenki = {
         h('div',{class:'row',style:'margin-top:22px'},
           h('button',{class:'btn danger',onclick:async()=>{ if(!confirm(`Usunąć „${s.title}"? Tego nie da się cofnąć.`)) return; if(saveFor===s){ clearTimeout(saveT); saveFor=null; } await DB.delSong(s.id); songs=songs.filter(x=>x.id!==s.id); currentId=songs[0]&&songs[0].id; drawList(); drawSong(); }},'Usuń piosenkę'))
       );
-      drawSheet(); drawBuilder(); drawAudio(); drawPdf();
+      drawSheet(); drawLyrics(); drawBuilder(); drawAudio(); drawPdf();
       if(focusTitle){ fTitle.focus(); fTitle.select(); }
     }
 

@@ -246,16 +246,72 @@ function guessLoopKey(chords){
   return best;
 }
 
-/* gotowe pętle do nauki */
+/* ---------- gotowe pętle do grania ----------
+   cat = kategoria do filtrowania w zakładce Pętla. Każda pętla ma działać „sama z siebie":
+   wpisujesz, wciskasz play i już brzmi jak kawałek muzyki. */
+const LOOP_CATS = [
+  {id:'wszystko',   name:'Wszystko'},
+  {id:'start',      name:'Na start'},
+  {id:'pop',        name:'Pop i radio'},
+  {id:'uwielbienie',name:'Uwielbienie'},
+  {id:'smutne',     name:'Rzewne i molowe'},
+  {id:'jazz',       name:'Jazz i blues'},
+  {id:'klasyka',    name:'Klasyka i kolędy'},
+  {id:'moje',       name:'Twoje piosenki'},
+];
 const LOOP_PRESETS = [
-  {name:'Cztery akordy (pop)', chords:['C','G','Am','F'], desc:'I–V–vi–IV. Pół radia na tym stoi.'},
-  {name:'Nostalgiczna', chords:['Am','F','C','G'], desc:'vi–IV–I–V. Ta sama, ale startuje z molla.'},
-  {name:'Doo-wop', chords:['C','Am','F','G'], desc:'I–vi–IV–V. Lata 50., ballady.'},
-  {name:'ii–V–I (jazz)', chords:['Dm7','G7','Cmaj7'], desc:'Serce jazzu: ruch, napięcie, dom.'},
-  {name:'Koło dominant', chords:['C','A7','D7','G7'], desc:'Każdy septymowy ciągnie kwartę w górę: A7 → D7 → G7 → C.'},
-  {name:'Kanon (Pachelbel)', chords:['C','G','Am','Em','F','C','F','G'], desc:'Bas schodzi krok po kroku.'},
-  {name:'Andaluzyjska', chords:['Am','G','F','E'], desc:'Moll z hiszpańskim zakończeniem na E.'},
-  {name:'Moll z dominantą', chords:['Am','Dm','E7'], desc:'i–iv–V7 — E7 mocno ciągnie do Am.'},
-  {name:'Widzę dom (refren)', chords:['D','G/D','Bm7','Em7','G','A'], desc:'Twoja piosenka, D-dur.'},
-  {name:'Bliżej (zwrotka)', chords:['C#m7','Bsus4','E/G#','Asus2'], desc:'Twoja piosenka, bas idzie schodkami.'},
+  // --- na start ---
+  {cat:'start', name:'Podstawowa (I–IV–V–I)', chords:['C','F','G','C'], desc:'Dom, ruch, napięcie, powrót. Od tego zacznij.'},
+  {cat:'start', name:'Dwa akordy', chords:['C','G'], desc:'Najprostsza rzecz, która już brzmi. Ćwicz zmianę ręki bez patrzenia.'},
+  {cat:'start', name:'Trzy akordy (I–V–vi)', chords:['C','G','Am'], desc:'Trzy chwyty, a słychać całą piosenkę.'},
+  {cat:'start', name:'Tonika i subdominanta', chords:['C','F'], desc:'Kołysanka. Lewa ręka tylko C i F, prawa trzyma akord.'},
+  {cat:'start', name:'Kadencja plagalna („amen")', chords:['C','F','C'], desc:'Zakończenie z kościelnych pieśni — miękkie, bez napięcia.'},
+
+  // --- pop ---
+  {cat:'pop', name:'Cztery akordy (pop)', chords:['C','G','Am','F'], desc:'I–V–vi–IV. Pół radia na tym stoi.'},
+  {cat:'pop', name:'Nostalgiczna', chords:['Am','F','C','G'], desc:'vi–IV–I–V. Ta sama, ale startuje z molla.'},
+  {cat:'pop', name:'Doo-wop (lata 50.)', chords:['C','Am','F','G'], desc:'I–vi–IV–V. Klasyka ballad i wesel.'},
+  {cat:'pop', name:'Bas schodzi (I–V/VII–vi–IV)', chords:['C','G/B','Am','F'], desc:'Ten sam pop, ale bas idzie schodkami C–B–A–F. Brzmi od razu dorośle.'},
+  {cat:'pop', name:'Z mocnym startem (I–IV–vi–V)', chords:['C','F','Am','G'], desc:'Refrenowa. Subdominanta zaraz po domu podnosi energię.'},
+  {cat:'pop', name:'Ballada rockowa', chords:['Am','G','F','G'], desc:'Kręci się w kółko i nie chce się skończyć — idealna do śpiewania.'},
+  {cat:'pop', name:'Marzycielska (I–iii–IV–V)', chords:['C','Em','F','G'], desc:'iii w środku robi miękkie przejście między domem a ruchem.'},
+  {cat:'pop', name:'Z sus-em', chords:['C','Csus4','C','G'], desc:'Jeden palec w prawej ręce idzie w górę i wraca. Bardzo wdzięczne na pianinie.'},
+
+  // --- uwielbienie ---
+  {cat:'uwielbienie', name:'Uwielbieniowa podstawa', chords:['G','D','Em','C'], desc:'I–V–vi–IV w G — tonacja, w której śpiewa pół Kościoła.'},
+  {cat:'uwielbienie', name:'Z basem pedałowym', chords:['D','A/D','G/D','D'], desc:'Lewa ręka cały czas trzyma D, zmienia się tylko prawa. Bardzo spokojne.'},
+  {cat:'uwielbienie', name:'Wznosząca (vi–IV–I–V)', chords:['Em','C','G','D'], desc:'Zaczyna cicho, kończy otwarcie — typowy bridge, który rośnie.'},
+  {cat:'uwielbienie', name:'Z sus4 przed rozwiązaniem', chords:['G','Dsus4','D','Em','C'], desc:'Dsus4 → D to oddech przed akordem. Słychać to w połowie pieśni.'},
+  {cat:'uwielbienie', name:'Spokojna z maj7', chords:['Cmaj7','G/B','Am7','G'], desc:'Miękkie, „szklane" brzmienie na intro albo pod modlitwę.'},
+  {cat:'uwielbienie', name:'Cztery akordy w D', chords:['D','A','Bm','G'], desc:'Ta sama pętla co pop, ale w D — dobra do śpiewania i łatwa na gitarze.'},
+
+  // --- rzewne i molowe ---
+  {cat:'smutne', name:'Andaluzyjska', chords:['Am','G','F','E'], desc:'Moll z hiszpańskim zakończeniem na E. Bas schodzi krok po kroku.'},
+  {cat:'smutne', name:'Moll z dominantą', chords:['Am','Dm','E7'], desc:'i–iv–V7 — E7 mocno ciągnie z powrotem do Am.'},
+  {cat:'smutne', name:'Opadający bas (lament)', chords:['Am','Am/G','F','E'], desc:'Jeden dźwięk w lewej ręce schodzi A–G–F–E. Najstarszy chwyt na smutek w muzyce.'},
+  {cat:'smutne', name:'Zimowa', chords:['Em','C','G','D'], desc:'Cicha, trochę melancholijna — dobra pod wolne tempo i dużo pedału.'},
+  {cat:'smutne', name:'Moll naturalna', chords:['Am','G','C','F'], desc:'Bez dominanty, więc nic nie ciągnie do domu — kręci się w nieskończoność.'},
+  {cat:'smutne', name:'Dominanta wtrącona', chords:['Am','E7','Am','Dm'], desc:'E7 nie jest z gamy, ale brzmi naturalnie — to „dominanta do molla".'},
+
+  // --- jazz i blues ---
+  {cat:'jazz', name:'Kadencja ii–V–I', chords:['Dm7','G7','Cmaj7'], desc:'Serce jazzu: ruch, napięcie, dom. Ćwicz z płynnym prowadzeniem głosów.'},
+  {cat:'jazz', name:'I–vi–ii–V (standard)', chords:['Cmaj7','Am7','Dm7','G7'], desc:'Pętla, na której stoi setka standardów. Gra się ją w kółko godzinami.'},
+  {cat:'jazz', name:'Koło dominant', chords:['C','A7','D7','G7'], desc:'Każdy septymowy ciągnie kwartę w górę: A7 → D7 → G7 → C.'},
+  {cat:'jazz', name:'Blues 12 taktów', chords:['C7','C7','C7','C7','F7','F7','C7','C7','G7','F7','C7','G7'], desc:'Klasyczne 12 taktów. Ustaw 4 uderzenia na akord — wyjdzie cały chorus.'},
+  {cat:'jazz', name:'Blues molowy', chords:['Am7','Am7','Dm7','Am7','Em7','Dm7','Am7','Em7'], desc:'Ciemniejszy, wolniejszy blues. Dobrze brzmi z pedałem.'},
+  {cat:'jazz', name:'Bossa nova', chords:['Cmaj7','Fmaj7','Dm7','G7'], desc:'Maj7 i m7 zamiast zwykłych akordów. Graj cicho i równo.'},
+  {cat:'jazz', name:'Wamp dorycki', chords:['Dm7','G'], desc:'Dwa akordy w kółko — tło do improwizacji prawą ręką po białych klawiszach.'},
+
+  // --- klasyka i kolędy ---
+  {cat:'klasyka', name:'Kanon (Pachelbel)', chords:['C','G','Am','Em','F','C','F','G'], desc:'Bas schodzi krok po kroku. Osiem akordów, które zna każdy.'},
+  {cat:'klasyka', name:'Kadencja doskonała', chords:['C','F','G7','C'], desc:'Tak kończy się większość utworów klasycznych. Posłuchaj, jak G7 „domyka" C.'},
+  {cat:'klasyka', name:'Kolęda (Cicha noc)', chords:['C','G7','C','F','C','G7','C'], desc:'Trzy akordy i cała kolęda. Metrum 3/4 — ustaw 3 uderzenia na akord.'},
+  {cat:'klasyka', name:'Kolęda (Przybieżeli)', chords:['C','G','C','F','C','G','C'], desc:'Żywa, pasterska. Graj z akcentem na raz.'},
+  {cat:'klasyka', name:'Walc', chords:['C','G7','G7','C'], desc:'Ustaw 3 uderzenia na akord i graj bas–akord–akord. Wychodzi walc.'},
+  {cat:'klasyka', name:'Zwodnicza (V–vi)', chords:['C','F','G','Am'], desc:'Dominanta zamiast do domu idzie do vi — ucho dostaje niespodziankę.'},
+
+  // --- jej piosenki ---
+  {cat:'moje', name:'Widzę dom (refren)', chords:['D','G/D','Bm7','Em7','G','A'], desc:'Twoja piosenka, D-dur.'},
+  {cat:'moje', name:'Widzę dom (bridge)', chords:['D','Em7','G','D'], desc:'Spokojniejsza część — dobra do ćwiczenia płynnych przewrotów.'},
+  {cat:'moje', name:'Bliżej (zwrotka)', chords:['C#m7','Bsus4','E/G#','Asus2'], desc:'Twoja piosenka, bas idzie schodkami.'},
 ];

@@ -440,6 +440,116 @@ test('Na telefonie żadna zakładka nie przewija się w bok', async () => {
   await context.close();
 });
 
+test('Pętla: style akompaniamentu zmieniają to, co słychać', async () => {
+  const {page, errors, close} = await open('#petla');
+  await page.waitForSelector('.stylebar');
+  assert.ok(await page.locator('.stylebtn').count() >= 8);
+  // styl zmienia zdarzenia, które pójdą do syntezatora
+  const ile = await page.evaluate(() => {
+    const c = parseChord('C'), right = smoothVoicing(c, null), bass = bassMidi(c);
+    return PLAY_STYLES.map(st => ({id:st.id, n: stylePattern(st.id, {right, bass, beats:4}).length}));
+  });
+  assert.ok(ile.find(x => x.id === 'blok').n === 2, 'na raz: bas + akord');
+  assert.ok(ile.find(x => x.id === 'ballada').n > 4, 'ballada ma więcej nut');
+
+  await page.click('.stylebtn:has-text("Walc")');
+  assert.match(await page.textContent('.player'), /Lewa: sam bas na raz/);
+  // podpowiedź ustawia metrum jednym kliknięciem
+  await page.click('button:has-text("ustaw 3 uderzenia na akord")');
+  assert.equal(await page.inputValue('#petla-beats'), '3');
+  // wybór stylu przeżywa przeładowanie
+  await page.reload();
+  await page.waitForSelector('.stylebar');
+  assert.match(await page.textContent('.stylebtn[aria-pressed="true"]'), /Walc/, 'wybrany styl wraca po przeładowaniu');
+
+  // i naprawdę gra
+  await page.click('button:has-text("Graj w kółko")');
+  await page.waitForTimeout(600);
+  assert.equal(await page.evaluate(() => isPlaying()), true);
+  await page.click('button:has-text("Stop")');
+  assert.deepEqual(errors, []);
+  await close();
+});
+
+test('Pętla: gotowe pętle da się filtrować po kategoriach', async () => {
+  const {page, errors, close} = await open('#petla');
+  await page.waitForSelector('.presets .preset');
+  const wszystkie = await page.locator('.preset').count();
+  assert.ok(wszystkie >= 30, 'gotowych pętli: ' + wszystkie);
+
+  await page.click('button:has-text("Uwielbienie")');
+  const uwielbienie = await page.locator('.preset').count();
+  assert.ok(uwielbienie > 0 && uwielbienie < wszystkie);
+
+  // wczytanie pętli podmienia akordy i tonację
+  await page.click('.preset:has-text("Cztery akordy w D")');
+  // (zaznaczony chip ma jeszcze strzałki przesuwania, stąd czyszczenie tekstu)
+  const chipy = (await page.locator('.seqbox .chord-chip').allTextContents()).map(t => t.replace(/[‹›×]/g, ''));
+  assert.deepEqual(chipy, ['D','A','Bm','G']);
+  assert.match(await page.textContent('.card .hint'), /D-dur/);
+
+  await page.click('button:has-text("Wszystko")');
+  assert.equal(await page.locator('.preset').count(), wszystkie);
+  assert.deepEqual(errors, []);
+  await close();
+});
+
+test('Piosenki: tekst z akordami nad słowami, granie i transpozycja', async () => {
+  const {page, errors, close} = await open('#piosenki');
+  await page.waitForSelector('.song-list .item');
+  await page.click('.song-list .item:has-text("Wlazł kotek")');
+  await page.waitForSelector('.lyr-line');
+
+  // akordy stoją nad tekstem, a słowa zostają słowami
+  assert.ok(await page.locator('.lyr-ch[data-c]').count() >= 8);
+  assert.deepEqual(await page.locator('.lyr-label').allTextContents(), ['Zwrotka','Refren']);
+  const slowa = async () => (await page.locator('.lyr-tx').allTextContents()).join('');
+  assert.match(await slowa(), /Wlazł kotek na płotek i mruga/);
+  assert.equal(await page.locator('.lyr-ch[data-c="C"]').first().getAttribute('class'), 'lyr-ch t', 'C w C-dur to tonika');
+  assert.equal(await page.locator('.lyr-ch[data-c="G7"]').first().getAttribute('class'), 'lyr-ch d', 'G7 to dominanta');
+
+  // transpozycja rusza akordy, nie słowa
+  await page.click('button[title="Cały tekst pół tonu wyżej"]');
+  await page.waitForTimeout(150);
+  assert.ok(await page.locator('.lyr-ch[data-c="Db"]').count(), 'C → Db');
+  assert.match(await slowa(), /Wlazł kotek na płotek i mruga/, 'słowa bez zmian');
+  await page.click('button[title="Cały tekst pół tonu niżej"]');
+  await page.waitForTimeout(150);
+  assert.ok(await page.locator('.lyr-ch[data-c="C"]').count(), 'i z powrotem');
+
+  // gra z tekstu
+  await page.click('button:has-text("Zagraj z tekstu")');
+  await page.waitForTimeout(400);
+  assert.equal(await page.evaluate(() => isPlaying()), true);
+  await page.click('button:has-text("Stop")');
+
+  // tekst zapisuje się i wraca po przeładowaniu
+  await page.click('summary:has-text("Edytuj tekst")');
+  await page.fill('details textarea', '[Refren]\nTy je[D]steś moim [Em7]domem');
+  await page.waitForTimeout(600);
+  await page.reload();
+  await page.waitForSelector('.lyr-line');
+  assert.match((await page.locator('.lyr-tx').allTextContents()).join(''), /Ty jesteś moim domem/);
+  assert.deepEqual(await page.locator('.lyr-ch[data-c]').allTextContents(), ['D','Em7']);
+  assert.deepEqual(errors, []);
+  await close();
+});
+
+test('Druk: tekst piosenki trafia na kartkę razem z chwytami', async () => {
+  const {page, errors, close} = await open('#piosenki');
+  await page.waitForSelector('.song-list .item');
+  await go(page, '#druk/song/seed-kotek');
+  await page.waitForSelector('.sheet .lyr-line');
+  const sheet = await page.textContent('.sheet');
+  assert.match((await page.locator('.sheet .lyr-tx').allTextContents()).join(''), /Wlazł kotek na płotek/);
+  assert.match(sheet, /Tekst/);
+  assert.match(sheet, /Chwyty/);
+  // chwyty zbierają też akordy, które są tylko w tekście
+  assert.ok(await page.locator('.sheet .kbd').count() >= 3);
+  assert.deepEqual(errors, []);
+  await close();
+});
+
 test('Pętla: baza akordów, układanie, granie w kółko i stop', async () => {
   const {page, errors, close} = await open('#petla');
   await page.waitForSelector('.dbtbl');

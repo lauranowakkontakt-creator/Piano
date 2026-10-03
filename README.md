@@ -26,9 +26,9 @@ Dane (piosenki, nagrania) na stronie są osobne od tych w pliku otwieranym z dys
 | **Nuty** | 6 lekcji czytania nut (pięciolinia, oba klucze, rytm, znaki, akordy) + trener „Jaka to nuta?”, który częściej pokazuje nuty, z którymi masz problem. |
 | **Trening** | Codzienna runda mieszanych zadań: akord i interwał ze słuchu, który to stopień, rola akordu, co dalej, złóż akord na klawiaturze, który przewrót. Appka liczy serię dni, pokazuje postęp i — przez system powtórek z odstępami — wraca częściej do tego, co Ci nie wychodzi. Klawisze: **1–4** odpowiedź, **spacja** powtarza dźwięk, **Enter** dalej. |
 | **Klawisze** | Żywe pianino. Grasz myszką, klawiaturą komputera albo prawdziwym pianinem przez **MIDI** — appka na bieżąco nazywa akord, który trzymasz (z przewrotem, basem po ukośniku i rolą w wybranej tonacji) i mówi, do jakich gam pasuje. Niżej gamy z **palcowaniem** obu rąk i ćwiczenie „zagraj gamę w górę i w dół". |
-| **Piosenki** | Twoje utwory: akordy, tonacja, notatki, nagranie audio (można je zwolnić) i PDF z tekstem. Na start są „Widzę dom” i „Bliżej”. Appka koloruje rolę każdego akordu, gra akordy i podpowiada tonację. |
+| **Piosenki** | Twoje utwory: akordy, **tekst z akordami nad słowami**, tonacja, notatki, nagranie audio (można je zwolnić) i PDF. Tekst da się zagrać i przetransponować o pół tonu — słowa zostają na miejscu. Na start są „Widzę dom”, „Bliżej” i „Wlazł kotek na płotek” (ta ostatnia pokazuje, jak zapisywać tekst). Appka koloruje rolę każdego akordu, gra akordy i podpowiada tonację. |
 | **Głos** | Rozgrzewka z akompaniamentem, który sam przechodzi pół tonu wyżej i z powrotem. Są tu ćwiczenia emisyjne (rozluźniające, głowowe, wąskie, szerokie, dykcyjne), ćwiczenia na emocje w głosie, nagrywanie się i mapa emocji Twoich piosenek. |
-| **Pętla** | Wybierasz akordy z bazy (12 dźwięków × dur, moll, 7, maj7, m7, sus, °, +) albo gotową pętlę. Appka układa je w koło (kolor = rodzaj akordu), pokazuje, jak trzymać ręce (przewroty, palce, które zostają), podpowiada, co pasuje dalej, i gra w kółko z metronomem i odliczaniem. Spacja = start/stop. |
+| **Pętla** | Wybierasz akordy z bazy (12 dźwięków × dur, moll, 7, maj7, m7, sus, °, +) albo jedną z **ponad 40 gotowych pętli** w kategoriach: na start, pop, uwielbienie, rzewne, jazz i blues, klasyka i kolędy. Do tego **styl akompaniamentu** — ten sam akord jako pompa, arpeggio, walc, ballada 6/8, bas Albertiego, synkopa albo mocne oktawy; appka pisze, co robi która ręka. Układa akordy w koło, pokazuje przewroty i palce, które zostają, i gra w kółko z metronomem. Spacja = start/stop. |
 | **Przejścia** | Układasz własne akordy. Appka pokazuje drzewo i koło kwintowe z Twoją drogą po gamach. Akord, który nie pasuje, świeci na czerwono, a pod nim jest podpowiedź, jak do niego przejść (do wstawienia jednym kliknięciem). |
 | **Wizualizacja** | Drzewo ruchów (kliknij akord, a zaświecą się ścieżki, dokąd może iść dalej) i koło kwintowe. Świecące węzły na czarnym tle. |
 | **Druk** | Ściągawki A4 do postawienia na pianinie: jedna strona na gamę + ściąga ogólna. Każdą piosenkę też da się wydrukować. „Zapisz jako PDF” jest w oknie drukowania. |
@@ -52,6 +52,20 @@ także na innym komputerze. Nagrań audio nie ma w kopii, bo trzymasz je jako os
 - rozumie: `C  Am  F#m  Bb  G7  Cmaj7  Cm7  C6  C9  C5  Bdim  B°  Bm7b5  Caug  Gsus4  C7sus4  D2  Cadd9  Gadd4  C/E`
 - słowo, które nie jest akordem (np. `Every`), zostaje na szaro jako „nie rozpoznano" — appka go nie gra
 
+## Jak wpisywać tekst piosenki
+
+```
+[Zwrotka]
+[C]Wlazł kotek na [G7]płotek i mruga,
+ładna to [C]piosenka nie[G7]długa.
+```
+
+- akord w nawiasie kwadratowym staje **nad następną sylabą** — dokładnie tam, gdzie ma zabrzmieć
+- linia z samym `[Zwrotka]` albo `[Refren]` to nagłówek części (bo to nie są akordy)
+- coś, co nie jest akordem, np. `[x2]`, zostaje zwykłym tekstem
+- przyciski `♭ −½` i `♯ +½` przepisują akordy w całym tekście, a słów nie ruszają
+- tekst drukuje się razem z chwytami: zakładka Piosenki → **🖨 Drukuj**
+
 ## Pianino przez kabel (MIDI)
 
 Pianino cyfrowe podłączone kablem USB gra w zakładce **Klawisze**: klawisze zapalają się na ekranie, a appka
@@ -72,6 +86,8 @@ albo klawiaturą komputera (`z s x d c v g b h n j m` to oktawa od C, `Shift` tr
 - `js/srs.js` to powtórki z odstępami (pudełka Leitnera, seria dni) — czysty stan JSON, bez DOM.
 - `js/detect.js` rozpoznaje akord z granych dźwięków (odwrotność `parseChord`): wzór akordu, bas, przewrót, akordy bez kwinty.
 - `js/fingering.js` to standardowe palcowania 12 gam durowych (obie ręce) plus logika ćwiczenia „zagraj gamę".
+- `js/patterns.js` to style akompaniamentu: z chwytu i liczby uderzeń robi listę zdarzeń {dźwięki, kiedy, jak długo}; `playChordSeq` w `js/ui.js` umie je zagrać zamiast zwykłego uderzenia w akord.
+- `js/lyrics.js` to parser tekstu z akordami w nawiasach (plus transpozycja samych akordów).
 - `js/midi.js` to Web MIDI w dwóch warstwach: czysty `parseMidiMessage` i `HeldNotes` (z pedałem), a nad nimi `MidiIn`. `midiSubscribe` daje jedno połączenie z pianinem na całą appkę, więc zmiana zakładki go nie zrywa. Bez pianina wszystko działa jak wcześniej.
 - `js/drills.js` to generatory zadań do Treningu: każde zadanie opisuje, co zagrać, a dźwięk odpala dopiero widok. Dzięki temu całą zawartość ćwiczeń sprawdzają testy w node.
 - Widoki są w `js/views/*.js`, a router (`#zakladka/podstrona`) w `js/app.js`.

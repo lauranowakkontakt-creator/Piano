@@ -136,7 +136,13 @@ function playChordSeq(items, step=0.78, onEnd, opts={}){
         i=0; cycle++;
       }
       const it=items[i], at=t, idx=i, cyc=cycle;
-      strike(it.pcs, it.dur ?? Math.max(step*1.04, .95), at-ctx.currentTime, it.bassPc, it.voiced);
+      if(it.events && it.events.length){
+        // styl akompaniamentu z js/patterns.js: czasy zdarzeń liczone w uderzeniach
+        it.events.forEach(e=>e.midis.forEach(m=>
+          pianoNote(m, Math.max(.12, (e.dur ?? 1)*beat), at - ctx.currentTime + e.at*beat, e.vel ?? .55)));
+      }else{
+        strike(it.pcs, it.dur ?? Math.max(step*1.04, .95), at-ctx.currentTime, it.bassPc, it.voiced);
+      }
       if(click) for(let b=0;b<beats;b++) playClick(at+b*beat-ctx.currentTime, b===0);
       later(at, ()=>{
         document.querySelectorAll('.lit').forEach(b=>b.classList.remove('lit'));
