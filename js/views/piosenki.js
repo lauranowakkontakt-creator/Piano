@@ -37,8 +37,8 @@ function guessKey(chords){
 }
 
 
-/* Piosenki Laury — akordy przepisane z jej PDF-ów (bez tekstu: tekst możesz
-   dołączyć jako PDF w piosence). */
+/* Piosenki Laury — akordy z jej PDF-ów i z angielskich wersji,
+   tekst po polsku z akordami nad słowami. */
 const SEED_SONGS = [
 { id:'seed-kotek', title:'Wlazł kotek na płotek', artist:'ludowa', key:'C', bpm:104, beats:2,
   chords:`[Zwrotka] C G7 C | C G7 C
@@ -86,33 +86,114 @@ EMOCJE W GŁOSIE (plan):
 • Outro — wyciszenie, pokój: decrescendo, ostatni dźwięk trzymaj i puszczaj powoli.
 
 Tekst: dołącz swój PDF w sekcji „Tekst i nuty (PDF)" niżej.`},
-{ id:'seed-blizej', title:'Bliżej (Closer)', artist:'tł. muz. A. Cook', key:'E', bpm:70, beats:4,
-  chords:`[Intro] Asus2 | Asus2 | Bsus4 | Bsus4 | C#m7 | C#m7 | Bsus4 | Bsus4
-[Zwrotka — 1. linia] C#m7 Bsus4 E/G# Asus2
-[Zwrotka — 2. linia] C#m7 Bsus4 E/G# Asus2
-[Refren — 1. linia] E B C#m7 Asus2 E
-[Refren — 2. linia] B C#m7 Asus2
-[Tag — powtarzaj] F#m7 E/G# | Asus2 | F#m7 E/G# | Asus2
-[Bridge 1] A E Bsus4 C#m7 A
-[Bridge 1] E Bsus4 C#m7
-[Bridge 2] A E Bsus4 C#m7 A E Bsus4 C#m7`,
-  notes:`Tonacja E-dur · metrum 4/4 · 70 BPM. Jeden akord w appce = 4 uderzenia (cały takt).
+{ id:'seed-blizej', title:'Bliżej (Closer)', artist:'Bethel Music · tł. Winnica Worship', key:'E', bpm:70, beats:4,
+  chords:`[Intro] A B C#m B | A B C#m B
+[Zwrotka] C#m B E/G# A | C#m B E/G# A
+[Refren] E B/D# C#m A E | B/D# C#m A
+[Interludium] F#m E/G# A | F#m E/G# A
+[Bridge] A E B C#m | A E B C#m`,
+  lyrics:`[Intro — 2×]
+[A] [B] [C#m] [B]
 
-HARMONIA: E (I, dom), A/Asus2 (IV, ruch), B/Bsus4 (V, napięcie), C#m7 (vi, dom — ale smutniejszy, tęskny), F#m7 (ii, ruch).
-• Zwrotka zaczyna się od C#m7, a nie od E — dlatego brzmi tęsknie, jakby „jeszcze nie w domu". Dom (E/G#) pojawia się dopiero w środku linii.
-• E/G# = akord E z G# w basie: bas idzie schodkami w górę (C# → B → G# → A), bardzo miękkie przejście.
-• sus2 i sus4 to akordy „otwarte", bez tercji — brzmią przestrzennie, niedopowiedzianie. Bsus4 to dominanta, która się waha.
-• Tag F#m7 → E/G# → Asus2 to schodki basu w górę F# → G# → A — jak wchodzenie coraz bliżej.
-• Appka może podpowiadać „c♯-moll" — bo zwrotka i bridge kończą się na C♯m7. To równoległa molowa E-dur (te same akordy, inny „dom"). Ta piosenka właśnie tak gra: między jasnym E a tęsknym C♯m7.
+[Zwrotka]
+[C#m]Twa miłość zdobyła [B]mnie
+I całe me [E/G#]serce, całe me [A]serce
+[C#m]Dziś to, czego pragnę, to [B]być
+Z Tobą na [E/G#]zawsze, z Tobą na [A]zawsze
+
+[Refren 1]
+[E]Przyciągnij mnie do [B/D#]siebie
+Zabierz trochę [C#m]głębiej
+Pragnę poznać [A]Cię
+Poznać serce [E]Twe
+
+Wiem, miłość Twa jest [B/D#]słodsza,
+Niż miłość tego [C#m]świata
+Pragnę poznać [A]Cię
+Poznać serce Twe
+
+[Interludium — 2×]
+[F#m] [E/G#] [A]
+
+[Bridge]
+[A]Ooo [E]ooo,
+[B]Jak wielka jest Twa [C#m]miłość
+[A]Ooo [E]ooo,
+[B]Cudowna [C#m]miłość
+
+[Refren 2]
+[E]Przyciągnij mnie do [B/D#]siebie
+Zabierz trochę [C#m]głębiej
+Pragnę poznać [A]Cię
+Poznać serce [E]Twe
+
+Twa miłość jest [B/D#]silniejsza,
+Niż wszystko, z czym się [C#m]zmagam
+Pragnę poznać [A]Cię
+Poznać serce [E]Twe`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Bethel Music). Akordy przeniesione z angielskiej wersji — każdy stoi nad tym słowem, nad którym był w oryginale.
+Tonacja E-dur · 4/4 · ok. 70 BPM.
+
+KOLEJNOŚĆ: Intro ×2 → Zwrotka → Refren 1 → Interludium ×2 → Bridge (×2 lub więcej) → Refren 2.
+
+HARMONIA: E (I, dom), A (IV, ruch), B i B/D# (V, napięcie), C#m (vi, dom smutniejszy), F#m (ii, ruch).
+• Zwrotka startuje od C#m, nie od E — dlatego brzmi tęsknie. E pojawia się dopiero jako E/G#.
+• Bas w zwrotce idzie schodkami: C# → B → G# → A.
+• B/D# w refrenie: bas schodzi E → D# → C# — miękkie zejście, prawie jak westchnienie.
+• Interludium F#m → E/G# → A: bas w górę F# → G# → A, jak wchodzenie coraz bliżej.
 
 EMOCJE W GŁOSIE (plan):
-• Intro/Zwrotka — intymnie, blisko: cicho, dużo miękkości, trochę powietrza, miękkie spółgłoski. Jakbyś mówiła szeptem, ale czysto.
-• Refren — prośba i tęsknota: każda fraza rośnie do środka (crescendo) i łagodnie opada. Otwarte samogłoski na długich nutach.
-• Tag — ta sama fraza wiele razy: za każdym razem inaczej (raz ciszej, raz pełniej, raz prawie mówiąc). Powtórzenie nie może być nudne.
-• Bridge 1 — nadzieja, budowanie: coraz więcej energii, jaśniejsza barwa.
-• Bridge 2 („o-o") — kulminacja: pełny głos na podparciu, szeroko otwarte „o", potem wyciszenie do refrenu/tagu.
+• Zwrotka — intymnie, blisko: cicho, miękko, trochę powietrza.
+• Refren — prośba i tęsknota: fraza rośnie do środka i łagodnie opada.
+• Bridge („Ooo") — kulminacja: pełny głos na podparciu, szeroko otwarte „o", potem wyciszenie.`},
+{ id:'seed-lean-back', title:'Wtulę się (Lean Back)', artist:'Jesus Culture · tł. Winnica Worship', key:'B', bpm:70, beats:4,
+  chords:`[Intro] B D#m7 C#sus | B D#m7 C#sus
+[Zwrotka] B D#m7 C#sus | B D#m7 C#sus | B D#m7 C#sus F#/A# | B D#m7 C#sus
+[Refren] B F# C#sus | G#m F#/A# B D#m7 C#sus
+[Instrumental] C# D#m7 B F# | C# D#m7 B F#
+[Bridge] C# D#m7 B F# | C# D#m7 B C#`,
+  lyrics:`[Intro — 2×]
+[B] [D#m7] [C#sus] [B] [D#m7] [C#sus]
 
-Tekst: dołącz swój PDF w sekcji „Tekst i nuty (PDF)" niżej.`},
+[Zwrotka 1]
+Nie o[B]puścisz [D#m7]mnie [C#sus]
+[B]Trzymasz [D#m7]życie [C#sus]me
+U[B]kochałeś [D#m7]mnie, nim [C#sus]poznałem [F#/A#]Cię [B] [D#m7] [C#sus]
+
+[Zwrotka 2]
+W [B]Tobie wy[D#m7]ciszam [C#sus]się
+Bio[B]rę głę[D#m7]boki [C#sus]wdech
+[B]Będę pewnie [D#m7]stał, [C#sus]aż wypeł[F#/A#]nisz mnie [B] [D#m7] [C#sus]
+
+[Refren]
+W [B]Twe ramiona [F#]znowu wtulę [C#sus]się
+[G#m]Mój u[F#/A#]kochany [B]Tato [D#m7] [C#sus]
+[B]Jesteś [F#]dobry dla [C#sus]mnie
+[G#m]Kochasz [F#/A#]jak nikt [B]inny [D#m7] [C#sus]
+
+[Powtórz zwrotki i refren]
+
+[Instrumental — 2×]
+[C#] [D#m7] [B] [F#]
+
+[Bridge — 2×]
+Teraz już [C#]wiem
+Twoja miłość jest [D#m7]lepsza
+Niż każda [B]inna, którą [F#]znam
+Biorę więc [C#]wdech Twojej [D#m7]dobroci
+Wielkiej [B]miłości do [C#]mnie
+
+[Refren — 3×]`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Jesus Culture / Chris McClarney). Akordy z angielskiej wersji, przeniesione nad odpowiednie słowa.
+Tonacja H-dur (w appce B) · 4/4 · tempo wolne, ok. 70 BPM — sprawdź z nagraniem.
+
+KOLEJNOŚĆ: Intro ×2 → Zwrotka 1 → Zwrotka 2 → Refren → Zwrotka 1 → Zwrotka 2 → Refren → Instrumental ×2 → Bridge ×2 (i jeszcze raz) → Refren ×3.
+
+HARMONIA: B (I, dom), F# (V, napięcie), G#m (vi, dom smutniejszy), D#m7 (iii, miękki łącznik), C#sus (ii bez tercji — zawieszony, „otwarty").
+• Refren to klasyka: I – V – ii – vi – V/3 – I. F#/A# to F# z A# w basie: bas idzie schodkami G# → A# → B i ląduje w domu na „Tato" i „inny".
+• Zwrotka B → D#m7 → C#sus kręci się wokół domu i nie ląduje — jak spokojny oddech.
+• Bridge: C# → D#m7 → B → F#. C#-dur nie należy do H-dur (tam jest C#m) — to „pożyczony" akord, dominanta do F#. Dlatego bridge brzmi jaśniej i bardziej do przodu.
+• Appka może podpowiadać inną tonację, bo zwrotka kończy się na C#sus, a bridge na C#. Dom tej piosenki to jednak B.`},
 ];
 
 /* Piosenki startowe — dodaj raz (nie wracają, jeśli je usuniesz). Dopisuje je też do tablicy songs. */
@@ -124,6 +205,15 @@ async function seedSongs(songs){
     done.push(seed.id);
   }
   prefs.set('songs.seedIds',done);
+  // piosenka startowa dodana wcześniej bez tekstu — dopisz tekst raz (reszty nie ruszamy)
+  const withLyrics = prefs.get('songs.seedLyrics',[]);
+  for(const seed of SEED_SONGS){
+    if(!seed.lyrics || withLyrics.includes(seed.id)) continue;
+    const s = songs.find(x=>x.id===seed.id);
+    if(s && !(s.lyrics||'').trim()){ s.lyrics = seed.lyrics; await DB.putSong(s); }
+    withLyrics.push(seed.id);
+  }
+  prefs.set('songs.seedLyrics',withLyrics);
   return songs;
 }
 
