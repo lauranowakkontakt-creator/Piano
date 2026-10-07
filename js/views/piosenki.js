@@ -115,6 +115,18 @@ EMOCJE W GŁOSIE (plan):
 Tekst: dołącz swój PDF w sekcji „Tekst i nuty (PDF)" niżej.`},
 ];
 
+/* Piosenki startowe — dodaj raz (nie wracają, jeśli je usuniesz). Dopisuje je też do tablicy songs. */
+async function seedSongs(songs){
+  const done = prefs.get('songs.seedIds',[]);
+  for(const seed of SEED_SONGS){
+    if(done.includes(seed.id)) continue;
+    if(!songs.find(x=>x.id===seed.id)){ const s={...seed}; await DB.putSong(s); songs.unshift(s); }
+    done.push(seed.id);
+  }
+  prefs.set('songs.seedIds',done);
+  return songs;
+}
+
 const ViewPiosenki = {
   title:'Piosenki',
   async render(root, sub){
@@ -130,21 +142,14 @@ const ViewPiosenki = {
       root.append(h('div',{class:'card'},h('p',null,'Ta przeglądarka nie pozwala zapisywać danych (IndexedDB). Otwórz appkę w Chrome, Edge albo Firefox. Jeśli otwierasz plik bezpośrednio z dysku w Safari — uruchom ją przez start (patrz README).')));
       return;
     }
-    { // piosenki Laury — dodaj raz (nie wracają, jeśli je usuniesz)
-      const done = prefs.get('songs.seedIds',[]);
-      for(const seed of SEED_SONGS){
-        if(done.includes(seed.id)) continue;
-        if(!songs.find(x=>x.id===seed.id)){ const s={...seed}; await DB.putSong(s); songs.unshift(s); }
-        done.push(seed.id);
-      }
-      prefs.set('songs.seedIds',done);
-    }
+    await seedSongs(songs);
 
     const list = h('div',{class:'song-list'});
     const main = h('div');
     root.append(h('div',{class:'songs-layout'}, h('div',null,
       h('div',{class:'row',style:'margin-bottom:10px'},
-        h('button',{class:'btn primary',onclick:newSong},'+ Nowa piosenka')),
+        h('button',{class:'btn primary',onclick:newSong},'+ Nowa piosenka'),
+        h('a',{class:'btn ghost',href:'#setlista'},'Setlista →')),
       list,
       h('div',{class:'row',style:'margin-top:16px'},
         h('button',{class:'btn small ghost',onclick:exportAll,title:'Zapisz kopię wszystkich piosenek do pliku'},'⤓ Kopia zapasowa'),
@@ -299,24 +304,7 @@ const ViewPiosenki = {
           lyrBox.append(h('div',{class:'empty'},'Tu wklej tekst piosenki. Akordy wpisz w nawiasach kwadratowych dokładnie tam, gdzie mają zabrzmieć — appka pokaże je nad sylabami.'));
           return;
         }
-        linie.forEach(l=>{
-          if(l.empty){ lyrBox.append(h('div',{class:'lyr-przerwa'})); return; }
-          if(l.label){ lyrBox.append(h('div',{class:'lyr-label'}, l.label)); return; }
-          const line = h('div',{class:'lyr-line'});
-          l.parts.forEach(part=>{
-            const kol = h('span',{class:'lyr-part'});
-            if(part.chord){
-              const f = functionIn(part.chord, s.key);
-              const b = h('button',{class:'lyr-ch '+f.fn,'data-c':part.chord.text,
-                title:FN_NAME[f.fn]+(f.rn?' · '+f.rn:'')+' — kliknij, żeby usłyszeć'}, fmt(part.chord.text));
-              b.onclick=()=>{ strike(part.chord.pcs,1.1,0,part.chord.bassPc); ring(b,'lit'); };
-              kol.append(b);
-            }else kol.append(h('span',{class:'lyr-ch pusty','aria-hidden':'true'}));
-            kol.append(h('span',{class:'lyr-tx'}, part.text || ' '));
-            line.append(kol);
-          });
-          lyrBox.append(line);
-        });
+        lyricsInto(lyrBox, linie, s.key);
       }
 
       /* --- kreator: akordy tonacji do klikania --- */

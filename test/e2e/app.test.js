@@ -695,3 +695,56 @@ test('Gamy: przełącznik „w kółko" gra progresję dalej po końcu', async (
   assert.deepEqual(errors, []);
   await close();
 });
+
+test('Setlista: układanie, zmiana tonacji, przejście i granie po kolei', async () => {
+  const {page, errors, close} = await open('#setlista');
+  await page.waitForSelector('.sl-dodaj select');
+  // trzy startowe piosenki: Bliżej (E), Widzę dom (D), Wlazł kotek (C)
+  const dodaj = async tytul => {
+    const v = await page.locator('.sl-dodaj option', {hasText: tytul}).getAttribute('value');
+    await page.selectOption('.sl-dodaj select', v);
+    await page.click('.sl-dodaj button');
+  };
+  await dodaj('Wlazł kotek');
+  await dodaj('Widzę dom');
+  assert.equal(await page.locator('.sl-item').count(), 2);
+
+  // C-dur → D-dur: przejście z akordami, wariant da się zmienić
+  assert.equal(await page.locator('.sl-przejscie').count(), 1);
+  assert.match(await page.textContent('.sl-przejscie'), /C-dur.*D-dur/);
+  assert.ok(await page.locator('.sl-przejscie .chord-chip').count() >= 1, 'są akordy przejścia');
+  await page.click('.sl-przejscie .sl-warianty button:has-text("Szybko")');
+  assert.equal(await page.locator('.sl-przejscie .sl-warianty button[aria-pressed="true"]').textContent(), 'Szybko');
+  assert.deepEqual(await page.locator('.sl-przejscie .chord-chip').allTextContents(), ['AV']);
+
+  // „dopasuj do poprzedniej" przenosi Widzę dom do C-dur → przejście niepotrzebne
+  await page.click('.sl-item >> nth=1 >> button:has-text("dopasuj do poprzedniej")');
+  assert.match(await page.textContent('.sl-przejscie'), /ta sama gama/);
+  assert.match(await page.locator('.sl-item').nth(1).textContent(), /wróć do D-dur/);
+
+  // kolejność
+  await page.click('.sl-item >> nth=1 >> button[aria-label="Wyżej"]');
+  assert.match(await page.locator('.sl-item').first().textContent(), /Widzę dom/);
+
+  // zapis przeżywa przeładowanie
+  await page.reload();
+  await page.waitForSelector('.sl-item');
+  assert.equal(await page.locator('.sl-item').count(), 2);
+  assert.match(await page.locator('.sl-item').first().textContent(), /Widzę dom/);
+
+  // granie: duży tekst, strzałka w prawo przechodzi dalej
+  await page.click('a:has-text("Graj setlistę")');
+  await page.waitForSelector('.sl-scena');
+  assert.match(await page.textContent('.sl-scena h1'), /Widzę dom/);
+  assert.match(await page.textContent('.sl-scena'), /Gram w C-dur/);
+  assert.match(await page.textContent('.sl-scena'), /oryginalnie D-dur/);
+  assert.match(await page.textContent('.sl-dalej'), /Wlazł kotek/);
+  await page.keyboard.press('ArrowRight');
+  await page.waitForFunction(() => /graj\/1$/.test(location.hash));
+  await page.waitForSelector('.sl-scena h1:has-text("Wlazł kotek")');
+  assert.match(await page.textContent('.sl-pasek'), /2 \/ 2/);
+  await page.keyboard.press('PageUp');
+  await page.waitForSelector('.sl-scena h1:has-text("Widzę dom")');
+  assert.deepEqual(errors, []);
+  await close();
+});

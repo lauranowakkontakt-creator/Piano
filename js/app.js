@@ -7,6 +7,7 @@ const ROUTES = {
   trening: ViewTrening,
   klawisze: ViewKlawisze,
   piosenki: ViewPiosenki,
+  setlista: ViewSetlista,
   wizualizacja: ViewWizualizacja,
   petla: ViewPetla,
   przejscia: ViewPrzejscia,

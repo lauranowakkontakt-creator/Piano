@@ -24,6 +24,7 @@ const NAV_GROUPS = [
   ]},
   {name:'Twoje', items:[
     {id:'piosenki', name:'Piosenki', opis:'Twoje utwory: akordy, tekst, nagranie, tonacja.'},
+    {id:'setlista', name:'Setlista',  opis:'Piosenki po kolei na występ, z akordami przejścia między tonacjami.'},
     {id:'glos',     name:'Głos',     opis:'Rozgrzewka, ćwiczenia emisyjne i nagrywanie się.'},
     {id:'druk',     name:'Druk',     opis:'Ściągawki A4 na pulpit pianina.'},
     {id:'zrodla',   name:'Źródła',   opis:'Gdzie uczyć się dalej.'},
@@ -117,7 +118,7 @@ const NAV_DOL = [
   {id:'dzis',     name:'Dziś',     ikona:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z'},
   {id:'teoria',   name:'Nauka',    ikona:'M4 5h7a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H4zM20 5h-5a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h5z', teZ:['nuty','trening']},
   {id:'klawisze', name:'Klawisze', ikona:'M3 5h18v14H3zM8 5v8M12 5v8M16 5v8'},
-  {id:'piosenki', name:'Piosenki', ikona:'M9 18V6l11-2v12M9 18a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0zM20 16a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0z'},
+  {id:'piosenki', name:'Piosenki', teZ:['setlista'], ikona:'M9 18V6l11-2v12M9 18a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0zM20 16a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0z'},
 ];
 /* Która pozycja dolnego paska jest aktywna dla danej zakładki ('wiecej' = reszta). */
 function navDolAktywny(id){

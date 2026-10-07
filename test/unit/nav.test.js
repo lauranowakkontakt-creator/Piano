@@ -55,6 +55,7 @@ test('dolny pasek: każda zakładka świeci się w jednym miejscu', () => {
   for(const id of ['teoria', 'nuty', 'trening']) assert.equal(navDolAktywny(id), 'teoria', id);
   assert.equal(navDolAktywny('klawisze'), 'klawisze');
   assert.equal(navDolAktywny('piosenki'), 'piosenki');
+  assert.equal(navDolAktywny('setlista'), 'piosenki', 'setlista mieszka przy piosenkach');
   for(const id of ['petla', 'gamy', 'glos', 'druk', 'zrodla', 'wizualizacja', 'przejscia', 'nie-ma'])
     assert.equal(navDolAktywny(id), 'wiecej', id);
 });
