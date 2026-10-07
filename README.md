@@ -47,6 +47,8 @@ Appka pamięta wybór. Kolory ról akordów (tonika — róż, subdominanta — 
 Na dole ekranu jest pasek pod kciukiem: **Dziś, Nauka, Klawisze, Piosenki, Więcej**.
 „Nauka” prowadzi do Teorii (świeci się też w Nutach i Treningu), a **Więcej** otwiera pełną listę zakładek z opisem i wybór motywu.
 
+Appka ma własną ikonę (pianino z zaświeconym akordem C). W telefonie otwórz stronę i wybierz **Udostępnij → Do ekranu początkowego** (iPhone) albo **⋮ → Dodaj do ekranu głównego** (Android) — Harmonia pojawi się jak zwykła aplikacja.
+
 ## Twoje dane
 
 Piosenki i nagrania są zapisane **tylko w tej przeglądarce na tym komputerze**. Nie ma logowania ani chmury.
