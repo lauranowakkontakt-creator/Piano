@@ -20,7 +20,10 @@ async function route(){
   const [name, ...rest] = (location.hash.replace(/^#/,'') || 'dzis').split('/');
   const view = ROUTES[name] || ViewDzis;
   const sub = rest.join('/') || null;
-  document.querySelectorAll('.tabs a').forEach(a=>a.setAttribute('aria-current', a.getAttribute('href')==='#'+(ROUTES[name]?name:'dzis') ? 'page' : 'false'));
+  const akt = ROUTES[name] ? name : 'dzis';
+  document.querySelectorAll('.tabs a').forEach(a=>a.setAttribute('aria-current', a.getAttribute('href')==='#'+akt ? 'page' : 'false'));
+  // zakładka, której nie ma w pasku (Druk, Źródła) — świeci się przycisk ☰
+  document.querySelectorAll('.navbtn').forEach(b=>b.toggleAttribute('data-akt', !document.querySelector('.tabs a[href="#'+akt+'"]')));
   document.title = view.title + ' · Harmonia';
   const root = document.getElementById('view');
   root.innerHTML='';

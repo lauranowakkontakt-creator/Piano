@@ -441,7 +441,7 @@ test('Na telefonie wszystkie zakładki są w zasięgu jednego dotknięcia', asyn
   assert.equal(await page.locator('.navdol [data-akt]').getAttribute('data-dol'), 'wiecej');
 
   // „Więcej" otwiera menu z każdą zakładką i z opisem
-  const wszystkich = await page.locator('.tabs a').count();
+  const wszystkich = await page.evaluate(() => Object.keys(ROUTES).length);
   await page.click('.nav-wiecej');
   assert.equal(await page.locator('.navmenu').isVisible(), true);
   assert.equal(await page.locator('.navgrupa a').count(), wszystkich, 'menu pokazuje każdą zakładkę');
@@ -745,6 +745,21 @@ test('Setlista: układanie, zmiana tonacji, przejście i granie po kolei', async
   assert.match(await page.textContent('.sl-pasek'), /2 \/ 2/);
   await page.keyboard.press('PageUp');
   await page.waitForSelector('.sl-scena h1:has-text("Widzę dom")');
+  assert.deepEqual(errors, []);
+  await close();
+});
+
+test('Druk i Źródła są tylko w menu ☰, a ☰ świeci się, gdy w nich jesteś', async () => {
+  const {page, errors, close} = await open('#gamy');
+  await page.waitForSelector('.tabs a[aria-current="page"]');
+  assert.equal(await page.locator('.tabs a[href="#druk"]').count(), 0);
+  assert.equal(await page.locator('.tabs a[href="#zrodla"]').count(), 0);
+  assert.equal(await page.locator('.navbtn[data-akt]').count(), 0, 'w Gamach ☰ nie świeci');
+  await page.click('.navbtn');
+  await page.click('.navgrupa a[data-id="zrodla"]');
+  await page.waitForSelector('.links');
+  assert.equal(await page.locator('.navbtn[data-akt]').count(), 1, 'w Źródłach świeci ☰');
+  assert.equal(await page.locator('.tabs a[aria-current="page"]').count(), 0);
   assert.deepEqual(errors, []);
   await close();
 });

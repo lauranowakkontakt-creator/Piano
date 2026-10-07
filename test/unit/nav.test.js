@@ -13,10 +13,12 @@ const app = fs.readFileSync(path.join(ROOT, 'js', 'app.js'), 'utf8');
 const wPasku = [...html.matchAll(/<a href="#([a-z]+)">/g)].map(m => m[1]);
 const wRouterze = [...app.matchAll(/^\s{2}([a-z]+):\s*View/gm)].map(m => m[1]);
 
-test('menu zna dokładnie te zakładki, które są w pasku i w routerze', () => {
+test('menu zna dokładnie te zakładki, które są w routerze; pasek pokazuje część z nich', () => {
   const wMenu = plain(NAV_ITEMS.map(i => i.id));
-  assert.deepEqual([...wMenu].sort(), [...wPasku].sort(), 'menu ≠ pasek zakładek');
   assert.deepEqual([...wMenu].sort(), [...wRouterze].sort(), 'menu ≠ router');
+  for(const id of wPasku) assert.ok(wMenu.includes(id), id + ' jest w pasku, a nie ma go w menu');
+  // rzadziej używane zakładki są tylko w menu ☰, żeby pasek się nie przepełniał
+  for(const id of ['druk', 'zrodla']) assert.ok(!wPasku.includes(id), id + ' ma być tylko w menu');
   assert.equal(new Set(wMenu).size, wMenu.length, 'powtórzona zakładka w menu');
 });
 
