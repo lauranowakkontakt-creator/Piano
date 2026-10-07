@@ -232,6 +232,29 @@ function quizBox(title, items, onDone){
   return box;
 }
 
+/* Tekst piosenki z akordami nad słowami (linie z parseLyrics) → do box.
+   Kolor akordu = jego rola w tonacji key; klik gra akord. Wspólne dla Piosenek i Setlisty. */
+function lyricsInto(box, linie, key){
+  linie.forEach(l=>{
+    if(l.empty){ box.append(h('div',{class:'lyr-przerwa'})); return; }
+    if(l.label){ box.append(h('div',{class:'lyr-label'}, l.label)); return; }
+    const line = h('div',{class:'lyr-line'});
+    l.parts.forEach(part=>{
+      const kol = h('span',{class:'lyr-part'});
+      if(part.chord){
+        const f = functionIn(part.chord, key);
+        const b = h('button',{class:'lyr-ch '+f.fn,'data-c':part.chord.text,
+          title:FN_NAME[f.fn]+(f.rn?' · '+f.rn:'')+' — kliknij, żeby usłyszeć'}, fmt(part.chord.text));
+        b.onclick=()=>{ strike(part.chord.pcs,1.1,0,part.chord.bassPc); ring(b,'lit'); };
+        kol.append(b);
+      }else kol.append(h('span',{class:'lyr-ch pusty','aria-hidden':'true'}));
+      kol.append(h('span',{class:'lyr-tx'}, part.text || ' '));
+      line.append(kol);
+    });
+    box.append(line);
+  });
+}
+
 /* ---------- pamięć drobnych ustawień (localStorage, bezpiecznie) ---------- */
 const prefs = {
   get(k, d){ try{ const v=localStorage.getItem('harmonia.'+k); return v==null?d:JSON.parse(v); }catch(e){ return d; } },
