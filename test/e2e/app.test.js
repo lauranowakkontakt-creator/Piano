@@ -81,12 +81,15 @@ test('Piosenki: startowe piosenki, wpisywanie akordów, role i zgadywanie tonacj
   }
   await page.click('text=+ Nowa piosenka');
   await page.waitForFunction(() => document.querySelector('input[aria-label="Tytuł"]')?.value === 'Nowa piosenka');
-  const ta = page.locator('textarea.mono');
-  await ta.fill('[Zwrotka] Am Dm E Am | Every');
+  // nie ma osobnego pola akordów, nagrania, PDF ani notatek — akordy idą z tekstu
+  for(const t of ['Edytuj akordy', 'Nagranie', 'Tekst i nuty (PDF)', 'Notatki'])
+    assert.equal(await page.locator('h2', {hasText: t}).count(), 0, t);
+  assert.equal(await page.locator('textarea.mono').count(), 0);
+  await page.click('summary:has-text("Edytuj tekst")');
+  await page.locator('details textarea').fill('[Am]Raz [Dm]dwa [E]trzy [Am]cztery');
   await page.waitForTimeout(50);
   const chips = await page.$$eval('.song-sheet .chord-chip', els => els.map(e => [e.dataset.c, e.className.split(' ').pop()]));
   assert.deepEqual(chips.map(c => c[0]), ['Am', 'Dm', 'E', 'Am']);
-  assert.match(await page.textContent('.song-sheet'), /Every/);   // słowo zostaje jako nierozpoznane
   assert.match(await page.textContent('.song-sheet + .hint, .card .hint'), /a-moll/);   // podpowiedź tonacji
   await page.click('text=ustaw a-moll');
   const roles = await page.$$eval('.song-sheet .chord-chip', els => els.map(e => e.className.split(' ').pop()));

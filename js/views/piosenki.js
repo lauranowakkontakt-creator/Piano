@@ -224,7 +224,7 @@ const ViewPiosenki = {
       h('header',{style:'margin-bottom:22px'},
         h('p',{class:'kicker'},'Twoje utwory'),
         h('h1',null,'Piosenki ', h('em',null,'rozebrane na części')),
-        h('p',{class:'lead'},'Wpisz akordy piosenki, a appka pokaże rolę każdego akordu w tonacji, zagra je i pomoże zgadnąć tonację. Możesz dołączyć nagranie do odsłuchu. Wszystko zapisuje się w tej przeglądarce.')));
+        h('p',{class:'lead'},'Tekst z akordami nad słowami. Appka pokaże rolę każdego akordu w tonacji, zagra je i pomoże zgadnąć tonację. Wszystko zapisuje się w tej przeglądarce.')));
 
     let songs;
     try{ songs = await DB.allSongs(); }
@@ -278,14 +278,12 @@ const ViewPiosenki = {
         if(!Array.isArray(arr)) throw new Error('brak listy piosenek');
         for(const raw of arr){ const s=sanitizeSong(raw); if(s){ await DB.putSong(s); n++; } }
         songs = await DB.allSongs(); drawList(); drawSong();
-        alert(`Wczytano piosenek: ${n}. (Nagrania audio nie są w kopii — dodaj je ponownie.)`);
+        alert(`Wczytano piosenek: ${n}.`);
       }catch(err){ alert('To nie wygląda na plik kopii z tej appki.'); }
       e.target.value='';
     }
 
     let saveT=null, saveFor=null;   // opóźniony zapis i piosenka, której dotyczy
-    let blobUrls={};   // podglądy audio/PDF — zwalniamy stary URL, kiedy rysujemy nowy
-    const blobUrl = (slot, blob)=>{ if(blobUrls[slot]) URL.revokeObjectURL(blobUrls[slot]); return blobUrls[slot]=URL.createObjectURL(blob); };
     function drawSong(focusTitle){
       stopSeq();
       main.innerHTML='';
@@ -304,23 +302,20 @@ const ViewPiosenki = {
       const fKey = h('select',null, ...SONG_KEYS.map(k=>h('option',{value:k.v,selected:k.v===s.key},k.l)));
       const fBpm = h('input',{type:'number',min:40,max:200,value:s.bpm||90});
       const fBeats = h('select',null, ...[1,2,3,4,8].map(n=>h('option',{value:n,selected:(s.beats||4)==n}, n+' '+(n===1?'uderzenie':n<5?'uderzenia':'uderzeń'))));
-      const fChords = h('textarea',{spellcheck:'false',class:'mono',style:'min-height:130px;font-size:.95rem',placeholder:'[Zwrotka] C G Am F\n[Refren] F G C C'}, s.chords||'');
       const fLyrics = h('textarea',{spellcheck:'false',style:'min-height:150px',
         placeholder:'[Zwrotka]\n[C]Wlazł kotek na [G7]płotek i mruga,\nładna to [C]piosenka nie[G7]długa.'}, s.lyrics||'');
-      const fNotes = h('textarea',{placeholder:'Twoje notatki: co ćwiczyć, gdzie jest trudno, jak grać…'}, s.notes||'');
 
       fTitle.oninput=()=>{ s.title=fTitle.value; save(); };
       fArtist.oninput=()=>{ s.artist=fArtist.value; save(); };
-      fKey.onchange=()=>{ s.key=fKey.value; save(); drawSheet(); drawBuilder(); };
+      fKey.onchange=()=>{ s.key=fKey.value; save(); drawSheet(); drawLyrics(); };
       fBpm.oninput=()=>{ s.bpm=+fBpm.value||90; save(); };
       fBeats.onchange=()=>{ s.beats=+fBeats.value; save(); };
-      fChords.oninput=()=>{ s.chords=fChords.value; save(); drawSheet(); };
-      fLyrics.oninput=()=>{ s.lyrics=fLyrics.value; save(); drawLyrics(); };
-      fNotes.oninput=()=>{ s.notes=fNotes.value; save(); };
+      fLyrics.oninput=()=>{ s.lyrics=fLyrics.value; save(); drawLyrics(); if(!(s.chords||'').trim()) drawSheet(); };
       fLyrics.style.minHeight = Math.min(700, 120 + (s.lyrics||'').split('\n').length*22)+'px';
-      fNotes.style.minHeight = Math.min(600, 90 + (s.notes||'').split('\n').length*22)+'px';
 
       /* --- arkusz z akordami --- */
+      // bez osobnej listy akordów — bierzemy je po kolei z tekstu
+      const chordText = ()=> (s.chords||'').trim() ? s.chords : lyricsChords(s.lyrics).map(c=>c.text).join(' ');
       const sheet = h('div',{class:'song-sheet'});
       const analysis = h('div',{class:'hint',style:'margin-top:10px'});
       const playAll = h('button',{class:'btn primary'},'▶ Zagraj akordy');
@@ -334,7 +329,7 @@ const ViewPiosenki = {
       };
       function drawSheet(){
         sheet.innerHTML='';
-        const lines = parseSongText(s.chords);
+        const lines = parseSongText(chordText());
         const all=[];
         const junk=[];
         lines.forEach(l=>{
@@ -351,7 +346,7 @@ const ViewPiosenki = {
           });
           sheet.append(line);
         });
-        if(!lines.length) sheet.append(h('div',{class:'empty'},'Wpisz akordy poniżej albo klikaj akordy w kreatorze.'));
+        if(!lines.length) sheet.append(h('div',{class:'empty'},'Akordy pojawią się tu z tekstu piosenki.'));
         // analiza
         const cnt={t:0,s:0,d:0,o:0}; all.forEach(c=>cnt[functionIn(c,s.key).fn]++);
         const guesses = guessKey(all);
@@ -363,7 +358,7 @@ const ViewPiosenki = {
           if(guesses[0] && guesses[0].v!==s.key && guesses[0].s > (guesses.find(g=>g.v===s.key)||{s:-1}).s){
             const g=guesses[0];
             const use=h('button',{class:'btn small',style:'margin-left:8px'},'ustaw '+keyNameLabel(g.v));
-            use.onclick=()=>{ s.key=g.v; fKey.value=g.v; save(); drawSheet(); drawBuilder(); };
+            use.onclick=()=>{ s.key=g.v; fKey.value=g.v; save(); drawSheet(); drawLyrics(); };
             analysis.append(h('div',{style:'margin-top:6px'},`Podpowiedź: akordy najlepiej pasują do tonacji `, h('b',null,keyNameLabel(g.v)), ` (${g.fit}/${all.length} akordów w gamie).`, use));
           }
         }
@@ -385,7 +380,7 @@ const ViewPiosenki = {
       function transponujTekst(n){
         if(!s.lyrics) return;
         s.lyrics = transposeLyrics(s.lyrics, n);
-        fLyrics.value = s.lyrics; save(); drawLyrics();
+        fLyrics.value = s.lyrics; save(); drawLyrics(); if(!(s.chords||'').trim()) drawSheet();
       }
       function drawLyrics(){
         lyrBox.innerHTML='';
@@ -395,88 +390,6 @@ const ViewPiosenki = {
           return;
         }
         lyricsInto(lyrBox, linie, s.key);
-      }
-
-      /* --- kreator: akordy tonacji do klikania --- */
-      const builder = h('div',{class:'builder'});
-      function drawBuilder(){
-        builder.innerHTML='';
-        const major = majorOfKey(s.key);
-        const isMin = s.key.endsWith('m');
-        let chords = chordsFor(major).map(c=>({...c, ...functionIn(parseChord(c.name.replace('°','dim')), s.key)}));
-        const minorV = ()=>{ const pc=(PC[s.key.slice(0,-1)]+7)%12; return (KEYS[major].some(n=>n.includes('b'))?PC_NAME_FLAT:PC_NAME_SHARP)[pc]; };
-        if(isMin){ chords = [...chords.slice(5), ...chords.slice(0,5)]; const V = parseChord(minorV()); chords.push({name:V.root, pcs:V.pcs, fn:'d', rn:'V', notes:[]}); }
-        const nodes = h('div',{class:'nodes'});
-        chords.forEach(c=>{
-          const b=h('button',{class:'node '+c.fn,title:'dodaj do piosenki',html:`<div class="rn">${c.rn}</div><div class="name">${fmt(c.name)}</div>`});
-          b.onclick=()=>{
-            strike(c.pcs); ring(b);
-            const ins = c.name.replace('°','dim');
-            const v=fChords.value; const pos = fChords.selectionStart ?? v.length;
-            const before = v.slice(0,pos), after=v.slice(pos);
-            const sep = before && !/[\s]$/.test(before) ? ' ' : '';
-            fChords.value = before + sep + ins + ' ' + after;
-            const np = (before+sep+ins+' ').length; fChords.setSelectionRange(np,np);
-            s.chords=fChords.value; save(); drawSheet();
-          };
-          nodes.appendChild(b);
-        });
-        builder.append(h('div',{class:'hint',style:'margin-bottom:8px'},`Akordy tonacji ${keyNameLabel(s.key)} — kliknij, żeby dopisać w miejscu kursora. Enter w polu akordów = nowa linia.`), nodes,
-          h('div',{class:'row',style:'margin-top:10px'},
-            ...[['T→S→D→T',[0,3,4,0]],['I–V–vi–IV',[0,4,5,3]],['vi–IV–I–V',[5,3,0,4]],['ii–V–I',[1,4,0]]].map(([l,deg])=>{
-              const b=h('button',{class:'btn small'},'+ '+l);
-              // w moll dominanta (V) jest durowa: w a-moll E, nie Em
-              b.onclick=()=>{ const cs=chordsFor(major); const names = deg.map(d=>isMin && d===4 ? minorV() : cs[isMin? (d+5)%7 : d].name.replace('°','dim'));
-                fChords.value = (fChords.value.trim()? fChords.value.replace(/\s*$/,'')+'\n':'') + names.join(' ');
-                s.chords=fChords.value; save(); drawSheet(); };
-              return b;
-            })));
-      }
-
-      /* --- PDF z tekstem / nutami --- */
-      const pdfBox = h('div');
-      async function drawPdf(){
-        pdfBox.innerHTML='';
-        const rec = await DB.getPdf(s.id).catch(()=>null);
-        const input = h('input',{type:'file',accept:'application/pdf,image/*',style:'display:none'});
-        input.onchange=async()=>{ const f=input.files[0]; if(!f) return; await DB.putPdf(s.id,f,f.name); drawPdf(); };
-        if(rec && rec.blob){
-          const url = blobUrl('pdf', rec.blob);
-          const isImg = (rec.blob.type||'').startsWith('image/');
-          pdfBox.append(h('div',{class:'row'},
-            h('a',{class:'btn primary',href:url,target:'_blank',rel:'noopener'},'📄 Otwórz: '+(rec.name||'plik')),
-            h('label',{class:'btn small ghost'},'zmień plik',input),
-            h('button',{class:'btn small ghost danger',onclick:async()=>{ if(confirm('Usunąć plik z tej piosenki?')){ await DB.delPdf(s.id); drawPdf(); } }},'usuń')),
-            isImg ? h('img',{src:url,alt:'nuty',style:'max-width:100%;margin-top:10px;border-radius:10px'}) :
-              h('object',{data:url,type:'application/pdf',style:'width:100%;height:70vh;margin-top:10px;border-radius:10px;border:1px solid var(--line)'},
-                h('p',{class:'hint'},'Podgląd niedostępny w tej przeglądarce — użyj przycisku „Otwórz".')));
-        }else{
-          pdfBox.append(h('label',{class:'btn'},'⤒ Dołącz PDF albo zdjęcie z tekstem / nutami',input),
-            h('div',{class:'hint',style:'margin-top:6px'},'Plik zostaje tylko u Ciebie, w przeglądarce. Będziesz mieć tekst obok akordów.'));
-        }
-      }
-
-      /* --- audio --- */
-      const audioBox = h('div');
-      async function drawAudio(){
-        audioBox.innerHTML='';
-        const rec = await DB.getAudio(s.id).catch(()=>null);
-        const input = h('input',{type:'file',accept:'audio/*',style:'display:none'});
-        input.onchange=async()=>{ const f=input.files[0]; if(!f) return; await DB.putAudio(s.id,f,f.name); s.audioName=f.name; save(); drawAudio(); };
-        if(rec && rec.blob){
-          const url = blobUrl('audio', rec.blob);
-          const player = h('audio',{controls:true,src:url,preload:'metadata'});
-          const rates = h('div',{class:'seg',role:'group','aria-label':'Tempo odsłuchu'});
-          [0.5,0.75,1].forEach(r=>{ const b=h('button',{'aria-pressed':String(r===1)}, r===1?'normalnie':'×'+r); b.onclick=()=>{ player.playbackRate=r; player.preservesPitch=true; rates.querySelectorAll('button').forEach(x=>x.setAttribute('aria-pressed',String(x===b))); }; rates.appendChild(b); });
-          audioBox.append(h('div',{class:'hint'},'🎵 '+(rec.name||'nagranie')), player,
-            h('div',{class:'row',style:'margin-top:8px'}, rates,
-              h('label',{class:'btn small ghost'},'zmień plik',input),
-              h('button',{class:'btn small ghost danger',onclick:async()=>{ if(confirm('Usunąć nagranie z tej piosenki?')){ await DB.delAudio(s.id); delete s.audioName; save(); drawAudio(); } }},'usuń nagranie')),
-            h('div',{class:'hint',style:'margin-top:6px'},'Zwolnij nagranie (×0.5), żeby łatwiej wyłapać zmiany akordów.'));
-        }else{
-          audioBox.append(h('label',{class:'btn'},'⤒ Dodaj nagranie (mp3, m4a, wav…)',input),
-            h('div',{class:'hint',style:'margin-top:6px'},'Plik zostaje tylko u Ciebie, w przeglądarce. Akordy wpisujesz ręcznie — słuchasz i dopasowujesz.'));
-        }
       }
 
       main.append(
@@ -489,13 +402,8 @@ const ViewPiosenki = {
             h('div',null,h('label',{class:'f'},'Tempo (uderzeń na minutę)'),fBpm),
             h('div',null,h('label',{class:'f'},'Jeden akord trwa'),fBeats))),
         h('section',{style:'margin-top:18px'},
-          h('div',{class:'sechead'}, h('h2',null,'Akordy'), h('div',{class:'row'}, playAll, loopToggle(), clickToggle(), h('a',{class:'btn',href:'#druk/song/'+s.id},'🖨 Drukuj'), h('button',{class:'btn',title:'Pokaż drzewo i koło dla akordów tej piosenki',onclick:()=>{ const toks=parseSongText(s.chords).flatMap(l=>l.tokens.filter(t=>t.chord).map(t=>t.chord.text)); prefs.set('przejscia.seq',toks); prefs.set('przejscia.start',s.key); location.hash='#przejscia'; }},'🌳 Drzewo przejść'))),
+          h('div',{class:'sechead'}, h('h2',null,'Akordy'), h('div',{class:'row'}, playAll, loopToggle(), clickToggle(), h('a',{class:'btn',href:'#druk/song/'+s.id},'🖨 Drukuj'), h('button',{class:'btn',title:'Pokaż drzewo i koło dla akordów tej piosenki',onclick:()=>{ const toks=parseSongText(chordText()).flatMap(l=>l.tokens.filter(t=>t.chord).map(t=>t.chord.text)); prefs.set('przejscia.seq',toks); prefs.set('przejscia.start',s.key); location.hash='#przejscia'; }},'🌳 Drzewo przejść'))),
           h('div',{class:'card'}, sheet, analysis)),
-        h('section',{style:'margin-top:18px'},
-          h('h2',null,'Edytuj akordy'),
-          fChords,
-          h('div',{class:'hint',style:'margin-top:6px'},'Jak pisać: akordy oddzielone spacją · „|" = kreska taktowa · [Zwrotka] na początku linii = etykieta · przykłady: C  Am  F#m  Bb7  Gsus4  C/E'),
-          h('div',{class:'card',style:'margin-top:12px'}, builder)),
         h('section',{style:'margin-top:18px'},
           h('div',{class:'sechead'}, h('h2',null,'Tekst z akordami'),
             h('div',{class:'row'}, playLyr, loopToggle(),
@@ -508,16 +416,10 @@ const ViewPiosenki = {
             h('div',{class:'hint',style:'margin-top:6px'},'Akord w nawiasie kwadratowym staje nad następną sylabą: ',
               h('span',{class:'mono'},'[C]Wlazł kotek na [G7]płotek'),'. Linia z samym ',
               h('span',{class:'mono'},'[Zwrotka]'),' to nagłówek części. Reszta linii zostaje zwykłym tekstem.'))),
-        h('section',{style:'margin-top:18px'},
-          h('h2',null,'Nagranie'), h('div',{class:'card'},audioBox)),
-        h('section',{style:'margin-top:18px'},
-          h('h2',null,'Tekst i nuty (PDF)'), h('div',{class:'card'},pdfBox)),
-        h('section',{style:'margin-top:18px'},
-          h('h2',null,'Notatki'), fNotes),
         h('div',{class:'row',style:'margin-top:22px'},
           h('button',{class:'btn danger',onclick:async()=>{ if(!confirm(`Usunąć „${s.title}"? Tego nie da się cofnąć.`)) return; if(saveFor===s){ clearTimeout(saveT); saveFor=null; } await DB.delSong(s.id); songs=songs.filter(x=>x.id!==s.id); currentId=songs[0]&&songs[0].id; drawList(); drawSong(); }},'Usuń piosenkę'))
       );
-      drawSheet(); drawLyrics(); drawBuilder(); drawAudio(); drawPdf();
+      drawSheet(); drawLyrics();
       if(focusTitle){ fTitle.focus(); fTitle.select(); }
     }
 
