@@ -1,5 +1,6 @@
 /* Router: #zakladka/podstrona */
 const ROUTES = {
+  dzis: ViewDzis,
   teoria: ViewTeoria,
   gamy: ViewGamy,
   nuty: ViewNuty,
@@ -15,10 +16,10 @@ const ROUTES = {
 };
 async function route(){
   stopSeq(); if(typeof Ladder!=='undefined') Ladder.stop();
-  const [name, ...rest] = (location.hash.replace(/^#/,'') || 'gamy').split('/');
-  const view = ROUTES[name] || ViewGamy;
+  const [name, ...rest] = (location.hash.replace(/^#/,'') || 'dzis').split('/');
+  const view = ROUTES[name] || ViewDzis;
   const sub = rest.join('/') || null;
-  document.querySelectorAll('.tabs a').forEach(a=>a.setAttribute('aria-current', a.getAttribute('href')==='#'+(ROUTES[name]?name:'gamy') ? 'page' : 'false'));
+  document.querySelectorAll('.tabs a').forEach(a=>a.setAttribute('aria-current', a.getAttribute('href')==='#'+(ROUTES[name]?name:'dzis') ? 'page' : 'false'));
   document.title = view.title + ' · Harmonia';
   const root = document.getElementById('view');
   root.innerHTML='';
@@ -37,7 +38,9 @@ const odswiezCienie = navShadows(tabsBar);
 const menu = navMenu();
 document.getElementById('nav-btn').replaceWith(menu.btn);
 document.querySelector('.topbar').append(menu.panel);
-window.addEventListener('hashchange', ()=>{ navScrollToCurrent(tabsBar); navMarkCurrent(menu.panel); });
+const dol = navDol(menu);
+document.body.append(dol.pasek);
+window.addEventListener('hashchange', ()=>{ navScrollToCurrent(tabsBar); navMarkCurrent(menu.panel); dol.odswiez(); });
 
 /* wersja plików — żeby dało się sprawdzić, co naprawdę siedzi w przeglądarce na telefonie */
 const metaW = document.querySelector('meta[name="harmonia-wersja"]');

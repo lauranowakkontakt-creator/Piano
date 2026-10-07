@@ -6,6 +6,9 @@
 
 /* rodzaj akordu → kolor jak na obrazkach: dur róż, moll niebieski, septymowy (dominanta)
    bursztyn, zwiększony zielony, zmniejszony fiolet, zawieszony szary */
+/* Kolor rodzaju akordu do tekstu na stronie — zależy od motywu (css: --ty-*).
+   Hex z CHORD_TYPES zostaje do ciemnych scen (koło, wizualizacja). */
+const tyColor = t => `var(--ty-${t})`;
 const CHORD_TYPES = {
   mj:{name:'dur',          color:'#f472b6', desc:'jasny, stabilny'},
   mn:{name:'moll',         color:'#60a5fa', desc:'ciemniejszy, miękki'},

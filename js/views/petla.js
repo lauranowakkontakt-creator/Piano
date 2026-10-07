@@ -134,8 +134,8 @@ const ViewPetla = {
         h('div',null,
           h('div',{class:'kbd-panel',style:'margin-top:0'}, kbdCap, kbdHold),
           howBox)),
-      h('div',{class:'legend'}, ...Object.entries(CHORD_TYPES).map(([k,t])=>h('span',{style:`color:${t.color}`},t.name)),
-        h('span',{style:'color:#fff'},'biała obwódka = palec zostaje')),
+      h('div',{class:'legend'}, ...Object.entries(CHORD_TYPES).map(([k,t])=>h('span',{style:`color:${tyColor(k)}`},t.name)),
+        h('span',{style:'color:var(--text)'},'obwódka = palec zostaje')),
       h('section',null, h('div',{class:'sechead'}, h('h2',null,'Co pasuje dalej'), h('span',{class:'hint'},'po zaznaczonym akordzie · kliknij, żeby dodać')), nextBox),
       h('section',null, h('div',{class:'sechead'}, h('h2',null,'Baza akordów'), h('span',{class:'hint'},'kolumny idą po kole kwintowym · kliknij, żeby dodać')), dbBox),
       h('section',null, h('div',{class:'sechead'}, h('h2',null,'Gotowe pętle'), h('span',{class:'hint'},'kliknij, żeby wczytać')), catBox, presetBox),
@@ -211,10 +211,10 @@ const ViewPetla = {
       held.forEach(m=>{ const r=svg.querySelector(`rect[data-midi="${m}"]`); if(r) r.classList.add('hold'); });
       kbdHold.innerHTML=''; kbdHold.append(svg);
       const nx = chords[(i+1)%chords.length];
-      kbdCap.innerHTML = `<b style="color:${CHORD_TYPES[t].color}">${esc(chordLabel(c.text))}</b> · ${esc(CHORD_TYPES[t].name)} · prawa ręka: <b>${v.map(nm).join(' – ')}</b> (${inversionName(c,v)}) · lewa: <b>${nm(bass)}</b>`+
+      kbdCap.innerHTML = `<b style="color:${tyColor(t)}">${esc(chordLabel(c.text))}</b> · ${esc(CHORD_TYPES[t].name)} · prawa ręka: <b>${v.map(nm).join(' – ')}</b> (${inversionName(c,v)}) · lewa: <b>${nm(bass)}</b>`+
         (held.length ? ` · zostaje: <b>${held.map(nm).join(', ')}</b>` : '');
-      nowEl.innerHTML = `<span class="muted">teraz</span> <b class="cur" style="color:${CHORD_TYPES[t].color}">${esc(chordLabel(c.text))}</b>`+
-        (chords.length>1 ? ` <span class="muted">→ potem</span> <b style="color:${CHORD_TYPES[chordType(nx)].color}">${esc(chordLabel(nx.text))}</b>` : '');
+      nowEl.innerHTML = `<span class="muted">teraz</span> <b class="cur" style="color:${tyColor(t)}">${esc(chordLabel(c.text))}</b>`+
+        (chords.length>1 ? ` <span class="muted">→ potem</span> <b style="color:${tyColor(chordType(nx))}">${esc(chordLabel(nx.text))}</b>` : '');
       howBox.querySelectorAll('tr[data-i]').forEach(tr=>tr.classList.toggle('sel', +tr.dataset.i===i));
     }
 
@@ -268,7 +268,7 @@ const ViewPetla = {
         const sp = spellChord(c), nm = m=>fmt(sp[m%12]);
         const held = chords.length>1 ? v.filter(m=>prevV.includes(m)) : [];
         const tr = h('tr',{'data-i':i,tabindex:'0',class:i===sel?'sel':''},
-          h('td',{class:'cn',style:`color:${CHORD_TYPES[chordType(c)].color}`}, chordLabel(c.text)),
+          h('td',{class:'cn',style:`color:${tyColor(chordType(c))}`}, chordLabel(c.text)),
           h('td',{class:'mono'}, v.map(nm).join(' – '), h('small',null,' '+inversionName(c,v))),
           h('td',{class:'mono'}, nm(voicing(c.pcs,c.bassPc)[0])),
           h('td',{class:'mono muted'}, held.length ? held.map(nm).join(', ') : '—'));
@@ -293,7 +293,7 @@ const ViewPetla = {
       if(!c){ nextBox.append(h('p',{class:'hint'},'Zaznacz akord w pętli, a zobaczysz, co może po nim zabrzmieć.')); return; }
       const list = h('div',{class:'nextlist'});
       suggestNext(c).forEach(s=>{ const b=chipBtn(s.name, s.why); if(b) list.append(h('div',{class:'nx'}, b, h('span',{class:'hint'},s.why))); });
-      nextBox.append(h('p',{class:'muted',style:'margin:0 0 8px;font-size:.9rem'},'Po ', h('b',{style:`color:${CHORD_TYPES[chordType(c)].color}`},chordLabel(c.text)),' dobrze brzmi:'), list);
+      nextBox.append(h('p',{class:'muted',style:'margin:0 0 8px;font-size:.9rem'},'Po ', h('b',{style:`color:${tyColor(chordType(c))}`},chordLabel(c.text)),' dobrze brzmi:'), list);
     }
 
     // baza: wiersze = rodzaje, kolumny = 12 podstaw po kole kwintowym
@@ -329,7 +329,7 @@ const ViewPetla = {
         st.lubiBeats && st.lubiBeats!==beats
           ? h('button',{class:'btn small',style:'margin-left:8px',onclick:()=>{ beats=st.lubiBeats; beatsSel.value=String(beats); save(); drawBeats(-1,-1); draw(); if(isPlaying()) start(); }},
               `ustaw ${st.lubiBeats} uderzenia na akord`)
-          : null);
+          : '');  // append(null) wypisałby „null"
     }
     function drawPresets(){
       presetBox.innerHTML='';

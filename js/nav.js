@@ -10,6 +10,7 @@
 
 const NAV_GROUPS = [
   {name:'Nauka', items:[
+    {id:'dzis',    name:'Dziś',         opis:'Start: seria dni, trening dnia i lekcja, do której wracasz.'},
     {id:'teoria',  name:'Teoria',       opis:'10 lekcji od zera: klawiatura, gama, akordy, kadencje.'},
     {id:'nuty',    name:'Nuty',         opis:'Czytanie nut + trener „jaka to nuta".'},
     {id:'trening', name:'Trening',      opis:'Codzienna runda ćwiczeń ze słuchu. Pamięta, co Ci nie wyszło.'},
@@ -57,8 +58,17 @@ function navShadows(bar){
 /* Panel „Wszystko": pełna lista zakładek z opisami. Zwraca {panel, toggle}. */
 function navMenu(){
   const panel = h('div',{class:'navmenu',hidden:true,role:'dialog','aria-label':'Wszystkie zakładki'});
-  const zamknij = () => { panel.hidden = true; btn.setAttribute('aria-expanded','false'); };
+  const zamknij = () => {
+    panel.hidden = true; btn.setAttribute('aria-expanded','false');
+    document.querySelectorAll('.nav-wiecej').forEach(b=>b.setAttribute('aria-expanded','false'));
+  };
   const btn = h('button',{class:'navbtn',type:'button','aria-expanded':'false','aria-label':'Wszystkie zakładki'},'☰');
+  const przelacz = ()=>{
+    panel.hidden = !panel.hidden;
+    btn.setAttribute('aria-expanded', String(!panel.hidden));
+    document.querySelectorAll('.nav-wiecej').forEach(b=>b.setAttribute('aria-expanded', String(!panel.hidden)));
+    if(!panel.hidden) navMarkCurrent(panel);
+  };
 
   NAV_GROUPS.forEach(g=>{
     const lista = h('div',{class:'navgrupa'});
@@ -71,21 +81,67 @@ function navMenu(){
     panel.append(h('div',{class:'navsekcja'}, h('h3',null, g.name), lista));
   });
 
-  btn.onclick = ()=>{
-    panel.hidden = !panel.hidden;
-    btn.setAttribute('aria-expanded', String(!panel.hidden));
-    if(!panel.hidden) navMarkCurrent(panel);
-  };
+  /* Wygląd: wybór motywu kolorów (js/motyw.js) */
+  if(typeof MOTYWY !== 'undefined'){
+    const rzad = h('div',{class:'motywy',role:'group','aria-label':'Motyw kolorów'});
+    const zaznacz = id => rzad.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.motyw===id)));
+    MOTYWY.forEach(m=>{
+      const b = h('button',{type:'button',class:'motyw','data-motyw':m.id,'aria-pressed':'false'},
+        h('i',{class:'probka','aria-hidden':'true'}), h('b',null,m.name), h('span',null,m.opis));
+      b.onclick = ()=>zaznacz(ustawMotyw(m.id, true));
+      rzad.append(b);
+    });
+    zaznacz(motywTeraz());
+    panel.append(h('div',{class:'navsekcja'}, h('h3',null,'Wygląd'), rzad));
+  }
+
+  btn.onclick = przelacz;
   document.addEventListener('keydown', e=>{ if(e.key === 'Escape') zamknij(); });
   document.addEventListener('click', e=>{
     if(panel.hidden) return;
-    if(!panel.contains(e.target) && e.target !== btn) zamknij();
+    if(!panel.contains(e.target) && !e.target.closest('.navbtn,.nav-wiecej')) zamknij();
   });
-  return {panel, btn, zamknij};
+  return {panel, btn, zamknij, przelacz};
 }
 /* Zaznacz w menu zakładkę, na której jesteśmy. */
 function navMarkCurrent(panel){
-  const teraz = (location.hash.replace(/^#/,'') || 'gamy').split('/')[0];
+  const teraz = (location.hash.replace(/^#/,'') || 'dzis').split('/')[0];
   panel.querySelectorAll('a[data-id]').forEach(a=>
     a.setAttribute('aria-current', String(a.dataset.id === teraz)));
+}
+
+/* ---------- dolny pasek na telefonie ----------
+   Pięć miejsc pod kciukiem. „Nauka" świeci się też w Nutach i Treningu,
+   „Więcej" otwiera pełne menu i świeci się w pozostałych zakładkach. */
+const NAV_DOL = [
+  {id:'dzis',     name:'Dziś',     ikona:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z'},
+  {id:'teoria',   name:'Nauka',    ikona:'M4 5h7a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H4zM20 5h-5a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h5z', teZ:['nuty','trening']},
+  {id:'klawisze', name:'Klawisze', ikona:'M3 5h18v14H3zM8 5v8M12 5v8M16 5v8'},
+  {id:'piosenki', name:'Piosenki', ikona:'M9 18V6l11-2v12M9 18a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0zM20 16a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0z'},
+];
+/* Która pozycja dolnego paska jest aktywna dla danej zakładki ('wiecej' = reszta). */
+function navDolAktywny(id){
+  const it = NAV_DOL.find(x => x.id === id || (x.teZ || []).includes(id));
+  return it ? it.id : 'wiecej';
+}
+function navDol(menu){
+  const ikona = d => {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('viewBox','0 0 24 24'); svg.setAttribute('aria-hidden','true');
+    const p = document.createElementNS('http://www.w3.org/2000/svg','path'); p.setAttribute('d', d);
+    svg.append(p); return svg;
+  };
+  const pasek = h('nav',{class:'navdol','aria-label':'Najważniejsze zakładki'});
+  NAV_DOL.forEach(it => pasek.append(h('a',{href:'#'+it.id,'data-dol':it.id}, ikona(it.ikona), h('span',null,it.name))));
+  const wiecej = h('button',{type:'button',class:'nav-wiecej','data-dol':'wiecej','aria-expanded':'false','aria-label':'Więcej zakładek i wygląd'},
+    ikona('M4 7h16M4 12h16M4 17h16'), h('span',null,'Więcej'));
+  wiecej.onclick = ()=>{ menu.przelacz(); };
+  pasek.append(wiecej);
+  const odswiez = ()=>{
+    const akt = navDolAktywny((location.hash.replace(/^#/,'') || 'dzis').split('/')[0]);
+    pasek.querySelectorAll('[data-dol]').forEach(el=>el.toggleAttribute('data-akt', el.dataset.dol === akt));
+    pasek.querySelectorAll('a[data-dol]').forEach(el=>el.setAttribute('aria-current', el.dataset.dol === akt ? 'page' : 'false'));
+  };
+  odswiez();
+  return {pasek, odswiez};
 }
