@@ -311,7 +311,7 @@ function renderGlosPiosenki(main){
     const plan = (s.notes.split('EMOCJE W GŁOSIE (plan):')[1]||'').split('\n\nTekst:')[0].trim();
     main.append(h('div',{class:'card',style:'margin-top:12px'},
       h('div',{class:'row',style:'justify-content:space-between'}, h('b',{style:'font-family:Fraunces,serif;font-size:1.2rem'},s.title), h('span',{class:'hint'},keyNameLabel(s.key)+' · '+s.bpm+' BPM')),
-      h('div',{style:'white-space:pre-wrap;margin-top:8px;color:#cfd0dc;font-size:.92rem'},plan),
+      h('div',{style:'white-space:pre-wrap;margin-top:8px;color:var(--text);font-size:.92rem'},plan),
       h('div',{class:'row',style:'margin-top:10px'}, h('a',{class:'btn small primary',href:'#piosenki/'+s.id},'Otwórz piosenkę →'))));
   });
   main.append(h('div',{class:'box try'}, h('p',null,'Dodałaś swoją piosenkę? Dopisz w jej notatkach własną mapę emocji: dla każdej części (zwrotka, refren, bridge) jedna emocja i jedno pokrętło, które zmieniasz.')));

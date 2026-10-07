@@ -46,3 +46,15 @@ test('navById znajduje zakładkę po id, a na śmieci oddaje null', () => {
   assert.equal(navById(''), null);
   assert.equal(navById(null), null);
 });
+
+test('dolny pasek: każda zakładka świeci się w jednym miejscu', () => {
+  const {navDolAktywny, NAV_DOL} = N;
+  assert.equal(NAV_DOL.length, 4, '4 miejsca + „Więcej"');
+  for(const it of NAV_DOL) assert.ok(navById(it.id), it.id + ' nie jest zakładką');
+  assert.equal(navDolAktywny('dzis'), 'dzis');
+  for(const id of ['teoria', 'nuty', 'trening']) assert.equal(navDolAktywny(id), 'teoria', id);
+  assert.equal(navDolAktywny('klawisze'), 'klawisze');
+  assert.equal(navDolAktywny('piosenki'), 'piosenki');
+  for(const id of ['petla', 'gamy', 'glos', 'druk', 'zrodla', 'wizualizacja', 'przejscia', 'nie-ma'])
+    assert.equal(navDolAktywny(id), 'wiecej', id);
+});

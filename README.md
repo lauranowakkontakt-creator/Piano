@@ -21,6 +21,7 @@ Dane (piosenki, nagrania) na stronie są osobne od tych w pliku otwieranym z dys
 
 | Zakładka | Co tam jest |
 |---|---|
+| **Dziś** | Ekran startowy: seria dni w tym tygodniu, dzisiejszy cel z Treningu i duży przycisk „Zacznij trening dnia”, lekcja Teorii, do której wracasz, ostatnio grana piosenka i szybkie wejścia do grania. |
 | **Teoria** | 10 krótkich lekcji od zera: klawiatura → gama → akordy → cyfry rzymskie → tonika / subdominanta / dominanta → kadencje → przewroty → zmiana gamy → moll → plan ćwiczeń. Każda lekcja ma przykłady do posłuchania, zadanie przy pianinie i quiz. |
 | **Gamy** | Pierwszy prototyp (akordy.html) z klawiaturą: kliknij akord, a zobaczysz, które klawisze nacisnąć. |
 | **Nuty** | 6 lekcji czytania nut (pięciolinia, oba klucze, rytm, znaki, akordy) + trener „Jaka to nuta?”, który częściej pokazuje nuty, z którymi masz problem. |
@@ -34,14 +35,16 @@ Dane (piosenki, nagrania) na stronie są osobne od tych w pliku otwieranym z dys
 | **Druk** | Ściągawki A4 do postawienia na pianinie: jedna strona na gamę + ściąga ogólna. Każdą piosenkę też da się wydrukować. „Zapisz jako PDF” jest w oknie drukowania. |
 | **Źródła** | Strony i kanały do dalszej nauki, także po polsku. |
 
+## Wygląd
+
+Trzy motywy kolorów do wyboru w menu **☰** (na telefonie: **Więcej**) → **Wygląd**:
+**Kość słoniowa** (jasny, domyślny), **Nocna scena** (ciemny, na wieczór) i **Szałwia** (jasny, zielony).
+Appka pamięta wybór. Kolory ról akordów (tonika — róż, subdominanta — morski, dominanta — bursztyn) są w każdym motywie te same.
+
 ## Na telefonie
 
-W pasku na górze mieści się tylko kilka zakładek — reszta jest pod przyciskiem **☰** (pełna lista z opisem, co gdzie jest).
-Pasek sam przewija się do zakładki, na której jesteś.
-
-W stopce widać **numer wersji** plików. Jeśli coś wygląda dziwnie, porównaj go z komputerem — jeśli się różni,
-telefon trzyma starą wersję w pamięci podręcznej (przytrzymaj przycisk odświeżania → „Wczytaj ponownie bez pamięci podręcznej").
-Przy publikacji każdy skrypt dostaje znacznik `?v=…`, więc normalnie nie powinno się to zdarzać.
+Na dole ekranu jest pasek pod kciukiem: **Dziś, Nauka, Klawisze, Piosenki, Więcej**.
+„Nauka” prowadzi do Teorii (świeci się też w Nutach i Treningu), a **Więcej** otwiera pełną listę zakładek z opisem i wybór motywu.
 
 ## Twoje dane
 

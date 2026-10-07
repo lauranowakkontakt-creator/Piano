@@ -429,42 +429,76 @@ test('Na telefonie wszystkie zakładki są w zasięgu jednego dotknięcia', asyn
   page.on('pageerror', e => errors.push(e.message));
   await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
   await page.goto(APP + '#petla');
-  await page.waitForSelector('.navbtn');
+  await page.waitForSelector('.navdol');
 
-  // w pasku mieści się tylko kilka zakładek — menu musi pokazywać wszystkie
-  const wPasku = await page.evaluate(() => {
-    const bar = document.querySelector('.tabs').getBoundingClientRect();
-    return [...document.querySelectorAll('.tabs a')]
-      .filter(a => { const r = a.getBoundingClientRect(); return r.left >= bar.left - 1 && r.right <= bar.right + 1; }).length;
-  });
+  // na telefonie górny pasek zakładek znika, zostaje dolny: 4 miejsca + „Więcej"
+  assert.equal(await page.locator('.tabs').isVisible(), false, 'górne zakładki schowane');
+  assert.equal(await page.locator('.navdol').isVisible(), true, 'dolny pasek widoczny');
+  assert.equal(await page.locator('.navdol a, .navdol button').count(), 5);
+  const dol = await page.evaluate(() => document.querySelector('.navdol').getBoundingClientRect());
+  assert.ok(Math.abs(dol.bottom - 844) < 2, 'dolny pasek przyklejony do dołu ekranu');
+  // Pętli nie ma w dolnym pasku — świeci się „Więcej"
+  assert.equal(await page.locator('.navdol [data-akt]').getAttribute('data-dol'), 'wiecej');
+
+  // „Więcej" otwiera menu z każdą zakładką i z opisem
   const wszystkich = await page.locator('.tabs a').count();
-  assert.ok(wPasku < wszystkich, 'test ma sens tylko wtedy, gdy pasek nie mieści wszystkiego');
-
-  await page.click('.navbtn');
+  await page.click('.nav-wiecej');
   assert.equal(await page.locator('.navmenu').isVisible(), true);
   assert.equal(await page.locator('.navgrupa a').count(), wszystkich, 'menu pokazuje każdą zakładkę');
-  // każda pozycja ma opis
   for(const a of await page.locator('.navgrupa a').all()) assert.ok((await a.locator('span').textContent()).length > 15);
-  // zaznaczona jest ta, na której jesteśmy
   assert.equal(await page.locator('.navgrupa a[aria-current="true"]').getAttribute('data-id'), 'petla');
 
   await page.click('.navgrupa a[data-id="trening"]');
   await page.waitForSelector('.tr-scena');
   assert.equal(await page.locator('.navmenu').isVisible(), false, 'menu zamyka się po wyborze');
-  // pasek sam przewinął się do aktywnej zakładki
-  await page.waitForTimeout(500);
-  assert.equal(await page.evaluate(() => {
-    const a = document.querySelector('.tabs a[aria-current="page"]'), bar = document.querySelector('.tabs').getBoundingClientRect();
-    const r = a.getBoundingClientRect();
-    return r.left >= bar.left - 2 && r.right <= bar.right + 2;
-  }), true, 'aktywna zakładka jest widoczna w pasku');
+  // Trening należy do „Nauki"
+  await page.waitForSelector('.navdol [data-dol="teoria"][data-akt]');
+
+  // dolny pasek przenosi jednym dotknięciem
+  await page.click('.navdol a[data-dol="piosenki"]');
+  await page.waitForSelector('.navdol a[data-dol="piosenki"][aria-current="page"]');
+  assert.equal(await page.locator('.navdol a[aria-current="page"]').count(), 1);
 
   // Escape zamyka menu
-  await page.click('.navbtn');
+  await page.click('.nav-wiecej');
+  assert.equal(await page.locator('.navmenu').isVisible(), true);
   await page.keyboard.press('Escape');
   assert.equal(await page.locator('.navmenu').isVisible(), false);
   assert.deepEqual(errors, []);
   await context.close();
+});
+
+test('Motyw kolorów: domyślnie jasny, wybór z menu zostaje po przeładowaniu', async () => {
+  const {page, errors, close} = await open('#dzis');
+  await page.waitForSelector('.dz-seria');
+  assert.equal(await page.evaluate(() => document.documentElement.dataset.theme), 'kosc');
+  const tlo = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+  const jasne = await tlo();
+  await page.click('.navbtn');
+  assert.equal(await page.locator('.motyw').count(), 3);
+  await page.click('.motyw[data-motyw="noc"]');
+  assert.equal(await page.evaluate(() => document.documentElement.dataset.theme), 'noc');
+  assert.notEqual(await tlo(), jasne, 'tło zmienia się z motywem');
+  assert.equal(await page.locator('.motyw[aria-pressed="true"]').getAttribute('data-motyw'), 'noc');
+  await page.reload();
+  await page.waitForSelector('.dz-seria');
+  assert.equal(await page.evaluate(() => document.documentElement.dataset.theme), 'noc', 'motyw wraca po przeładowaniu');
+  assert.equal(await page.evaluate(() => document.querySelector('meta[name="theme-color"]').content), '#111218');
+  assert.deepEqual(errors, []);
+  await close();
+});
+
+test('Dziś: start pokazuje serię, trening dnia i lekcję do kontynuacji', async () => {
+  const {page, errors, close} = await open('');
+  await page.waitForSelector('.dz-seria');
+  assert.match(await page.textContent('h1'), /Dziś/);
+  assert.equal(await page.locator('.dz-tydz i').count(), 7);
+  assert.equal(await page.getAttribute('.dz-start', 'href'), '#trening');
+  assert.match(await page.getAttribute('.dz-lekcja', 'href'), /^#teoria/);
+  await page.click('.dz-start');
+  await page.waitForSelector('.tr-scena');
+  assert.deepEqual(errors, []);
+  await close();
 });
 
 test('Pętla: na telefonie „Graj" widać bez przewijania', async () => {

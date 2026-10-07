@@ -139,7 +139,7 @@ const ViewKlawisze = {
         const t = c ? chordType(c) : 'su';
         tablica.append(
           h('div',{class:'kl-akord'},
-            h('b',{style:`color:${CHORD_TYPES[t].color}`}, det.label),
+            h('b',{style:`color:${tyColor(t)}`}, det.label),
             h('span',{class:'kl-opis'}, det.opis + (det.exact ? '' : ' · bez kwinty')),
             det.slash || det.inversion ? h('span',{class:'kl-opis'}, det.invName) : null),
           h('p',{class:'kl-rola'},
