@@ -69,3 +69,21 @@ test('Wlazł kotek i Widzę dom: nie ma ich wśród startowych, a zapisane kopie
     assert.ok(SEED_REMOVED.includes(id), id);
   }
 });
+
+test('piosenka bazowa: wiadomo, czy jest zmieniona, i da się wrócić do oryginału', () => {
+  const {seedZmieniona, seedPrzywroc} = A;
+  const oryg = SEED_SONGS.find(s => s.id === 'seed-blizej');
+  const s = JSON.parse(JSON.stringify(oryg));
+  assert.equal(seedZmieniona(s), false);
+  s.lyrics = '[E]moje słowa'; s.key = 'D'; s.bpm = 120;
+  assert.equal(seedZmieniona(s), true);
+  assert.equal(seedPrzywroc(s), true);
+  assert.equal(seedZmieniona(s), false);
+  assert.equal(s.lyrics, oryg.lyrics);
+  assert.equal(s.key, 'E');
+  // własna piosenka nie jest bazowa — nie ma czego przywracać
+  const moja = {id: 'x1', title: 'Moja', lyrics: '[C]la'};
+  assert.equal(seedZmieniona(moja), false);
+  assert.equal(seedPrzywroc(moja), false);
+  assert.equal(moja.lyrics, '[C]la');
+});

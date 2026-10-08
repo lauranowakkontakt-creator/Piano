@@ -632,6 +632,49 @@ test('Piosenki: tekst z akordami nad słowami, granie i transpozycja', async () 
   await close();
 });
 
+test('Piosenki bazowe: zmieniasz, a potem wracasz do oryginału', async () => {
+  const {page, errors, close} = await open('#piosenki/seed-blizej');
+  await page.waitForSelector('.lyr-line');
+  assert.match(await page.textContent('.baza'), /oryginał/);
+  assert.equal(await page.locator('.baza button').count(), 0, 'nic do przywracania');
+  const oryginal = (await page.locator('.lyr-tx').allTextContents()).join('');
+
+  // zmiana tekstu i tonacji — piosenka jest „zmieniona" i to zostaje po przeładowaniu
+  await page.click('summary:has-text("Edytuj tekst")');
+  await page.fill('details textarea', '[E]Moje własne słowa');
+  await page.click('button[title="Cały tekst pół tonu wyżej"]');
+  await page.waitForTimeout(600);
+  await page.reload();
+  await page.waitForSelector('.lyr-line');
+  assert.match(await page.textContent('.baza'), /zmieniona/);
+  assert.match(await page.textContent('.song-list .item[aria-current="true"]'), /bazowa · zmieniona/);
+
+  // przywróć: najpierw pytanie, Anuluj nic nie zmienia
+  await page.click('.baza button:has-text("Przywróć oryginał")');
+  await page.click('.baza button:has-text("Anuluj")');
+  assert.match((await page.locator('.lyr-tx').allTextContents()).join(''), /Moje własne słowa/);
+  await page.click('.baza button:has-text("Przywróć oryginał")');
+  await page.click('.baza button:has-text("Tak, przywróć")');
+  await page.waitForFunction(() => /oryginał/.test(document.querySelector('.baza').textContent));
+  assert.equal((await page.locator('.lyr-tx').allTextContents()).join(''), oryginal);
+  await page.reload();
+  await page.waitForSelector('.lyr-line');
+  assert.equal((await page.locator('.lyr-tx').allTextContents()).join(''), oryginal, 'oryginał zapisany');
+
+  // usunięta piosenka bazowa wraca przyciskiem pod listą
+  await page.click('button:has-text("Usuń piosenkę")');
+  await page.waitForSelector('button:has-text("Przywróć usunięte bazowe (1)")');
+  await page.click('button:has-text("Przywróć usunięte bazowe")');
+  await page.waitForSelector('.song-list .item:has-text("Bliżej")');
+  assert.equal(await page.locator('button:has-text("Przywróć usunięte bazowe")').count(), 0);
+  // własna piosenka nie ma paska bazowej
+  await page.click('text=+ Nowa piosenka');
+  await page.waitForFunction(() => document.querySelector('input[aria-label="Tytuł"]')?.value === 'Nowa piosenka');
+  assert.equal(await page.locator('.baza').isVisible(), false);
+  assert.deepEqual(errors, []);
+  await close();
+});
+
 test('Druk: tekst piosenki trafia na kartkę razem z chwytami', async () => {
   const {page, errors, close} = await open('#piosenki');
   await page.waitForSelector('.song-list .item');

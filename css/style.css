@@ -694,6 +694,11 @@ footer.site{margin-top:50px;color:var(--faint);font-size:.8rem}
   .navmenu{max-height:calc(100vh - 140px)}
 }
 
+/* ---------- piosenka bazowa ---------- */
+.baza{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.baza-tag{font-size:.82rem;font-weight:600;color:var(--sub);padding:4px 10px;border-radius:var(--radius-pill);background:var(--sub-soft);border:1px solid var(--sub-dim)}
+.baza-pyt{font-size:.88rem;color:var(--muted)}
+
 /* ---------- setlista ---------- */
 .sl-top{display:flex;flex-direction:column;gap:12px;margin-bottom:18px}
 .sl-toprow{display:flex;gap:8px;flex-wrap:wrap}

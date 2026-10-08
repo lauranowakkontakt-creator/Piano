@@ -178,6 +178,22 @@ const SEED_FIXES = [
 /* Dawne piosenki startowe, które mają zniknąć także z zapisanych piosenek. */
 const SEED_REMOVED = ['seed-kotek', 'seed-widze-dom'];
 
+/* Piosenki bazowe (startowe) można zmieniać, a potem wrócić do oryginału.
+   Porównujemy tylko to, co da się zmienić w zakładce. */
+const SEED_POLA = ['title', 'artist', 'key', 'bpm', 'beats', 'lyrics'];
+const seedOf = s => s && SEED_SONGS.find(x => x.id === s.id) || null;
+function seedZmieniona(s){
+  const seed = seedOf(s);
+  return !!seed && SEED_POLA.some(k => String(s[k] ?? '') !== String(seed[k] ?? ''));
+}
+/* Wpisuje do piosenki oryginał z SEED_SONGS (razem z akordami i notatkami). */
+function seedPrzywroc(s){
+  const seed = seedOf(s);
+  if(!seed) return false;
+  for(const k of [...SEED_POLA, 'chords', 'notes']) s[k] = seed[k] ?? '';
+  return true;
+}
+
 /* Piosenki startowe — dodaj raz (nie wracają, jeśli je usuniesz). Dopisuje je też do tablicy songs. */
 async function seedSongs(songs){
   const done = prefs.get('songs.seedIds',[]);
@@ -251,10 +267,16 @@ const ViewPiosenki = {
       list.innerHTML='';
       if(!songs.length){ list.append(h('div',{class:'empty'},'Nie masz jeszcze piosenek. Kliknij „+ Nowa piosenka".')); return; }
       songs.forEach(s=>{
-        const b=h('button',{class:'item','aria-current':String(s.id===currentId)}, s.title||'(bez tytułu)', h('small',null,[s.artist,keyNameLabel(s.key)].filter(Boolean).join(' · ')));
+        const baza = seedOf(s) ? (seedZmieniona(s) ? 'bazowa · zmieniona' : 'bazowa') : '';
+        const b=h('button',{class:'item','aria-current':String(s.id===currentId)}, s.title||'(bez tytułu)', h('small',null,[s.artist,keyNameLabel(s.key),baza].filter(Boolean).join(' · ')));
         b.onclick=()=>{ currentId=s.id; history.replaceState(null,'','#piosenki/'+s.id); drawList(); drawSong(); };
         list.appendChild(b);
       });
+      // usunięte piosenki bazowe da się przywrócić jednym kliknięciem
+      const brak = SEED_SONGS.filter(x=>!songs.some(s=>s.id===x.id));
+      if(brak.length) list.append(h('button',{class:'btn small ghost',title:'Dodaj z powrotem: '+brak.map(x=>x.title).join(', '),
+        onclick:async()=>{ for(const x of brak){ const n={...x}; await DB.putSong(n); songs.push(n); } drawList(); }},
+        '↺ Przywróć usunięte bazowe ('+brak.length+')'));
     }
 
     async function newSong(){
@@ -293,7 +315,29 @@ const ViewPiosenki = {
         if(saveFor && saveFor!==s) DB.putSong(saveFor);
         clearTimeout(saveT); saveFor=s;
         saveT=setTimeout(()=>{ saveFor=null; DB.putSong(s); drawList(); },400);
+        drawBaza();
       };
+
+      /* --- piosenka bazowa: oznaczenie i powrót do oryginału --- */
+      const bazaBox = h('div',{class:'baza'});
+      function drawBaza(pytaj){
+        bazaBox.innerHTML='';
+        if(!seedOf(s)){ bazaBox.hidden=true; return; }
+        bazaBox.hidden=false;
+        const zmieniona = seedZmieniona(s);
+        bazaBox.append(h('span',{class:'baza-tag'}, zmieniona ? 'Piosenka bazowa · zmieniona przez Ciebie' : 'Piosenka bazowa · oryginał'));
+        if(!zmieniona) return;
+        if(!pytaj){
+          bazaBox.append(h('button',{class:'btn small',onclick:()=>drawBaza(true)},'↺ Przywróć oryginał'));
+          return;
+        }
+        bazaBox.append(h('span',{class:'baza-pyt'},'Twoje zmiany w tej piosence przepadną.'),
+          h('button',{class:'btn small primary',onclick:async()=>{
+            if(saveFor===s){ clearTimeout(saveT); saveFor=null; }
+            seedPrzywroc(s); await DB.putSong(s); drawList(); drawSong();
+          }},'Tak, przywróć'),
+          h('button',{class:'btn small ghost',onclick:()=>drawBaza(false)},'Anuluj'));
+      }
 
       /* --- pola --- */
       const fTitle = h('input',{value:s.title||'',placeholder:'Tytuł','aria-label':'Tytuł',style:'font-family:Fraunces,serif;font-size:1.5rem;font-weight:600;padding:8px 12px'});
@@ -391,7 +435,9 @@ const ViewPiosenki = {
         lyricsInto(lyrBox, linie, s.key);
       }
 
+      drawBaza();
       main.append(
+        bazaBox,
         h('div',{class:'card'},
           fTitle,
           h('div',{class:'grid2'},
