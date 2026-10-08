@@ -53,6 +53,20 @@ function dopisz(parts, txt){
 function lyricsChords(text){
   return parseLyrics(text).flatMap(l => (l.parts || []).map(p => p.chord).filter(Boolean));
 }
+/* Akordy z tekstu jako arkusz: „[Zwrotka] C G7 C | C G7 C" — każda część w osobnej linii,
+   linie tekstu rozdzielone kreską. Pusty napis, gdy w tekście nie ma akordów. */
+function lyricsChordSheet(text){
+  const out = [];
+  let label = '', linie = [];
+  const zamknij = () => { if(linie.length) out.push((label ? '[' + label + '] ' : '') + linie.join(' | ')); linie = []; };
+  parseLyrics(text).forEach(l => {
+    if(l.label){ zamknij(); label = l.label; return; }
+    const ak = (l.parts || []).map(p => p.chord).filter(Boolean).map(c => c.text);
+    if(ak.length) linie.push(ak.join(' '));
+  });
+  zamknij();
+  return out.join('\n');
+}
 /* Czy w tekście w ogóle są akordy (jeśli nie, pokazujemy sam tekst). */
 function lyricsHasChords(text){ return lyricsChords(text).length > 0; }
 /* Sam tekst, bez akordów — do druku „tylko słowa" i do liczenia zwrotek. */

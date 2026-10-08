@@ -104,3 +104,17 @@ test('Bliżej i Wtulę się: polski tekst z akordami, które rozpoznaje appka', 
     assert.ok(linie.some(l => l.label && l.label.startsWith('Refren')), id + ': brak refrenu');
   }
 });
+
+test('lyricsChordSheet: akordy z tekstu z podziałem na części', () => {
+  const {lyricsChordSheet} = L;
+  const t = '[Zwrotka]\n[C]raz [G7]dwa\n[Am]trzy\n\n[Refren]\n[F]cztery\nbez akordów';
+  assert.equal(lyricsChordSheet(t), '[Zwrotka] C G7 | Am\n[Refren] F');
+  assert.equal(lyricsChordSheet('[Hm]raz'), 'Bm');
+  assert.equal(lyricsChordSheet('sam tekst'), '');
+  assert.equal(lyricsChordSheet(null), '');
+});
+
+test('lyricsChordSheet: po transpozycji tekstu arkusz idzie za tekstem', () => {
+  const {lyricsChordSheet} = L;
+  assert.equal(lyricsChordSheet(transposeLyrics('[Zwrotka]\n[C]raz [G]dwa', 2)), '[Zwrotka] D A');
+});

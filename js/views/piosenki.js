@@ -310,12 +310,12 @@ const ViewPiosenki = {
       fKey.onchange=()=>{ s.key=fKey.value; save(); drawSheet(); drawLyrics(); };
       fBpm.oninput=()=>{ s.bpm=+fBpm.value||90; save(); };
       fBeats.onchange=()=>{ s.beats=+fBeats.value; save(); };
-      fLyrics.oninput=()=>{ s.lyrics=fLyrics.value; save(); drawLyrics(); if(!(s.chords||'').trim()) drawSheet(); };
+      fLyrics.oninput=()=>{ s.lyrics=fLyrics.value; save(); drawLyrics(); drawSheet(); };
       fLyrics.style.minHeight = Math.min(700, 120 + (s.lyrics||'').split('\n').length*22)+'px';
 
       /* --- arkusz z akordami --- */
-      // bez osobnej listy akordów — bierzemy je po kolei z tekstu
-      const chordText = ()=> (s.chords||'').trim() ? s.chords : lyricsChords(s.lyrics).map(c=>c.text).join(' ');
+      // akordy bierzemy z tekstu (to on jest edytowany i przenoszony); stara lista tylko, gdy tekst jest bez akordów
+      const chordText = ()=> lyricsChordSheet(s.lyrics) || s.chords || '';
       const sheet = h('div',{class:'song-sheet'});
       const analysis = h('div',{class:'hint',style:'margin-top:10px'});
       const playAll = h('button',{class:'btn primary'},'▶ Zagraj akordy');
@@ -380,7 +380,7 @@ const ViewPiosenki = {
       function transponujTekst(n){
         if(!s.lyrics) return;
         s.lyrics = transposeLyrics(s.lyrics, n);
-        fLyrics.value = s.lyrics; save(); drawLyrics(); if(!(s.chords||'').trim()) drawSheet();
+        fLyrics.value = s.lyrics; save(); drawLyrics(); drawSheet();
       }
       function drawLyrics(){
         lyrBox.innerHTML='';
