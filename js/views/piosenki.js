@@ -178,6 +178,22 @@ const SEED_FIXES = [
 /* Dawne piosenki startowe, które mają zniknąć także z zapisanych piosenek. */
 const SEED_REMOVED = ['seed-kotek', 'seed-widze-dom'];
 
+/* O ile półtonów przenieść akordy przy zmianie tonacji z → na (najkrótsza droga, −5…+6).
+   Równoległa dur/moll (E-dur → cis-moll) to te same akordy: 0. */
+function przesuniecieTonacji(z, na){
+  if(!z || !na || z===na || majorOfKey(z)===majorOfKey(na)) return 0;
+  const pc = k => PC[String(k).replace(/m$/,'')];
+  let d = ((pc(na) - pc(z)) % 12 + 12) % 12;
+  return d > 6 ? d - 12 : d;
+}
+/* Lista akordów „[Zwrotka] C G | Am” przeniesiona o n półtonów — etykiety i kreski zostają. */
+function transposeSongText(text, n){
+  return String(text||'').split('\n').map(line=>{
+    const lm = line.match(/^(\s*\[[^\]]+\]\s*)?(.*)$/);
+    return (lm[1]||'') + lm[2].split(/(\s+)/).map(t => t.trim() && parseChord(t) ? transposeChord(t, n) : t).join('');
+  }).join('\n');
+}
+
 /* Piosenki bazowe (startowe) można zmieniać, a potem wrócić do oryginału.
    Porównujemy tylko to, co da się zmienić w zakładce. */
 const SEED_POLA = ['title', 'artist', 'key', 'bpm', 'beats', 'lyrics'];
@@ -350,7 +366,14 @@ const ViewPiosenki = {
 
       fTitle.oninput=()=>{ s.title=fTitle.value; save(); };
       fArtist.oninput=()=>{ s.artist=fArtist.value; save(); };
-      fKey.onchange=()=>{ s.key=fKey.value; save(); drawSheet(); drawLyrics(); };
+      // nowa tonacja przenosi akordy tekstu (C → D: wszystko o cały ton w górę);
+      // równoległa dur/moll (E-dur ↔ cis-moll) to te same akordy, więc tylko zmienia nazwę
+      fKey.onchange=()=>{
+        const n = przesuniecieTonacji(s.key, fKey.value);
+        s.key = fKey.value;
+        if(n) przeniesAkordy(n);
+        save(); drawSheet(); drawLyrics();
+      };
       fBpm.oninput=()=>{ s.bpm=+fBpm.value||90; save(); };
       fBeats.onchange=()=>{ s.beats=+fBeats.value; save(); };
       fLyrics.oninput=()=>{ s.lyrics=fLyrics.value; save(); drawLyrics(); drawSheet(); };
@@ -435,10 +458,16 @@ const ViewPiosenki = {
         playChordSeq(items, (60/(s.bpm||90))*(s.beats||4), ()=>{ delete playLyr.dataset.on; playLyr.textContent='▶ Zagraj z tekstu'; },
           {loop:loopPref(), beats:s.beats||4, click:clickPref()});
       };
+      function przeniesAkordy(n){
+        s.lyrics = transposeLyrics(s.lyrics||'', n);
+        s.chords = transposeSongText(s.chords||'', n);
+        fLyrics.value = s.lyrics;
+      }
+      // ♭ / ♯ przenoszą tekst i razem z nim tonację
       function transponujTekst(n){
-        if(!s.lyrics) return;
-        s.lyrics = transposeLyrics(s.lyrics, n);
-        fLyrics.value = s.lyrics; save(); drawLyrics(); drawSheet();
+        przeniesAkordy(n);
+        s.key = transposeKey(s.key, n); fKey.value = s.key;
+        save(); drawLyrics(); drawSheet();
       }
       function drawLyrics(){
         lyrBox.innerHTML='';
@@ -457,7 +486,7 @@ const ViewPiosenki = {
           fTitle,
           h('div',{class:'grid2'},
             h('div',null,h('label',{class:'f'},'Wykonawca'),fArtist),
-            h('div',null,h('label',{class:'f'},'Tonacja'),fKey)),
+            h('div',null,h('label',{class:'f'},'Tonacja'),fKey,h('p',{class:'faint',style:'margin:4px 0 0;font-size:.8rem'},'Zmiana tonacji przenosi akordy w tekście.'))),
           h('div',{class:'grid2'},
             h('div',null,h('label',{class:'f'},'Tempo (uderzeń na minutę)'),fBpm),
             h('div',null,h('label',{class:'f'},'Jeden akord trwa'),fBeats))),

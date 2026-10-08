@@ -87,3 +87,15 @@ test('piosenka bazowa: wiadomo, czy jest zmieniona, i da się wrócić do orygin
   assert.equal(seedPrzywroc(moja), false);
   assert.equal(moja.lyrics, '[C]la');
 });
+
+test('zmiana tonacji: o ile przenieść akordy, a lista akordów zachowuje etykiety', () => {
+  const B = load('js/theory.js', 'js/loop.js', 'js/views/piosenki.js');
+  const {przesuniecieTonacji, transposeSongText} = B;
+  assert.equal(przesuniecieTonacji('C', 'D'), 2);
+  assert.equal(przesuniecieTonacji('E', 'D'), -2);
+  assert.equal(przesuniecieTonacji('C', 'A'), -3, 'najkrótsza droga');
+  assert.equal(przesuniecieTonacji('E', 'C#m'), 0, 'równoległa moll — te same akordy');
+  assert.equal(przesuniecieTonacji('E', 'E'), 0);
+  assert.equal(przesuniecieTonacji('Am', 'Em'), -5);
+  assert.equal(transposeSongText('[Zwrotka] C#m B E A | C#m\n[Refren — 2×] E B', -2), '[Zwrotka] Bm A D G | Bm\n[Refren — 2×] D A');
+});

@@ -681,6 +681,25 @@ test('Piosenki bazowe: zmieniasz, a potem wracasz do oryginału', async () => {
   await close();
 });
 
+test('Piosenki: zmiana tonacji przenosi akordy w tekście, a ♯ zmienia tonację', async () => {
+  const {page, errors, close} = await open('#piosenki/seed-blizej');
+  await page.waitForSelector('.lyr-line');
+  const akordy = () => page.locator('.lyr-ch[data-c]').allTextContents();
+  assert.deepEqual((await akordy()).slice(0, 4), ['A', 'B', 'C♯m', 'B']);
+  await page.selectOption('.card select >> nth=0', 'D');
+  await page.waitForTimeout(100);
+  assert.deepEqual((await akordy()).slice(0, 4), ['G', 'A', 'Bm', 'A'], 'E → D: cały ton w dół');
+  assert.equal(await page.locator('.lyr-ch.o').count(), 0, 'akordy dalej pasują do tonacji');
+  await page.click('button[title="Cały tekst pół tonu wyżej"]');
+  await page.waitForTimeout(100);
+  assert.equal(await page.inputValue('.card select >> nth=0'), 'Eb', '♯ przesuwa też tonację');
+  await page.selectOption('.card select >> nth=0', 'Cm');
+  await page.waitForTimeout(100);
+  assert.deepEqual((await akordy()).slice(0, 4), ['A♭', 'B♭', 'Cm', 'B♭'], 'równoległa moll: akordy bez zmian');
+  assert.deepEqual(errors, []);
+  await close();
+});
+
 test('Druk: tekst piosenki trafia na kartkę razem z chwytami', async () => {
   const {page, errors, close} = await open('#piosenki');
   await page.waitForSelector('.song-list .item');
