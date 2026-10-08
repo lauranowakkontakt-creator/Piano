@@ -325,18 +325,18 @@ const ViewPiosenki = {
         if(!seedOf(s)){ bazaBox.hidden=true; return; }
         bazaBox.hidden=false;
         const zmieniona = seedZmieniona(s);
-        bazaBox.append(h('span',{class:'baza-tag'}, zmieniona ? 'Piosenka bazowa · zmieniona przez Ciebie' : 'Piosenka bazowa · oryginał'));
+        bazaBox.append(h('span',null, zmieniona ? 'bazowa · zmieniona' : 'bazowa'));
         if(!zmieniona) return;
         if(!pytaj){
-          bazaBox.append(h('button',{class:'btn small',onclick:()=>drawBaza(true)},'↺ Przywróć oryginał'));
+          bazaBox.append(h('button',{type:'button',class:'baza-link',onclick:()=>drawBaza(true)},'przywróć oryginał'));
           return;
         }
-        bazaBox.append(h('span',{class:'baza-pyt'},'Twoje zmiany w tej piosence przepadną.'),
-          h('button',{class:'btn small primary',onclick:async()=>{
+        bazaBox.append(h('span',null,'— Twoje zmiany przepadną.'),
+          h('button',{type:'button',class:'baza-link mocny',onclick:async()=>{
             if(saveFor===s){ clearTimeout(saveT); saveFor=null; }
             seedPrzywroc(s); await DB.putSong(s); drawList(); drawSong();
           }},'Tak, przywróć'),
-          h('button',{class:'btn small ghost',onclick:()=>drawBaza(false)},'Anuluj'));
+          h('button',{type:'button',class:'baza-link',onclick:()=>drawBaza(false)},'anuluj'));
       }
 
       /* --- pola --- */
@@ -383,9 +383,7 @@ const ViewPiosenki = {
             if(t.junk){ junk.push(t.junk); line.append(h('span',{class:'faint mono',title:'nie rozpoznano akordu'},t.junk)); return; }
             const c=t.chord; all.push(c);
             const f=functionIn(c, s.key);
-            const b=h('button',{class:'chord-chip '+f.fn,'data-c':c.text,title:FN_NAME[f.fn]+(f.rn?' · '+f.rn:'')}, fmt(c.text), f.rn?h('span',{class:'deg'},f.rn):null);
-            b.onclick=()=>{ strike(c.pcs,1.1,0,c.bassPc); ring(b,'lit'); };
-            line.append(b);
+            line.append(h('span',{class:'chord-chip '+f.fn,'data-c':c.text,title:FN_NAME[f.fn]+(f.rn?' · '+f.rn:'')}, fmt(c.text), f.rn?h('span',{class:'deg'},f.rn):null));
           });
           sheet.append(line);
         });
@@ -405,7 +403,24 @@ const ViewPiosenki = {
             analysis.append(h('div',{style:'margin-top:6px'},`Podpowiedź: akordy najlepiej pasują do tonacji `, h('b',null,keyNameLabel(g.v)), ` (${g.fit}/${all.length} akordów w gamie).`, use));
           }
         }
+        drawSklad(all);
         if(junk.length) analysis.append(h('div',{style:'margin-top:6px'},'Nie rozpoznano: '+junk.join(', ')+' — pisz akordy jak C, Am, F#m, Bb7, G/B.'));
+      }
+
+      /* --- z jakich dźwięków są akordy tej piosenki --- */
+      const sklad = h('div',{class:'sklad'});
+      function drawSklad(all){
+        sklad.innerHTML='';
+        const widziane = new Set();
+        const lista = all.filter(c=>!widziane.has(c.text) && widziane.add(c.text));
+        if(!lista.length){ sklad.hidden=true; return; }
+        sklad.hidden=false;
+        sklad.append(h('h3',null,'Z czego są akordy'),
+          h('dl',null, ...lista.flatMap(c=>{
+            const {notes, bas} = chordNotes(c);
+            return [h('dt',null,fmt(c.text)),
+              h('dd',null, notes.join(' · '), bas && c.bassPc!==c.rootPc ? h('span',{class:'faint'},'  bas '+bas) : null)];
+          })));
       }
 
       /* --- tekst z akordami nad słowami --- */
@@ -432,7 +447,7 @@ const ViewPiosenki = {
           lyrBox.append(h('div',{class:'empty'},'Tu wklej tekst piosenki. Akordy wpisz w nawiasach kwadratowych dokładnie tam, gdzie mają zabrzmieć — appka pokaże je nad sylabami.'));
           return;
         }
-        lyricsInto(lyrBox, linie, s.key);
+        lyricsInto(lyrBox, linie, s.key, {graj:false});
       }
 
       drawBaza();
@@ -447,8 +462,8 @@ const ViewPiosenki = {
             h('div',null,h('label',{class:'f'},'Tempo (uderzeń na minutę)'),fBpm),
             h('div',null,h('label',{class:'f'},'Jeden akord trwa'),fBeats))),
         h('section',{style:'margin-top:18px'},
-          h('div',{class:'sechead'}, h('h2',null,'Akordy'), h('div',{class:'row'}, playAll, loopToggle(), clickToggle(), h('a',{class:'btn',href:'#druk/song/'+s.id},'🖨 Drukuj'), h('button',{class:'btn',title:'Pokaż drzewo i koło dla akordów tej piosenki',onclick:()=>{ const toks=parseSongText(chordText()).flatMap(l=>l.tokens.filter(t=>t.chord).map(t=>t.chord.text)); prefs.set('przejscia.seq',toks); prefs.set('przejscia.start',s.key); location.hash='#przejscia'; }},'🌳 Drzewo przejść'))),
-          h('div',{class:'card'}, sheet, analysis)),
+          h('div',{class:'sechead'}, h('h2',null,'Akordy'), h('div',{class:'row'}, playAll, loopToggle(), clickToggle(), h('a',{class:'btn',href:'#druk/song/'+s.id},'🖨 Drukuj'))),
+          h('div',{class:'card'}, sheet, analysis, sklad)),
         h('section',{style:'margin-top:18px'},
           h('div',{class:'sechead'}, h('h2',null,'Tekst z akordami'),
             h('div',{class:'row'}, playLyr, loopToggle(),

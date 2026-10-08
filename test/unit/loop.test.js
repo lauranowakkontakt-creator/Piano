@@ -119,3 +119,13 @@ test('gotowe pętle są poprawne', () => {
     assert.ok(LOOP_PRESETS.some(p => p.cat === c.id), `pusta kategoria: ${c.name}`);
   assert.ok(LOOP_PRESETS.length >= 30, 'baza gotowych pętli: ' + LOOP_PRESETS.length);
 });
+
+test('chordNotes: z jakich dźwięków jest akord, z pisownią i basem', () => {
+  const {chordNotes, parseChord} = L;
+  const n = t => plain(chordNotes(parseChord(t)));
+  assert.deepEqual(n('C#m'), {notes: ['C♯', 'E', 'G♯'], bas: null});
+  assert.deepEqual(n('Bb7'), {notes: ['B♭', 'D', 'F', 'A♭'], bas: null});
+  assert.deepEqual(n('C#sus'), {notes: ['C♯', 'F♯', 'G♯'], bas: null});
+  assert.deepEqual(n('F#/A#'), {notes: ['F♯', 'A♯', 'C♯'], bas: 'A♯'});
+  assert.deepEqual(n('C/D'), {notes: ['C', 'E', 'G'], bas: 'D'});
+});

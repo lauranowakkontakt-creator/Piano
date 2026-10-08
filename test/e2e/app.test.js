@@ -127,9 +127,8 @@ test('Piosenki: kopia zapasowa — złe dane z pliku są oczyszczane', async () 
   const saved = await page.evaluate(() => DB.getSong('imp1'));
   assert.equal(saved.key, 'C');
   assert.equal(saved.bpm, 90);
-  await page.click('text=🌳 Drzewo przejść');   // tonacja piosenki trafia do Przejść (tam do innerHTML)
-  await page.waitForSelector('.seqbox .chord-chip');
   assert.match(await page.textContent('#view'), /C-dur/);
+  assert.equal(await page.locator('button:has-text("Drzewo przejść")').count(), 0, 'Piosenki nie odsyłają do Przejść');
   assert.equal(await page.evaluate(() => window.__xss), undefined);
   assert.deepEqual(errors, []);
   await close();
@@ -635,8 +634,15 @@ test('Piosenki: tekst z akordami nad słowami, granie i transpozycja', async () 
 test('Piosenki bazowe: zmieniasz, a potem wracasz do oryginału', async () => {
   const {page, errors, close} = await open('#piosenki/seed-blizej');
   await page.waitForSelector('.lyr-line');
-  assert.match(await page.textContent('.baza'), /oryginał/);
+  assert.equal((await page.textContent('.baza')).trim(), 'bazowa');
   assert.equal(await page.locator('.baza button').count(), 0, 'nic do przywracania');
+  // klik w akord nic nie gra, a pod akordami jest spis dźwięków
+  assert.equal(await page.locator('.lyr button.lyr-ch, .song-sheet button.chord-chip').count(), 0, 'akordy to sam tekst');
+  await page.click('.lyr-ch[data-c="C#m"] >> nth=0');
+  assert.equal(await page.evaluate(() => typeof ctx === 'undefined' || !ctx), true, 'dźwięk się nie włączył');
+  const sklad = await page.textContent('.sklad');
+  assert.match(sklad, /C♯m\s*C♯ · E · G♯/);
+  assert.match(sklad, /F♯m\s*F♯ · A · C♯/);
   const oryginal = (await page.locator('.lyr-tx').allTextContents()).join('');
 
   // zmiana tekstu i tonacji — piosenka jest „zmieniona" i to zostaje po przeładowaniu
@@ -655,7 +661,7 @@ test('Piosenki bazowe: zmieniasz, a potem wracasz do oryginału', async () => {
   assert.match((await page.locator('.lyr-tx').allTextContents()).join(''), /Moje własne słowa/);
   await page.click('.baza button:has-text("Przywróć oryginał")');
   await page.click('.baza button:has-text("Tak, przywróć")');
-  await page.waitForFunction(() => /oryginał/.test(document.querySelector('.baza').textContent));
+  await page.waitForFunction(() => document.querySelector('.baza').textContent.trim() === 'bazowa');
   assert.equal((await page.locator('.lyr-tx').allTextContents()).join(''), oryginal);
   await page.reload();
   await page.waitForSelector('.lyr-line');

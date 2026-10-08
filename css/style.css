@@ -695,9 +695,18 @@ footer.site{margin-top:50px;color:var(--faint);font-size:.8rem}
 }
 
 /* ---------- piosenka bazowa ---------- */
-.baza{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
-.baza-tag{font-size:.82rem;font-weight:600;color:var(--sub);padding:4px 10px;border-radius:var(--radius-pill);background:var(--sub-soft);border:1px solid var(--sub-dim)}
-.baza-pyt{font-size:.88rem;color:var(--muted)}
+.baza{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;margin:0 0 6px 4px;font-size:.8rem;color:var(--faint)}
+.baza-link{font:inherit;color:var(--muted);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.baza-link:hover{color:var(--text)}
+.baza-link.mocny{color:var(--bad);font-weight:600}
+/* z czego są akordy — sam tekst */
+.sklad{margin-top:16px;padding-top:12px;border-top:1px solid var(--line)}
+.sklad h3{margin:0 0 6px;font-size:.95rem}
+.sklad dl{display:grid;grid-template-columns:max-content 1fr;gap:3px 14px;margin:0;font-size:.9rem}
+.sklad dt{font-family:var(--font-mono);font-weight:600}
+.sklad dd{margin:0;font-family:var(--font-mono);color:var(--muted)}
+.song-sheet .chord-chip{cursor:default}
+span.lyr-ch{cursor:default}
 
 /* ---------- setlista ---------- */
 .sl-top{display:flex;flex-direction:column;gap:12px;margin-bottom:18px}

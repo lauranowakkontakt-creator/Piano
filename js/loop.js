@@ -76,6 +76,15 @@ function spellChord(c){
   return out;
 }
 const LETTER_PC_L = {C:0,D:2,E:4,F:5,G:7,A:9,B:11};
+/* Z jakich dźwięków jest akord, z pisownią akordu: „C♯m” → ['C♯','E','G♯'].
+   bas — dźwięk po ukośniku, gdy nie należy do akordu (C/D → bas D). */
+function chordNotes(c){
+  if(!c) return {notes:[], bas:null};
+  const sp = spellChord(c);
+  const notes = [...new Set((c.iv||[]).map(iv => (c.rootPc+iv)%12))].map(pc => fmt(sp[pc]));
+  const bas = c.bassPc!=null ? fmt(sp[c.bassPc]) : null;
+  return {notes, bas};
+}
 function chordLabel(txt){ return fmt(String(txt).replace(/dim(?=7?$)/,'°')); }
 
 /* transpozycja zapisu akordu o n półtonów (zachowuje końcówkę i bas) */
