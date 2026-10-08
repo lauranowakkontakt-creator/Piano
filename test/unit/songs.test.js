@@ -49,3 +49,15 @@ test('sanitizeSong: odrzuca śmieci i naprawia złe pola', () => {
   assert.deepEqual(s, {id: '7', title: '', artist: '', key: 'C', bpm: 90, beats: 4, chords: '', lyrics: '', notes: ''});
   assert.equal(sanitizeSong({id: 'a', key: 'toString'}).key, 'C');
 });
+
+test('poprawka „Bliżej”: zapisana stara wersja dostaje E i B zamiast E/G# i B/D#', () => {
+  const {SEED_FIXES} = A;
+  const nowa = SEED_SONGS.find(s => s.id === 'seed-blizej');
+  const stara = {id: 'seed-blizej', lyrics: '[C#m]Twa [B]miłość [E/G#]serce [A]x\n[E]Przyciągnij [B/D#]siebie',
+    chords: '[Zwrotka] C#m B E/G# A\n[Refren] E B/D# C#m', notes: 'HARMONIA: E (I, dom), A (IV, ruch), B i B/D# (V, napięcie).'};
+  SEED_FIXES.find(f => f.id === 'blizej-bez-basow').apply(stara);
+  assert.equal(stara.lyrics, '[C#m]Twa [B]miłość [E]serce [A]x\n[E]Przyciągnij [B]siebie');
+  assert.equal(stara.chords, '[Zwrotka] C#m B E A\n[Refren] E B C#m');
+  assert.equal(stara.notes, 'HARMONIA: E (I, dom), A (IV, ruch), B (V, napięcie).');
+  for(const pole of ['lyrics', 'chords', 'notes']) assert.ok(!/E\/G#|B\/D#/.test(nowa[pole]), pole);
+});

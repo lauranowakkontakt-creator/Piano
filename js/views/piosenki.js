@@ -88,32 +88,32 @@ EMOCJE W GŁOSIE (plan):
 Tekst: dołącz swój PDF w sekcji „Tekst i nuty (PDF)" niżej.`},
 { id:'seed-blizej', title:'Bliżej (Closer)', artist:'Bethel Music · tł. Winnica Worship', key:'E', bpm:70, beats:4,
   chords:`[Intro] A B C#m B | A B C#m B
-[Zwrotka] C#m B E/G# A | C#m B E/G# A
-[Refren] E B/D# C#m A E | B/D# C#m A
-[Interludium] F#m E/G# A | F#m E/G# A
+[Zwrotka] C#m B E A | C#m B E A
+[Refren] E B C#m A E | B C#m A
+[Interludium] F#m E A | F#m E A
 [Bridge] A E B C#m | A E B C#m`,
   lyrics:`[Intro — 2×]
 [A] [B] [C#m] [B]
 
 [Zwrotka]
 [C#m]Twa miłość zdobyła [B]mnie
-I całe me [E/G#]serce, całe me [A]serce
+I całe me [E]serce, całe me [A]serce
 [C#m]Dziś to, czego pragnę, to [B]być
-Z Tobą na [E/G#]zawsze, z Tobą na [A]zawsze
+Z Tobą na [E]zawsze, z Tobą na [A]zawsze
 
 [Refren 1]
-[E]Przyciągnij mnie do [B/D#]siebie
+[E]Przyciągnij mnie do [B]siebie
 Zabierz trochę [C#m]głębiej
 Pragnę poznać [A]Cię
 Poznać serce [E]Twe
 
-Wiem, miłość Twa jest [B/D#]słodsza,
+Wiem, miłość Twa jest [B]słodsza,
 Niż miłość tego [C#m]świata
 Pragnę poznać [A]Cię
 Poznać serce Twe
 
 [Interludium — 2×]
-[F#m] [E/G#] [A]
+[F#m] [E] [A]
 
 [Bridge]
 [A]Ooo [E]ooo,
@@ -122,12 +122,12 @@ Poznać serce Twe
 [B]Cudowna [C#m]miłość
 
 [Refren 2]
-[E]Przyciągnij mnie do [B/D#]siebie
+[E]Przyciągnij mnie do [B]siebie
 Zabierz trochę [C#m]głębiej
 Pragnę poznać [A]Cię
 Poznać serce [E]Twe
 
-Twa miłość jest [B/D#]silniejsza,
+Twa miłość jest [B]silniejsza,
 Niż wszystko, z czym się [C#m]zmagam
 Pragnę poznać [A]Cię
 Poznać serce [E]Twe`,
@@ -136,11 +136,11 @@ Tonacja E-dur · 4/4 · ok. 70 BPM.
 
 KOLEJNOŚĆ: Intro ×2 → Zwrotka → Refren 1 → Interludium ×2 → Bridge (×2 lub więcej) → Refren 2.
 
-HARMONIA: E (I, dom), A (IV, ruch), B i B/D# (V, napięcie), C#m (vi, dom smutniejszy), F#m (ii, ruch).
-• Zwrotka startuje od C#m, nie od E — dlatego brzmi tęsknie. E pojawia się dopiero jako E/G#.
-• Bas w zwrotce idzie schodkami: C# → B → G# → A.
-• B/D# w refrenie: bas schodzi E → D# → C# — miękkie zejście, prawie jak westchnienie.
-• Interludium F#m → E/G# → A: bas w górę F# → G# → A, jak wchodzenie coraz bliżej.
+HARMONIA: E (I, dom), A (IV, ruch), B (V, napięcie), C#m (vi, dom smutniejszy), F#m (ii, ruch).
+• Zwrotka startuje od C#m, nie od E — dlatego brzmi tęsknie. E pojawia się dopiero w połowie linii.
+• Zwrotka: C#m → B → E → A — vi, V, I, IV.
+• Refren: E → B → C#m → A — klasyczne I–V–vi–IV.
+• Interludium F#m → E → A: ii – I – IV, spokojny ruch wokół domu.
 
 EMOCJE W GŁOSIE (plan):
 • Zwrotka — intymnie, blisko: cicho, miękko, trochę powietrza.
@@ -196,6 +196,31 @@ HARMONIA: B (I, dom), F# (V, napięcie), G#m (vi, dom smutniejszy), D#m7 (iii, m
 • Appka może podpowiadać inną tonację, bo zwrotka kończy się na C#sus, a bridge na C#. Dom tej piosenki to jednak B.`},
 ];
 
+/* Zmiany w piosenkach startowych, które ktoś ma już zapisane. Ruszają tylko to, co było
+   z piosenki startowej — akordy wpisane samodzielnie zostają. */
+// zdania z notatek „Bliżej”, które mówiły o basie E/G# i B/D#
+const BLIZEJ_NOTE_FIX = [
+  ['B i B/D# (V, napięcie)',
+   'B (V, napięcie)'],
+  ['E pojawia się dopiero jako E/G#.',
+   'E pojawia się dopiero w połowie linii.'],
+  ['• Bas w zwrotce idzie schodkami: C# → B → G# → A.',
+   '• Zwrotka: C#m → B → E → A — vi, V, I, IV.'],
+  ['• B/D# w refrenie: bas schodzi E → D# → C# — miękkie zejście, prawie jak westchnienie.',
+   '• Refren: E → B → C#m → A — klasyczne I–V–vi–IV.'],
+  ['• Interludium F#m → E/G# → A: bas w górę F# → G# → A, jak wchodzenie coraz bliżej.',
+   '• Interludium F#m → E → A: ii – I – IV, spokojny ruch wokół domu.'],
+];
+const SEED_FIXES = [
+{ id:'blizej-bez-basow', song:'seed-blizej',
+  apply(s){
+    const akord = (t, z, na) => String(t||'').split('['+z+']').join('['+na+']');
+    s.lyrics = akord(akord(s.lyrics,'E/G#','E'),'B/D#','B');
+    s.chords = String(s.chords||'').replace(/(^|\s)E\/G#(?=\s|$)/g,'$1E').replace(/(^|\s)B\/D#(?=\s|$)/g,'$1B');
+    s.notes = BLIZEJ_NOTE_FIX.reduce((n,[z,na])=>n.split(z).join(na), String(s.notes||''));
+  }},
+];
+
 /* Piosenki startowe — dodaj raz (nie wracają, jeśli je usuniesz). Dopisuje je też do tablicy songs. */
 async function seedSongs(songs){
   const done = prefs.get('songs.seedIds',[]);
@@ -214,6 +239,15 @@ async function seedSongs(songs){
     withLyrics.push(seed.id);
   }
   prefs.set('songs.seedLyrics',withLyrics);
+  // poprawki piosenek startowych, które są już zapisane — każda raz
+  const fixes = prefs.get('songs.seedFixes',[]);
+  for(const f of SEED_FIXES){
+    if(fixes.includes(f.id)) continue;
+    const s = songs.find(x=>x.id===f.song);
+    if(s){ f.apply(s); await DB.putSong(s); }
+    fixes.push(f.id);
+  }
+  prefs.set('songs.seedFixes',fixes);
   return songs;
 }
 
