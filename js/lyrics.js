@@ -2,7 +2,7 @@
    Tekst piosenki z akordami w nawiasach kwadratowych:
 
      [Zwrotka]
-     [C]Wlazł kotek na [G7]płotek i mruga
+     [C]Tu wpisz tekst [G7]piosenki
 
    Akord stoi tam, gdzie ma być zagrany — appka rysuje go nad sylabą.
    „[Zwrotka]" samo w linii to etykieta części, bo to nie jest akord.

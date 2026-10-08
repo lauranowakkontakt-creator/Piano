@@ -37,55 +37,9 @@ function guessKey(chords){
 }
 
 
-/* Piosenki Laury — akordy z jej PDF-ów i z angielskich wersji,
+/* Piosenki Laury — akordy z angielskich wersji,
    tekst po polsku z akordami nad słowami. */
 const SEED_SONGS = [
-{ id:'seed-kotek', title:'Wlazł kotek na płotek', artist:'ludowa', key:'C', bpm:104, beats:2,
-  chords:`[Zwrotka] C G7 C | C G7 C
-[Refren] F C G7 C | C G7 C`,
-  lyrics:`[Zwrotka]
-[C]Wlazł kotek na [G7]płotek i [C]mruga,
-[C]ładna to [G7]piosenka, nie[C]długa.
-
-[Refren]
-Nie [F]długa, nie [C]krótka, lecz [G7]w sam [C]raz,
-[C]zaśpiewaj [G7]koteczku jeszcze [C]raz.`,
-  notes:`Przykład, jak działa tekst z akordami: akord w nawiasie kwadratowym staje nad następną sylabą.
-Trzy akordy — C, F i G7 — i cała piosenka. Dobra na pierwszy raz: lewa ręka sam bas, prawa akord.
-Możesz ją spokojnie usunąć, kiedy nie będzie już potrzebna.`},
-{ id:'seed-widze-dom', title:'Widzę dom', artist:'K. Kukier, O. Juraszus, Z. Muzalewska', key:'D', bpm:76, beats:2,
-  chords:`[Intro] Bm7 Asus4 A | G | Bm7 Asus4 A | G
-[Zwrotka — 1. linia] D G/D D Bm7 A Gadd4
-[Zwrotka — 2. linia] D G/D D Bm7 A Gadd4
-[Tag] Bm7 A Gadd4
-[Refren] D G/D D Bm7 | Em7 G | D | Dsus4 D
-[Interludium] D | G/D | D
-[Instrumental] D | D | Em7 | Em7 | Gsus2 | Gsus2 | D | D
-[Bridge 1] D Em7 G D
-[Bridge 2] D Em7 G D
-[Bridge 2 — powtórka, bas w górę] D/A Em7/B G D
-[Refren — ostatni] D G/D D Bm7 | Em7 G Bm7 A
-[Outro] Em7 G D`,
-  notes:`Tonacja D-dur · metrum 6/8 · 76 BPM (liczymy „RAZ dwa trzy CZTE-ry pięć sześć", akcent na 1 i 4).
-Jeden akord w appce = 2 uderzenia (jeden takt 6/8).
-
-KOLEJNOŚĆ: Intro → Zwrotka → Tag → Refren → Interludium → Zwrotka → Tag → Refren → Instrumental → Bridge 1 → Bridge 2 ×2 → Refren (ostatni) → Outro.
-
-HARMONIA (zobacz kolory): cała piosenka stoi na akordach D-dur: D (I, dom), G (IV, ruch), Em7 (ii, ruch), Bm7 (vi, dom smutniejszy), A (V, napięcie).
-• Asus4 → A w intro: „zawieszone" napięcie, które się rozwiązuje — zagraj powoli i posłuchaj.
-• G/D = akord G z D w basie: lewa ręka zostaje na D, zmienia się tylko prawa. Brzmi jak „oddech" w domu.
-• Refren kończy się Dsus4 → D: mały „amen" na koniec.
-• Bridge 2 powtórka: bas idzie w górę D/A → Em7/B — ta sama harmonia, ale czuć wznoszenie. Idealne miejsce na crescendo.
-
-EMOCJE W GŁOSIE (plan):
-• Zwrotka — spokojna opowieść, jak do jednej osoby. Ciszej, ciepło, legato, trochę powietrza w głosie.
-• Tag — lekkie zmęczenie, wspomnienie trudu: ciemniejsza barwa, wolniej końcówki fraz.
-• Refren — radość i pewność: pełniejszy głos na podparciu (nie krzyk), jaśniejsza barwa, wyraźne spółgłoski, lekko do przodu w rytmie.
-• Bridge 1 — odwaga, deklaracja: rytmicznie, zdecydowanie, prosty dźwięk bez vibrato.
-• Bridge 2 — wdzięczność, która rośnie: 1. raz ciszej i miękko, 2. raz pełniej (crescendo przez całą frazę).
-• Outro — wyciszenie, pokój: decrescendo, ostatni dźwięk trzymaj i puszczaj powoli.
-
-Tekst: dołącz swój PDF w sekcji „Tekst i nuty (PDF)" niżej.`},
 { id:'seed-blizej', title:'Bliżej (Closer)', artist:'Bethel Music · tł. Winnica Worship', key:'E', bpm:70, beats:4,
   chords:`[Intro] A B C#m B | A B C#m B
 [Zwrotka] C#m B E A | C#m B E A
@@ -221,6 +175,9 @@ const SEED_FIXES = [
   }},
 ];
 
+/* Dawne piosenki startowe, które mają zniknąć także z zapisanych piosenek. */
+const SEED_REMOVED = ['seed-kotek', 'seed-widze-dom'];
+
 /* Piosenki startowe — dodaj raz (nie wracają, jeśli je usuniesz). Dopisuje je też do tablicy songs. */
 async function seedSongs(songs){
   const done = prefs.get('songs.seedIds',[]);
@@ -248,6 +205,14 @@ async function seedSongs(songs){
     fixes.push(f.id);
   }
   prefs.set('songs.seedFixes',fixes);
+  // dawne piosenki startowe — usuń raz
+  const usuniete = prefs.get('songs.seedRemoved',[]);
+  for(const id of SEED_REMOVED){
+    if(usuniete.includes(id)) continue;
+    if(songs.some(x=>x.id===id)){ await DB.delSong(id); songs.splice(songs.findIndex(x=>x.id===id),1); }
+    usuniete.push(id);
+  }
+  prefs.set('songs.seedRemoved',usuniete);
   return songs;
 }
 
@@ -337,7 +302,7 @@ const ViewPiosenki = {
       const fBpm = h('input',{type:'number',min:40,max:200,value:s.bpm||90});
       const fBeats = h('select',null, ...[1,2,3,4,8].map(n=>h('option',{value:n,selected:(s.beats||4)==n}, n+' '+(n===1?'uderzenie':n<5?'uderzenia':'uderzeń'))));
       const fLyrics = h('textarea',{spellcheck:'false',style:'min-height:150px',
-        placeholder:'[Zwrotka]\n[C]Wlazł kotek na [G7]płotek i mruga,\nładna to [C]piosenka nie[G7]długa.'}, s.lyrics||'');
+        placeholder:'[Zwrotka]\n[C]Tu wpisz tekst [G7]piosenki,\na akord stoi [Am]nad sylabą.'}, s.lyrics||'');
 
       fTitle.oninput=()=>{ s.title=fTitle.value; save(); };
       fArtist.oninput=()=>{ s.artist=fArtist.value; save(); };
@@ -448,7 +413,7 @@ const ViewPiosenki = {
             h('summary',{class:'hint',style:'cursor:pointer'},'Edytuj tekst'),
             fLyrics,
             h('div',{class:'hint',style:'margin-top:6px'},'Akord w nawiasie kwadratowym staje nad następną sylabą: ',
-              h('span',{class:'mono'},'[C]Wlazł kotek na [G7]płotek'),'. Linia z samym ',
+              h('span',{class:'mono'},'[C]Tu wpisz tekst [G7]piosenki'),'. Linia z samym ',
               h('span',{class:'mono'},'[Zwrotka]'),' to nagłówek części. Reszta linii zostaje zwykłym tekstem.'))),
         h('div',{class:'row',style:'margin-top:22px'},
           h('button',{class:'btn danger',onclick:async()=>{ if(!confirm(`Usunąć „${s.title}"? Tego nie da się cofnąć.`)) return; if(saveFor===s){ clearTimeout(saveT); saveFor=null; } await DB.delSong(s.id); songs=songs.filter(x=>x.id!==s.id); currentId=songs[0]&&songs[0].id; drawList(); drawSong(); }},'Usuń piosenkę'))

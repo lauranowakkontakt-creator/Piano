@@ -89,7 +89,7 @@ const PLAY_STYLES = [
 },
 {
   id:'ballada', name:'Ballada 6/8', krotko:'trójki, dwa razy na takt',
-  opis:'Każde uderzenie dzieli się na trzy — kołyszący rytm z „Widzę dom" i z większości wolnych pieśni. Ustaw 2 albo 6 uderzeń na akord.',
+  opis:'Każde uderzenie dzieli się na trzy — kołyszący rytm większości wolnych pieśni. Ustaw 2 albo 6 uderzeń na akord.',
   reka:'Lewa: bas na początku każdej połowy taktu. Prawa: trójki po dźwiękach akordu.',
   lubiBeats:2,
   make({right, bass, beats}){

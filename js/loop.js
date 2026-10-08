@@ -314,7 +314,5 @@ const LOOP_PRESETS = [
   {cat:'klasyka', name:'Zwodnicza (V–vi)', chords:['C','F','G','Am'], desc:'Dominanta zamiast do domu idzie do vi — ucho dostaje niespodziankę.'},
 
   // --- jej piosenki ---
-  {cat:'moje', name:'Widzę dom (refren)', chords:['D','G/D','Bm7','Em7','G','A'], desc:'Twoja piosenka, D-dur.'},
-  {cat:'moje', name:'Widzę dom (bridge)', chords:['D','Em7','G','D'], desc:'Spokojniejsza część — dobra do ćwiczenia płynnych przewrotów.'},
   {cat:'moje', name:'Bliżej (zwrotka)', chords:['C#m7','Bsus4','E/G#','Asus2'], desc:'Twoja piosenka, bas idzie schodkami.'},
 ];

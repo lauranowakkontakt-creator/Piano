@@ -61,3 +61,11 @@ test('poprawka „Bliżej”: zapisana stara wersja dostaje E i B zamiast E/G# i
   assert.equal(stara.notes, 'HARMONIA: E (I, dom), A (IV, ruch), B (V, napięcie).');
   for(const pole of ['lyrics', 'chords', 'notes']) assert.ok(!/E\/G#|B\/D#/.test(nowa[pole]), pole);
 });
+
+test('Wlazł kotek i Widzę dom: nie ma ich wśród startowych, a zapisane kopie są do usunięcia', () => {
+  const {SEED_REMOVED} = A;
+  for(const id of ['seed-kotek', 'seed-widze-dom']){
+    assert.ok(!SEED_SONGS.some(s => s.id === id), id);
+    assert.ok(SEED_REMOVED.includes(id), id);
+  }
+});
