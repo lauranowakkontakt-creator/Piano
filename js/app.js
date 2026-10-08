@@ -1,6 +1,5 @@
 /* Router: #zakladka/podstrona */
 const ROUTES = {
-  dzis: ViewDzis,
   teoria: ViewTeoria,
   gamy: ViewGamy,
   nuty: ViewNuty,
@@ -17,10 +16,10 @@ const ROUTES = {
 };
 async function route(){
   stopSeq(); if(typeof Ladder!=='undefined') Ladder.stop();
-  const [name, ...rest] = (location.hash.replace(/^#/,'') || 'dzis').split('/');
-  const view = ROUTES[name] || ViewDzis;
+  const [name, ...rest] = (location.hash.replace(/^#/,'') || 'piosenki').split('/');
+  const view = ROUTES[name] || ViewPiosenki;
   const sub = rest.join('/') || null;
-  const akt = ROUTES[name] ? name : 'dzis';
+  const akt = ROUTES[name] ? name : 'piosenki';
   document.querySelectorAll('.tabs a').forEach(a=>a.setAttribute('aria-current', a.getAttribute('href')==='#'+akt ? 'page' : 'false'));
   // zakładka, której nie ma w pasku (Druk, Źródła) — świeci się przycisk ☰
   document.querySelectorAll('.navbtn').forEach(b=>b.toggleAttribute('data-akt', !document.querySelector('.tabs a[href="#'+akt+'"]')));

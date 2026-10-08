@@ -431,7 +431,7 @@ test('Na telefonie wszystkie zakładki są w zasięgu jednego dotknięcia', asyn
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));
   await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
-  await page.goto(APP + '#petla');
+  await page.goto(APP + '#gamy');
   await page.waitForSelector('.navdol');
 
   // na telefonie górny pasek zakładek znika, zostaje dolny: 4 miejsca + „Więcej"
@@ -440,7 +440,7 @@ test('Na telefonie wszystkie zakładki są w zasięgu jednego dotknięcia', asyn
   assert.equal(await page.locator('.navdol a, .navdol button').count(), 5);
   const dol = await page.evaluate(() => document.querySelector('.navdol').getBoundingClientRect());
   assert.ok(Math.abs(dol.bottom - 844) < 2, 'dolny pasek przyklejony do dołu ekranu');
-  // Pętli nie ma w dolnym pasku — świeci się „Więcej"
+  // Gam nie ma w dolnym pasku — świeci się „Więcej"
   assert.equal(await page.locator('.navdol [data-akt]').getAttribute('data-dol'), 'wiecej');
 
   // „Więcej" otwiera menu z każdą zakładką i z opisem
@@ -449,7 +449,7 @@ test('Na telefonie wszystkie zakładki są w zasięgu jednego dotknięcia', asyn
   assert.equal(await page.locator('.navmenu').isVisible(), true);
   assert.equal(await page.locator('.navgrupa a').count(), wszystkich, 'menu pokazuje każdą zakładkę');
   for(const a of await page.locator('.navgrupa a').all()) assert.ok((await a.locator('span').textContent()).length > 15);
-  assert.equal(await page.locator('.navgrupa a[aria-current="true"]').getAttribute('data-id'), 'petla');
+  assert.equal(await page.locator('.navgrupa a[aria-current="true"]').getAttribute('data-id'), 'gamy');
 
   await page.click('.navgrupa a[data-id="trening"]');
   await page.waitForSelector('.tr-scena');
@@ -472,8 +472,8 @@ test('Na telefonie wszystkie zakładki są w zasięgu jednego dotknięcia', asyn
 });
 
 test('Motyw kolorów: domyślnie jasny, wybór z menu zostaje po przeładowaniu', async () => {
-  const {page, errors, close} = await open('#dzis');
-  await page.waitForSelector('.dz-seria');
+  const {page, errors, close} = await open('#piosenki');
+  await page.waitForSelector('.song-sheet');
   assert.equal(await page.evaluate(() => document.documentElement.dataset.theme), 'kosc');
   const tlo = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
   const jasne = await tlo();
@@ -484,22 +484,18 @@ test('Motyw kolorów: domyślnie jasny, wybór z menu zostaje po przeładowaniu'
   assert.notEqual(await tlo(), jasne, 'tło zmienia się z motywem');
   assert.equal(await page.locator('.motyw[aria-pressed="true"]').getAttribute('data-motyw'), 'noc');
   await page.reload();
-  await page.waitForSelector('.dz-seria');
+  await page.waitForSelector('.song-sheet');
   assert.equal(await page.evaluate(() => document.documentElement.dataset.theme), 'noc', 'motyw wraca po przeładowaniu');
   assert.equal(await page.evaluate(() => document.querySelector('meta[name="theme-color"]').content), '#111218');
   assert.deepEqual(errors, []);
   await close();
 });
 
-test('Dziś: start pokazuje serię, trening dnia i lekcję do kontynuacji', async () => {
+test('Start: bez adresu otwierają się Piosenki', async () => {
   const {page, errors, close} = await open('');
-  await page.waitForSelector('.dz-seria');
-  assert.match(await page.textContent('h1'), /Dziś/);
-  assert.equal(await page.locator('.dz-tydz i').count(), 7);
-  assert.equal(await page.getAttribute('.dz-start', 'href'), '#trening');
-  assert.match(await page.getAttribute('.dz-lekcja', 'href'), /^#teoria/);
-  await page.click('.dz-start');
-  await page.waitForSelector('.tr-scena');
+  await page.waitForSelector('.song-sheet');
+  assert.match(await page.textContent('h1'), /Piosenki/);
+  assert.equal(await page.locator('.tabs a[href="#dzis"]').count(), 0);
   assert.deepEqual(errors, []);
   await close();
 });

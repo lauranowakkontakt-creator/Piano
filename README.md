@@ -21,7 +21,6 @@ Dane (piosenki, nagrania) na stronie są osobne od tych w pliku otwieranym z dys
 
 | Zakładka | Co tam jest |
 |---|---|
-| **Dziś** | Ekran startowy: seria dni w tym tygodniu, dzisiejszy cel z Treningu i duży przycisk „Zacznij trening dnia”, lekcja Teorii, do której wracasz, ostatnio grana piosenka i szybkie wejścia do grania. |
 | **Teoria** | 10 krótkich lekcji od zera: klawiatura → gama → akordy → cyfry rzymskie → tonika / subdominanta / dominanta → kadencje → przewroty → zmiana gamy → moll → plan ćwiczeń. Każda lekcja ma przykłady do posłuchania, zadanie przy pianinie i quiz. |
 | **Gamy** | Pierwszy prototyp (akordy.html) z klawiaturą: kliknij akord, a zobaczysz, które klawisze nacisnąć. |
 | **Nuty** | 6 lekcji czytania nut (pięciolinia, oba klucze, rytm, znaki, akordy) + trener „Jaka to nuta?”, który częściej pokazuje nuty, z którymi masz problem. |
@@ -44,7 +43,7 @@ Appka pamięta wybór. Kolory ról akordów (tonika — róż, subdominanta — 
 
 ## Na telefonie
 
-Na dole ekranu jest pasek pod kciukiem: **Dziś, Nauka, Klawisze, Piosenki, Więcej**.
+Na dole ekranu jest pasek pod kciukiem: **Piosenki, Nauka, Klawisze, Pętla, Więcej**.
 „Nauka” prowadzi do Teorii (świeci się też w Nutach i Treningu), a **Więcej** otwiera pełną listę zakładek z opisem i wybór motywu.
 
 Appka ma własną ikonę (pianino z zaświeconym akordem C). W telefonie otwórz stronę i wybierz **Udostępnij → Do ekranu początkowego** (iPhone) albo **⋮ → Dodaj do ekranu głównego** (Android) — Harmonia pojawi się jak zwykła aplikacja.
