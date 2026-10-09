@@ -37,83 +37,37 @@ function guessKey(chords){
 }
 
 
-/* Piosenki Laury — akordy z jej PDF-ów i z angielskich wersji,
+/* Piosenki Laury — akordy z angielskich wersji,
    tekst po polsku z akordami nad słowami. */
 const SEED_SONGS = [
-{ id:'seed-kotek', title:'Wlazł kotek na płotek', artist:'ludowa', key:'C', bpm:104, beats:2,
-  chords:`[Zwrotka] C G7 C | C G7 C
-[Refren] F C G7 C | C G7 C`,
-  lyrics:`[Zwrotka]
-[C]Wlazł kotek na [G7]płotek i [C]mruga,
-[C]ładna to [G7]piosenka, nie[C]długa.
-
-[Refren]
-Nie [F]długa, nie [C]krótka, lecz [G7]w sam [C]raz,
-[C]zaśpiewaj [G7]koteczku jeszcze [C]raz.`,
-  notes:`Przykład, jak działa tekst z akordami: akord w nawiasie kwadratowym staje nad następną sylabą.
-Trzy akordy — C, F i G7 — i cała piosenka. Dobra na pierwszy raz: lewa ręka sam bas, prawa akord.
-Możesz ją spokojnie usunąć, kiedy nie będzie już potrzebna.`},
-{ id:'seed-widze-dom', title:'Widzę dom', artist:'K. Kukier, O. Juraszus, Z. Muzalewska', key:'D', bpm:76, beats:2,
-  chords:`[Intro] Bm7 Asus4 A | G | Bm7 Asus4 A | G
-[Zwrotka — 1. linia] D G/D D Bm7 A Gadd4
-[Zwrotka — 2. linia] D G/D D Bm7 A Gadd4
-[Tag] Bm7 A Gadd4
-[Refren] D G/D D Bm7 | Em7 G | D | Dsus4 D
-[Interludium] D | G/D | D
-[Instrumental] D | D | Em7 | Em7 | Gsus2 | Gsus2 | D | D
-[Bridge 1] D Em7 G D
-[Bridge 2] D Em7 G D
-[Bridge 2 — powtórka, bas w górę] D/A Em7/B G D
-[Refren — ostatni] D G/D D Bm7 | Em7 G Bm7 A
-[Outro] Em7 G D`,
-  notes:`Tonacja D-dur · metrum 6/8 · 76 BPM (liczymy „RAZ dwa trzy CZTE-ry pięć sześć", akcent na 1 i 4).
-Jeden akord w appce = 2 uderzenia (jeden takt 6/8).
-
-KOLEJNOŚĆ: Intro → Zwrotka → Tag → Refren → Interludium → Zwrotka → Tag → Refren → Instrumental → Bridge 1 → Bridge 2 ×2 → Refren (ostatni) → Outro.
-
-HARMONIA (zobacz kolory): cała piosenka stoi na akordach D-dur: D (I, dom), G (IV, ruch), Em7 (ii, ruch), Bm7 (vi, dom smutniejszy), A (V, napięcie).
-• Asus4 → A w intro: „zawieszone" napięcie, które się rozwiązuje — zagraj powoli i posłuchaj.
-• G/D = akord G z D w basie: lewa ręka zostaje na D, zmienia się tylko prawa. Brzmi jak „oddech" w domu.
-• Refren kończy się Dsus4 → D: mały „amen" na koniec.
-• Bridge 2 powtórka: bas idzie w górę D/A → Em7/B — ta sama harmonia, ale czuć wznoszenie. Idealne miejsce na crescendo.
-
-EMOCJE W GŁOSIE (plan):
-• Zwrotka — spokojna opowieść, jak do jednej osoby. Ciszej, ciepło, legato, trochę powietrza w głosie.
-• Tag — lekkie zmęczenie, wspomnienie trudu: ciemniejsza barwa, wolniej końcówki fraz.
-• Refren — radość i pewność: pełniejszy głos na podparciu (nie krzyk), jaśniejsza barwa, wyraźne spółgłoski, lekko do przodu w rytmie.
-• Bridge 1 — odwaga, deklaracja: rytmicznie, zdecydowanie, prosty dźwięk bez vibrato.
-• Bridge 2 — wdzięczność, która rośnie: 1. raz ciszej i miękko, 2. raz pełniej (crescendo przez całą frazę).
-• Outro — wyciszenie, pokój: decrescendo, ostatni dźwięk trzymaj i puszczaj powoli.
-
-Tekst: dołącz swój PDF w sekcji „Tekst i nuty (PDF)" niżej.`},
 { id:'seed-blizej', title:'Bliżej (Closer)', artist:'Bethel Music · tł. Winnica Worship', key:'E', bpm:70, beats:4,
   chords:`[Intro] A B C#m B | A B C#m B
-[Zwrotka] C#m B E/G# A | C#m B E/G# A
-[Refren] E B/D# C#m A E | B/D# C#m A
-[Interludium] F#m E/G# A | F#m E/G# A
+[Zwrotka] C#m B E A | C#m B E A
+[Refren] E B C#m A E | B C#m A
+[Interludium] F#m E A | F#m E A
 [Bridge] A E B C#m | A E B C#m`,
   lyrics:`[Intro — 2×]
 [A] [B] [C#m] [B]
 
 [Zwrotka]
 [C#m]Twa miłość zdobyła [B]mnie
-I całe me [E/G#]serce, całe me [A]serce
+I całe me [E]serce, całe me [A]serce
 [C#m]Dziś to, czego pragnę, to [B]być
-Z Tobą na [E/G#]zawsze, z Tobą na [A]zawsze
+Z Tobą na [E]zawsze, z Tobą na [A]zawsze
 
 [Refren 1]
-[E]Przyciągnij mnie do [B/D#]siebie
+[E]Przyciągnij mnie do [B]siebie
 Zabierz trochę [C#m]głębiej
 Pragnę poznać [A]Cię
 Poznać serce [E]Twe
 
-Wiem, miłość Twa jest [B/D#]słodsza,
+Wiem, miłość Twa jest [B]słodsza,
 Niż miłość tego [C#m]świata
 Pragnę poznać [A]Cię
 Poznać serce Twe
 
 [Interludium — 2×]
-[F#m] [E/G#] [A]
+[F#m] [E] [A]
 
 [Bridge]
 [A]Ooo [E]ooo,
@@ -122,12 +76,12 @@ Poznać serce Twe
 [B]Cudowna [C#m]miłość
 
 [Refren 2]
-[E]Przyciągnij mnie do [B/D#]siebie
+[E]Przyciągnij mnie do [B]siebie
 Zabierz trochę [C#m]głębiej
 Pragnę poznać [A]Cię
 Poznać serce [E]Twe
 
-Twa miłość jest [B/D#]silniejsza,
+Twa miłość jest [B]silniejsza,
 Niż wszystko, z czym się [C#m]zmagam
 Pragnę poznać [A]Cię
 Poznać serce [E]Twe`,
@@ -136,11 +90,11 @@ Tonacja E-dur · 4/4 · ok. 70 BPM.
 
 KOLEJNOŚĆ: Intro ×2 → Zwrotka → Refren 1 → Interludium ×2 → Bridge (×2 lub więcej) → Refren 2.
 
-HARMONIA: E (I, dom), A (IV, ruch), B i B/D# (V, napięcie), C#m (vi, dom smutniejszy), F#m (ii, ruch).
-• Zwrotka startuje od C#m, nie od E — dlatego brzmi tęsknie. E pojawia się dopiero jako E/G#.
-• Bas w zwrotce idzie schodkami: C# → B → G# → A.
-• B/D# w refrenie: bas schodzi E → D# → C# — miękkie zejście, prawie jak westchnienie.
-• Interludium F#m → E/G# → A: bas w górę F# → G# → A, jak wchodzenie coraz bliżej.
+HARMONIA: E (I, dom), A (IV, ruch), B (V, napięcie), C#m (vi, dom smutniejszy), F#m (ii, ruch).
+• Zwrotka startuje od C#m, nie od E — dlatego brzmi tęsknie. E pojawia się dopiero w połowie linii.
+• Zwrotka: C#m → B → E → A — vi, V, I, IV.
+• Refren: E → B → C#m → A — klasyczne I–V–vi–IV.
+• Interludium F#m → E → A: ii – I – IV, spokojny ruch wokół domu.
 
 EMOCJE W GŁOSIE (plan):
 • Zwrotka — intymnie, blisko: cicho, miękko, trochę powietrza.
@@ -196,6 +150,66 @@ HARMONIA: B (I, dom), F# (V, napięcie), G#m (vi, dom smutniejszy), D#m7 (iii, m
 • Appka może podpowiadać inną tonację, bo zwrotka kończy się na C#sus, a bridge na C#. Dom tej piosenki to jednak B.`},
 ];
 
+/* Zmiany w piosenkach startowych, które ktoś ma już zapisane. Ruszają tylko to, co było
+   z piosenki startowej — akordy wpisane samodzielnie zostają. */
+// zdania z notatek „Bliżej”, które mówiły o basie E/G# i B/D#
+const BLIZEJ_NOTE_FIX = [
+  ['B i B/D# (V, napięcie)',
+   'B (V, napięcie)'],
+  ['E pojawia się dopiero jako E/G#.',
+   'E pojawia się dopiero w połowie linii.'],
+  ['• Bas w zwrotce idzie schodkami: C# → B → G# → A.',
+   '• Zwrotka: C#m → B → E → A — vi, V, I, IV.'],
+  ['• B/D# w refrenie: bas schodzi E → D# → C# — miękkie zejście, prawie jak westchnienie.',
+   '• Refren: E → B → C#m → A — klasyczne I–V–vi–IV.'],
+  ['• Interludium F#m → E/G# → A: bas w górę F# → G# → A, jak wchodzenie coraz bliżej.',
+   '• Interludium F#m → E → A: ii – I – IV, spokojny ruch wokół domu.'],
+];
+const SEED_FIXES = [
+{ id:'blizej-bez-basow', song:'seed-blizej',
+  apply(s){
+    const akord = (t, z, na) => String(t||'').split('['+z+']').join('['+na+']');
+    s.lyrics = akord(akord(s.lyrics,'E/G#','E'),'B/D#','B');
+    s.chords = String(s.chords||'').replace(/(^|\s)E\/G#(?=\s|$)/g,'$1E').replace(/(^|\s)B\/D#(?=\s|$)/g,'$1B');
+    s.notes = BLIZEJ_NOTE_FIX.reduce((n,[z,na])=>n.split(z).join(na), String(s.notes||''));
+  }},
+];
+
+/* Dawne piosenki startowe, które mają zniknąć także z zapisanych piosenek. */
+const SEED_REMOVED = ['seed-kotek', 'seed-widze-dom'];
+
+/* O ile półtonów przenieść akordy przy zmianie tonacji z → na (najkrótsza droga, −5…+6).
+   Równoległa dur/moll (E-dur → cis-moll) to te same akordy: 0. */
+function przesuniecieTonacji(z, na){
+  if(!z || !na || z===na || majorOfKey(z)===majorOfKey(na)) return 0;
+  const pc = k => PC[String(k).replace(/m$/,'')];
+  let d = ((pc(na) - pc(z)) % 12 + 12) % 12;
+  return d > 6 ? d - 12 : d;
+}
+/* Lista akordów „[Zwrotka] C G | Am” przeniesiona o n półtonów — etykiety i kreski zostają. */
+function transposeSongText(text, n){
+  return String(text||'').split('\n').map(line=>{
+    const lm = line.match(/^(\s*\[[^\]]+\]\s*)?(.*)$/);
+    return (lm[1]||'') + lm[2].split(/(\s+)/).map(t => t.trim() && parseChord(t) ? transposeChord(t, n) : t).join('');
+  }).join('\n');
+}
+
+/* Piosenki bazowe (startowe) można zmieniać, a potem wrócić do oryginału.
+   Porównujemy tylko to, co da się zmienić w zakładce. */
+const SEED_POLA = ['title', 'artist', 'key', 'bpm', 'beats', 'lyrics'];
+const seedOf = s => s && SEED_SONGS.find(x => x.id === s.id) || null;
+function seedZmieniona(s){
+  const seed = seedOf(s);
+  return !!seed && SEED_POLA.some(k => String(s[k] ?? '') !== String(seed[k] ?? ''));
+}
+/* Wpisuje do piosenki oryginał z SEED_SONGS (razem z akordami i notatkami). */
+function seedPrzywroc(s){
+  const seed = seedOf(s);
+  if(!seed) return false;
+  for(const k of [...SEED_POLA, 'chords', 'notes']) s[k] = seed[k] ?? '';
+  return true;
+}
+
 /* Piosenki startowe — dodaj raz (nie wracają, jeśli je usuniesz). Dopisuje je też do tablicy songs. */
 async function seedSongs(songs){
   const done = prefs.get('songs.seedIds',[]);
@@ -214,6 +228,23 @@ async function seedSongs(songs){
     withLyrics.push(seed.id);
   }
   prefs.set('songs.seedLyrics',withLyrics);
+  // poprawki piosenek startowych, które są już zapisane — każda raz
+  const fixes = prefs.get('songs.seedFixes',[]);
+  for(const f of SEED_FIXES){
+    if(fixes.includes(f.id)) continue;
+    const s = songs.find(x=>x.id===f.song);
+    if(s){ f.apply(s); await DB.putSong(s); }
+    fixes.push(f.id);
+  }
+  prefs.set('songs.seedFixes',fixes);
+  // dawne piosenki startowe — usuń raz
+  const usuniete = prefs.get('songs.seedRemoved',[]);
+  for(const id of SEED_REMOVED){
+    if(usuniete.includes(id)) continue;
+    if(songs.some(x=>x.id===id)){ await DB.delSong(id); songs.splice(songs.findIndex(x=>x.id===id),1); }
+    usuniete.push(id);
+  }
+  prefs.set('songs.seedRemoved',usuniete);
   return songs;
 }
 
@@ -252,10 +283,16 @@ const ViewPiosenki = {
       list.innerHTML='';
       if(!songs.length){ list.append(h('div',{class:'empty'},'Nie masz jeszcze piosenek. Kliknij „+ Nowa piosenka".')); return; }
       songs.forEach(s=>{
-        const b=h('button',{class:'item','aria-current':String(s.id===currentId)}, s.title||'(bez tytułu)', h('small',null,[s.artist,keyNameLabel(s.key)].filter(Boolean).join(' · ')));
+        const baza = seedOf(s) ? (seedZmieniona(s) ? 'bazowa · zmieniona' : 'bazowa') : '';
+        const b=h('button',{class:'item','aria-current':String(s.id===currentId)}, s.title||'(bez tytułu)', h('small',null,[s.artist,keyNameLabel(s.key),baza].filter(Boolean).join(' · ')));
         b.onclick=()=>{ currentId=s.id; history.replaceState(null,'','#piosenki/'+s.id); drawList(); drawSong(); };
         list.appendChild(b);
       });
+      // usunięte piosenki bazowe da się przywrócić jednym kliknięciem
+      const brak = SEED_SONGS.filter(x=>!songs.some(s=>s.id===x.id));
+      if(brak.length) list.append(h('button',{class:'btn small ghost',title:'Dodaj z powrotem: '+brak.map(x=>x.title).join(', '),
+        onclick:async()=>{ for(const x of brak){ const n={...x}; await DB.putSong(n); songs.push(n); } drawList(); }},
+        '↺ Przywróć usunięte bazowe ('+brak.length+')'));
     }
 
     async function newSong(){
@@ -294,7 +331,29 @@ const ViewPiosenki = {
         if(saveFor && saveFor!==s) DB.putSong(saveFor);
         clearTimeout(saveT); saveFor=s;
         saveT=setTimeout(()=>{ saveFor=null; DB.putSong(s); drawList(); },400);
+        drawBaza();
       };
+
+      /* --- piosenka bazowa: oznaczenie i powrót do oryginału --- */
+      const bazaBox = h('div',{class:'baza'});
+      function drawBaza(pytaj){
+        bazaBox.innerHTML='';
+        if(!seedOf(s)){ bazaBox.hidden=true; return; }
+        bazaBox.hidden=false;
+        const zmieniona = seedZmieniona(s);
+        bazaBox.append(h('span',null, zmieniona ? 'bazowa · zmieniona' : 'bazowa'));
+        if(!zmieniona) return;
+        if(!pytaj){
+          bazaBox.append(h('button',{type:'button',class:'baza-link',onclick:()=>drawBaza(true)},'przywróć oryginał'));
+          return;
+        }
+        bazaBox.append(h('span',null,'— Twoje zmiany przepadną.'),
+          h('button',{type:'button',class:'baza-link mocny',onclick:async()=>{
+            if(saveFor===s){ clearTimeout(saveT); saveFor=null; }
+            seedPrzywroc(s); await DB.putSong(s); drawList(); drawSong();
+          }},'Tak, przywróć'),
+          h('button',{type:'button',class:'baza-link',onclick:()=>drawBaza(false)},'anuluj'));
+      }
 
       /* --- pola --- */
       const fTitle = h('input',{value:s.title||'',placeholder:'Tytuł','aria-label':'Tytuł',style:'font-family:Fraunces,serif;font-size:1.5rem;font-weight:600;padding:8px 12px'});
@@ -303,19 +362,26 @@ const ViewPiosenki = {
       const fBpm = h('input',{type:'number',min:40,max:200,value:s.bpm||90});
       const fBeats = h('select',null, ...[1,2,3,4,8].map(n=>h('option',{value:n,selected:(s.beats||4)==n}, n+' '+(n===1?'uderzenie':n<5?'uderzenia':'uderzeń'))));
       const fLyrics = h('textarea',{spellcheck:'false',style:'min-height:150px',
-        placeholder:'[Zwrotka]\n[C]Wlazł kotek na [G7]płotek i mruga,\nładna to [C]piosenka nie[G7]długa.'}, s.lyrics||'');
+        placeholder:'[Zwrotka]\n[C]Tu wpisz tekst [G7]piosenki,\na akord stoi [Am]nad sylabą.'}, s.lyrics||'');
 
       fTitle.oninput=()=>{ s.title=fTitle.value; save(); };
       fArtist.oninput=()=>{ s.artist=fArtist.value; save(); };
-      fKey.onchange=()=>{ s.key=fKey.value; save(); drawSheet(); drawLyrics(); };
+      // nowa tonacja przenosi akordy tekstu (C → D: wszystko o cały ton w górę);
+      // równoległa dur/moll (E-dur ↔ cis-moll) to te same akordy, więc tylko zmienia nazwę
+      fKey.onchange=()=>{
+        const n = przesuniecieTonacji(s.key, fKey.value);
+        s.key = fKey.value;
+        if(n) przeniesAkordy(n);
+        save(); drawSheet(); drawLyrics();
+      };
       fBpm.oninput=()=>{ s.bpm=+fBpm.value||90; save(); };
       fBeats.onchange=()=>{ s.beats=+fBeats.value; save(); };
-      fLyrics.oninput=()=>{ s.lyrics=fLyrics.value; save(); drawLyrics(); if(!(s.chords||'').trim()) drawSheet(); };
+      fLyrics.oninput=()=>{ s.lyrics=fLyrics.value; save(); drawLyrics(); drawSheet(); };
       fLyrics.style.minHeight = Math.min(700, 120 + (s.lyrics||'').split('\n').length*22)+'px';
 
       /* --- arkusz z akordami --- */
-      // bez osobnej listy akordów — bierzemy je po kolei z tekstu
-      const chordText = ()=> (s.chords||'').trim() ? s.chords : lyricsChords(s.lyrics).map(c=>c.text).join(' ');
+      // akordy bierzemy z tekstu (to on jest edytowany i przenoszony); stara lista tylko, gdy tekst jest bez akordów
+      const chordText = ()=> lyricsChordSheet(s.lyrics) || s.chords || '';
       const sheet = h('div',{class:'song-sheet'});
       const analysis = h('div',{class:'hint',style:'margin-top:10px'});
       const playAll = h('button',{class:'btn primary'},'▶ Zagraj akordy');
@@ -340,9 +406,7 @@ const ViewPiosenki = {
             if(t.junk){ junk.push(t.junk); line.append(h('span',{class:'faint mono',title:'nie rozpoznano akordu'},t.junk)); return; }
             const c=t.chord; all.push(c);
             const f=functionIn(c, s.key);
-            const b=h('button',{class:'chord-chip '+f.fn,'data-c':c.text,title:FN_NAME[f.fn]+(f.rn?' · '+f.rn:'')}, fmt(c.text), f.rn?h('span',{class:'deg'},f.rn):null);
-            b.onclick=()=>{ strike(c.pcs,1.1,0,c.bassPc); ring(b,'lit'); };
-            line.append(b);
+            line.append(h('span',{class:'chord-chip '+f.fn,'data-c':c.text,title:FN_NAME[f.fn]+(f.rn?' · '+f.rn:'')}, fmt(c.text), f.rn?h('span',{class:'deg'},f.rn):null));
           });
           sheet.append(line);
         });
@@ -362,7 +426,24 @@ const ViewPiosenki = {
             analysis.append(h('div',{style:'margin-top:6px'},`Podpowiedź: akordy najlepiej pasują do tonacji `, h('b',null,keyNameLabel(g.v)), ` (${g.fit}/${all.length} akordów w gamie).`, use));
           }
         }
+        drawSklad(all);
         if(junk.length) analysis.append(h('div',{style:'margin-top:6px'},'Nie rozpoznano: '+junk.join(', ')+' — pisz akordy jak C, Am, F#m, Bb7, G/B.'));
+      }
+
+      /* --- z jakich dźwięków są akordy tej piosenki --- */
+      const sklad = h('div',{class:'sklad'});
+      function drawSklad(all){
+        sklad.innerHTML='';
+        const widziane = new Set();
+        const lista = all.filter(c=>!widziane.has(c.text) && widziane.add(c.text));
+        if(!lista.length){ sklad.hidden=true; return; }
+        sklad.hidden=false;
+        sklad.append(h('h3',null,'Z czego są akordy'),
+          h('dl',null, ...lista.flatMap(c=>{
+            const {notes, bas} = chordNotes(c);
+            return [h('dt',null,fmt(c.text)),
+              h('dd',null, notes.join(' · '), bas && c.bassPc!==c.rootPc ? h('span',{class:'faint'},'  bas '+bas) : null)];
+          })));
       }
 
       /* --- tekst z akordami nad słowami --- */
@@ -377,10 +458,16 @@ const ViewPiosenki = {
         playChordSeq(items, (60/(s.bpm||90))*(s.beats||4), ()=>{ delete playLyr.dataset.on; playLyr.textContent='▶ Zagraj z tekstu'; },
           {loop:loopPref(), beats:s.beats||4, click:clickPref()});
       };
+      function przeniesAkordy(n){
+        s.lyrics = transposeLyrics(s.lyrics||'', n);
+        s.chords = transposeSongText(s.chords||'', n);
+        fLyrics.value = s.lyrics;
+      }
+      // ♭ / ♯ przenoszą tekst i razem z nim tonację
       function transponujTekst(n){
-        if(!s.lyrics) return;
-        s.lyrics = transposeLyrics(s.lyrics, n);
-        fLyrics.value = s.lyrics; save(); drawLyrics(); if(!(s.chords||'').trim()) drawSheet();
+        przeniesAkordy(n);
+        s.key = transposeKey(s.key, n); fKey.value = s.key;
+        save(); drawLyrics(); drawSheet();
       }
       function drawLyrics(){
         lyrBox.innerHTML='';
@@ -389,21 +476,23 @@ const ViewPiosenki = {
           lyrBox.append(h('div',{class:'empty'},'Tu wklej tekst piosenki. Akordy wpisz w nawiasach kwadratowych dokładnie tam, gdzie mają zabrzmieć — appka pokaże je nad sylabami.'));
           return;
         }
-        lyricsInto(lyrBox, linie, s.key);
+        lyricsInto(lyrBox, linie, s.key, {graj:false});
       }
 
+      drawBaza();
       main.append(
+        bazaBox,
         h('div',{class:'card'},
           fTitle,
           h('div',{class:'grid2'},
             h('div',null,h('label',{class:'f'},'Wykonawca'),fArtist),
-            h('div',null,h('label',{class:'f'},'Tonacja'),fKey)),
+            h('div',null,h('label',{class:'f'},'Tonacja'),fKey,h('p',{class:'faint',style:'margin:4px 0 0;font-size:.8rem'},'Zmiana tonacji przenosi akordy w tekście.'))),
           h('div',{class:'grid2'},
             h('div',null,h('label',{class:'f'},'Tempo (uderzeń na minutę)'),fBpm),
             h('div',null,h('label',{class:'f'},'Jeden akord trwa'),fBeats))),
         h('section',{style:'margin-top:18px'},
-          h('div',{class:'sechead'}, h('h2',null,'Akordy'), h('div',{class:'row'}, playAll, loopToggle(), clickToggle(), h('a',{class:'btn',href:'#druk/song/'+s.id},'🖨 Drukuj'), h('button',{class:'btn',title:'Pokaż drzewo i koło dla akordów tej piosenki',onclick:()=>{ const toks=parseSongText(chordText()).flatMap(l=>l.tokens.filter(t=>t.chord).map(t=>t.chord.text)); prefs.set('przejscia.seq',toks); prefs.set('przejscia.start',s.key); location.hash='#przejscia'; }},'🌳 Drzewo przejść'))),
-          h('div',{class:'card'}, sheet, analysis)),
+          h('div',{class:'sechead'}, h('h2',null,'Akordy'), h('div',{class:'row'}, playAll, loopToggle(), clickToggle(), h('a',{class:'btn',href:'#druk/song/'+s.id},'🖨 Drukuj'))),
+          h('div',{class:'card'}, sheet, analysis, sklad)),
         h('section',{style:'margin-top:18px'},
           h('div',{class:'sechead'}, h('h2',null,'Tekst z akordami'),
             h('div',{class:'row'}, playLyr, loopToggle(),
@@ -414,7 +503,7 @@ const ViewPiosenki = {
             h('summary',{class:'hint',style:'cursor:pointer'},'Edytuj tekst'),
             fLyrics,
             h('div',{class:'hint',style:'margin-top:6px'},'Akord w nawiasie kwadratowym staje nad następną sylabą: ',
-              h('span',{class:'mono'},'[C]Wlazł kotek na [G7]płotek'),'. Linia z samym ',
+              h('span',{class:'mono'},'[C]Tu wpisz tekst [G7]piosenki'),'. Linia z samym ',
               h('span',{class:'mono'},'[Zwrotka]'),' to nagłówek części. Reszta linii zostaje zwykłym tekstem.'))),
         h('div',{class:'row',style:'margin-top:22px'},
           h('button',{class:'btn danger',onclick:async()=>{ if(!confirm(`Usunąć „${s.title}"? Tego nie da się cofnąć.`)) return; if(saveFor===s){ clearTimeout(saveT); saveFor=null; } await DB.delSong(s.id); songs=songs.filter(x=>x.id!==s.id); currentId=songs[0]&&songs[0].id; drawList(); drawSong(); }},'Usuń piosenkę'))

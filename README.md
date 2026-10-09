@@ -21,13 +21,12 @@ Dane (piosenki, nagrania) na stronie są osobne od tych w pliku otwieranym z dys
 
 | Zakładka | Co tam jest |
 |---|---|
-| **Dziś** | Ekran startowy: seria dni w tym tygodniu, dzisiejszy cel z Treningu i duży przycisk „Zacznij trening dnia”, lekcja Teorii, do której wracasz, ostatnio grana piosenka i szybkie wejścia do grania. |
 | **Teoria** | 10 krótkich lekcji od zera: klawiatura → gama → akordy → cyfry rzymskie → tonika / subdominanta / dominanta → kadencje → przewroty → zmiana gamy → moll → plan ćwiczeń. Każda lekcja ma przykłady do posłuchania, zadanie przy pianinie i quiz. |
 | **Gamy** | Pierwszy prototyp (akordy.html) z klawiaturą: kliknij akord, a zobaczysz, które klawisze nacisnąć. |
 | **Nuty** | 6 lekcji czytania nut (pięciolinia, oba klucze, rytm, znaki, akordy) + trener „Jaka to nuta?”, który częściej pokazuje nuty, z którymi masz problem. |
 | **Trening** | Codzienna runda mieszanych zadań: akord i interwał ze słuchu, który to stopień, rola akordu, co dalej, złóż akord na klawiaturze, który przewrót. Appka liczy serię dni, pokazuje postęp i — przez system powtórek z odstępami — wraca częściej do tego, co Ci nie wychodzi. Klawisze: **1–4** odpowiedź, **spacja** powtarza dźwięk, **Enter** dalej. |
 | **Klawisze** | Żywe pianino. Grasz myszką, klawiaturą komputera albo prawdziwym pianinem przez **MIDI** — appka na bieżąco nazywa akord, który trzymasz (z przewrotem, basem po ukośniku i rolą w wybranej tonacji) i mówi, do jakich gam pasuje. Niżej gamy z **palcowaniem** obu rąk i ćwiczenie „zagraj gamę w górę i w dół". |
-| **Piosenki** | Twoje utwory: **tekst z akordami nad słowami**, tonacja i tempo. Akordy appka bierze z tekstu. Tekst da się zagrać i przetransponować o pół tonu — słowa zostają na miejscu. Na start są „Widzę dom”, „Bliżej (Closer)” i „Wtulę się (Lean Back)” (te dwie z polskim tekstem i akordami) oraz „Wlazł kotek na płotek” (pokazuje, jak zapisywać tekst). Appka koloruje rolę każdego akordu, gra akordy i podpowiada tonację. |
+| **Piosenki** | Twoje utwory: **tekst z akordami nad słowami**, tonacja i tempo. Akordy appka bierze z tekstu. Tekst da się zagrać i przetransponować o pół tonu — słowa zostają na miejscu. Na start są „Bliżej (Closer)” i „Wtulę się (Lean Back)” z polskim tekstem i akordami. To piosenki bazowe: możesz je zmieniać, a przycisk „↺ Przywróć oryginał” cofa wszystkie zmiany. Usuniętą bazową przywrócisz przyciskiem pod listą. Appka koloruje rolę każdego akordu, gra akordy i podpowiada tonację. |
 | **Setlista** | Wybierasz piosenki i układasz je w kolejności (strzałki ↑ ↓). Każda gra w swojej tonacji albo w wybranej innej — przycisk „dopasuj do poprzedniej” przenosi ją tak, żeby przejście nie było potrzebne. Gdy następna piosenka jest w innej tonacji, appka podaje **akordy przejścia** do wyboru (gładko przez wspólny akord, ii–V, po kole kwintowym albo szybko przez dominantę) i może je zagrać. **Graj setlistę** pokazuje duży tekst z akordami (przeniesionymi do wybranej tonacji), przejście do następnej i przyciski Poprzednia / Następna — działają też strzałki ← → i pedał do przewracania stron (PageUp / PageDown). |
 | **Głos** | Rozgrzewka z akompaniamentem, który sam przechodzi pół tonu wyżej i z powrotem. Są tu ćwiczenia emisyjne (rozluźniające, głowowe, wąskie, szerokie, dykcyjne), ćwiczenia na emocje w głosie, nagrywanie się i mapa emocji Twoich piosenek. |
 | **Pętla** | Wybierasz akordy z bazy (12 dźwięków × dur, moll, 7, maj7, m7, sus, °, +) albo jedną z **ponad 40 gotowych pętli** w kategoriach: na start, pop, uwielbienie, rzewne, jazz i blues, klasyka i kolędy. Do tego **styl akompaniamentu** — ten sam akord jako pompa, arpeggio, walc, ballada 6/8, bas Albertiego, synkopa albo mocne oktawy; appka pisze, co robi która ręka. Układa akordy w koło, pokazuje przewroty i palce, które zostają, i gra w kółko z metronomem. Spacja = start/stop. |
@@ -44,7 +43,7 @@ Appka pamięta wybór. Kolory ról akordów (tonika — róż, subdominanta — 
 
 ## Na telefonie
 
-Na dole ekranu jest pasek pod kciukiem: **Dziś, Nauka, Klawisze, Piosenki, Więcej**.
+Na dole ekranu jest pasek pod kciukiem: **Piosenki, Nauka, Klawisze, Pętla, Więcej**.
 „Nauka” prowadzi do Teorii (świeci się też w Nutach i Treningu), a **Więcej** otwiera pełną listę zakładek z opisem i wybór motywu.
 
 Appka ma własną ikonę (pianino z zaświeconym akordem C). W telefonie otwórz stronę i wybierz **Udostępnij → Do ekranu początkowego** (iPhone) albo **⋮ → Dodaj do ekranu głównego** (Android) — Harmonia pojawi się jak zwykła aplikacja.
@@ -73,8 +72,8 @@ także na innym komputerze. Nagrań audio nie ma w kopii, bo trzymasz je jako os
 
 ```
 [Zwrotka]
-[C]Wlazł kotek na [G7]płotek i mruga,
-ładna to [C]piosenka nie[G7]długa.
+[C]Tu wpisz tekst [G7]piosenki,
+a akord stoi [Am]nad sylabą.
 ```
 
 - akord w nawiasie kwadratowym staje **nad następną sylabą** — dokładnie tam, gdzie ma zabrzmieć

@@ -91,7 +91,8 @@ async function sheetSong(id){
   if(!s){ sheet.append(h('p',null,'Nie znaleziono piosenki.')); return sheet; }
   sheet.append(h('h2',null,s.title||'(bez tytułu)'),
     h('p',{class:'sub'}, [s.artist, 'tonacja: '+keyNameLabel(s.key), s.bpm? s.bpm+' BPM':''].filter(Boolean).join(' · ')));
-  parseSongText(s.chords).forEach(l=>{
+  const arkusz = lyricsChordSheet(s.lyrics) || s.chords || '';   // jak w zakładce Piosenki
+  parseSongText(arkusz).forEach(l=>{
     const line = h('div',{class:'song-line'});
     if(l.label) line.append(h('span',{class:'ll'},l.label));
     l.tokens.forEach(t=>{
@@ -125,8 +126,7 @@ async function sheetSong(id){
   // chwyty użytych akordów
   const used=[]; const seen=new Set();
   const dodaj = c => { if(c && !seen.has(c.text)){ seen.add(c.text); used.push(c); } };
-  parseSongText(s.chords).forEach(l=>l.tokens.forEach(t=>dodaj(t.chord)));
-  lyricsChords(s.lyrics).forEach(dodaj);
+  parseSongText(arkusz).forEach(l=>l.tokens.forEach(t=>dodaj(t.chord)));
   if(used.length){
     sheet.append(h('h3',{style:'font-family:Fraunces,serif;color:#111;margin:16px 0 6px'},'Chwyty'));
     const grid = h('div',{style:'display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px 14px'});

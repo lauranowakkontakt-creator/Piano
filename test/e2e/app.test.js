@@ -41,7 +41,7 @@ test('każda zakładka i podstrona otwiera się bez błędów', async () => {
     ...LESSONS.map(l => 'teoria/' + l.id),
     ...NUTY_LESSONS.map(l => 'nuty/' + l.id), 'nuty/trener',
     ...GLOS_PAGES.map(p => 'glos/' + p.id),
-    'piosenki/seed-widze-dom', 'druk/song/seed-blizej', 'nieznana-zakladka',
+    'piosenki/seed-lean-back', 'druk/song/seed-blizej', 'nieznana-zakladka',
   ]);
   for(const hsh of hashes){
     await go(page, '#' + hsh);
@@ -72,9 +72,9 @@ test('Piosenki: startowe piosenki, wpisywanie akordów, role i zgadywanie tonacj
   const {page, errors, close} = await open('#piosenki');
   await page.waitForSelector('.song-list .item');
   const titles = await page.$$eval('.song-list .item', els => els.map(e => e.firstChild.textContent));
-  assert.ok(titles.includes('Widzę dom') && titles.includes('Bliżej (Closer)'), titles.join(', '));
+  assert.ok(titles.includes('Wtulę się (Lean Back)') && titles.includes('Bliżej (Closer)'), titles.join(', '));
   // piosenki startowe nie mają nierozpoznanych akordów
-  for(const id of ['seed-widze-dom', 'seed-blizej']){
+  for(const id of ['seed-lean-back', 'seed-blizej']){
     await go(page, '#piosenki/' + id);
     await page.waitForSelector('.song-sheet .chord-chip');
     assert.equal(await page.locator('.song-sheet .faint.mono').count(), 0, id);
@@ -127,9 +127,8 @@ test('Piosenki: kopia zapasowa — złe dane z pliku są oczyszczane', async () 
   const saved = await page.evaluate(() => DB.getSong('imp1'));
   assert.equal(saved.key, 'C');
   assert.equal(saved.bpm, 90);
-  await page.click('text=🌳 Drzewo przejść');   // tonacja piosenki trafia do Przejść (tam do innerHTML)
-  await page.waitForSelector('.seqbox .chord-chip');
   assert.match(await page.textContent('#view'), /C-dur/);
+  assert.equal(await page.locator('button:has-text("Drzewo przejść")').count(), 0, 'Piosenki nie odsyłają do Przejść');
   assert.equal(await page.evaluate(() => window.__xss), undefined);
   assert.deepEqual(errors, []);
   await close();
@@ -431,7 +430,7 @@ test('Na telefonie wszystkie zakładki są w zasięgu jednego dotknięcia', asyn
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));
   await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
-  await page.goto(APP + '#petla');
+  await page.goto(APP + '#gamy');
   await page.waitForSelector('.navdol');
 
   // na telefonie górny pasek zakładek znika, zostaje dolny: 4 miejsca + „Więcej"
@@ -440,7 +439,7 @@ test('Na telefonie wszystkie zakładki są w zasięgu jednego dotknięcia', asyn
   assert.equal(await page.locator('.navdol a, .navdol button').count(), 5);
   const dol = await page.evaluate(() => document.querySelector('.navdol').getBoundingClientRect());
   assert.ok(Math.abs(dol.bottom - 844) < 2, 'dolny pasek przyklejony do dołu ekranu');
-  // Pętli nie ma w dolnym pasku — świeci się „Więcej"
+  // Gam nie ma w dolnym pasku — świeci się „Więcej"
   assert.equal(await page.locator('.navdol [data-akt]').getAttribute('data-dol'), 'wiecej');
 
   // „Więcej" otwiera menu z każdą zakładką i z opisem
@@ -449,7 +448,7 @@ test('Na telefonie wszystkie zakładki są w zasięgu jednego dotknięcia', asyn
   assert.equal(await page.locator('.navmenu').isVisible(), true);
   assert.equal(await page.locator('.navgrupa a').count(), wszystkich, 'menu pokazuje każdą zakładkę');
   for(const a of await page.locator('.navgrupa a').all()) assert.ok((await a.locator('span').textContent()).length > 15);
-  assert.equal(await page.locator('.navgrupa a[aria-current="true"]').getAttribute('data-id'), 'petla');
+  assert.equal(await page.locator('.navgrupa a[aria-current="true"]').getAttribute('data-id'), 'gamy');
 
   await page.click('.navgrupa a[data-id="trening"]');
   await page.waitForSelector('.tr-scena');
@@ -472,8 +471,8 @@ test('Na telefonie wszystkie zakładki są w zasięgu jednego dotknięcia', asyn
 });
 
 test('Motyw kolorów: domyślnie jasny, wybór z menu zostaje po przeładowaniu', async () => {
-  const {page, errors, close} = await open('#dzis');
-  await page.waitForSelector('.dz-seria');
+  const {page, errors, close} = await open('#piosenki');
+  await page.waitForSelector('.song-sheet');
   assert.equal(await page.evaluate(() => document.documentElement.dataset.theme), 'kosc');
   const tlo = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
   const jasne = await tlo();
@@ -484,22 +483,18 @@ test('Motyw kolorów: domyślnie jasny, wybór z menu zostaje po przeładowaniu'
   assert.notEqual(await tlo(), jasne, 'tło zmienia się z motywem');
   assert.equal(await page.locator('.motyw[aria-pressed="true"]').getAttribute('data-motyw'), 'noc');
   await page.reload();
-  await page.waitForSelector('.dz-seria');
+  await page.waitForSelector('.song-sheet');
   assert.equal(await page.evaluate(() => document.documentElement.dataset.theme), 'noc', 'motyw wraca po przeładowaniu');
   assert.equal(await page.evaluate(() => document.querySelector('meta[name="theme-color"]').content), '#111218');
   assert.deepEqual(errors, []);
   await close();
 });
 
-test('Dziś: start pokazuje serię, trening dnia i lekcję do kontynuacji', async () => {
+test('Start: bez adresu otwierają się Piosenki', async () => {
   const {page, errors, close} = await open('');
-  await page.waitForSelector('.dz-seria');
-  assert.match(await page.textContent('h1'), /Dziś/);
-  assert.equal(await page.locator('.dz-tydz i').count(), 7);
-  assert.equal(await page.getAttribute('.dz-start', 'href'), '#trening');
-  assert.match(await page.getAttribute('.dz-lekcja', 'href'), /^#teoria/);
-  await page.click('.dz-start');
-  await page.waitForSelector('.tr-scena');
+  await page.waitForSelector('.song-sheet');
+  assert.match(await page.textContent('h1'), /Piosenki/);
+  assert.equal(await page.locator('.tabs a[href="#dzis"]').count(), 0);
   assert.deepEqual(errors, []);
   await close();
 });
@@ -597,7 +592,9 @@ test('Pętla: gotowe pętle da się filtrować po kategoriach', async () => {
 test('Piosenki: tekst z akordami nad słowami, granie i transpozycja', async () => {
   const {page, errors, close} = await open('#piosenki');
   await page.waitForSelector('.song-list .item');
-  await page.click('.song-list .item:has-text("Wlazł kotek")');
+  await page.click('text=+ Nowa piosenka');
+  await page.click('summary:has-text("Edytuj tekst")');
+  await page.fill('details textarea', '[Zwrotka]\n[C]Wlazł kotek na [G7]płotek i [C]mruga,\n[C]ładna to [G7]piosenka, nie[C]długa.\n\n[Refren]\nNie [F]długa, nie [C]krótka, lecz [G7]w sam [C]raz');
   await page.waitForSelector('.lyr-line');
 
   // akordy stoją nad tekstem, a słowa zostają słowami
@@ -624,7 +621,6 @@ test('Piosenki: tekst z akordami nad słowami, granie i transpozycja', async () 
   await page.click('button:has-text("Stop")');
 
   // tekst zapisuje się i wraca po przeładowaniu
-  await page.click('summary:has-text("Edytuj tekst")');
   await page.fill('details textarea', '[Refren]\nTy je[D]steś moim [Em7]domem');
   await page.waitForTimeout(600);
   await page.reload();
@@ -635,13 +631,82 @@ test('Piosenki: tekst z akordami nad słowami, granie i transpozycja', async () 
   await close();
 });
 
+test('Piosenki bazowe: zmieniasz, a potem wracasz do oryginału', async () => {
+  const {page, errors, close} = await open('#piosenki/seed-blizej');
+  await page.waitForSelector('.lyr-line');
+  assert.equal((await page.textContent('.baza')).trim(), 'bazowa');
+  assert.equal(await page.locator('.baza button').count(), 0, 'nic do przywracania');
+  // klik w akord nic nie gra, a pod akordami jest spis dźwięków
+  assert.equal(await page.locator('.lyr button.lyr-ch, .song-sheet button.chord-chip').count(), 0, 'akordy to sam tekst');
+  await page.click('.lyr-ch[data-c="C#m"] >> nth=0');
+  assert.equal(await page.evaluate(() => typeof ctx === 'undefined' || !ctx), true, 'dźwięk się nie włączył');
+  const sklad = await page.textContent('.sklad');
+  assert.match(sklad, /C♯m\s*C♯ · E · G♯/);
+  assert.match(sklad, /F♯m\s*F♯ · A · C♯/);
+  const oryginal = (await page.locator('.lyr-tx').allTextContents()).join('');
+
+  // zmiana tekstu i tonacji — piosenka jest „zmieniona" i to zostaje po przeładowaniu
+  await page.click('summary:has-text("Edytuj tekst")');
+  await page.fill('details textarea', '[E]Moje własne słowa');
+  await page.click('button[title="Cały tekst pół tonu wyżej"]');
+  await page.waitForTimeout(600);
+  await page.reload();
+  await page.waitForSelector('.lyr-line');
+  assert.match(await page.textContent('.baza'), /zmieniona/);
+  assert.match(await page.textContent('.song-list .item[aria-current="true"]'), /bazowa · zmieniona/);
+
+  // przywróć: najpierw pytanie, Anuluj nic nie zmienia
+  await page.click('.baza button:has-text("Przywróć oryginał")');
+  await page.click('.baza button:has-text("Anuluj")');
+  assert.match((await page.locator('.lyr-tx').allTextContents()).join(''), /Moje własne słowa/);
+  await page.click('.baza button:has-text("Przywróć oryginał")');
+  await page.click('.baza button:has-text("Tak, przywróć")');
+  await page.waitForFunction(() => document.querySelector('.baza').textContent.trim() === 'bazowa');
+  assert.equal((await page.locator('.lyr-tx').allTextContents()).join(''), oryginal);
+  await page.reload();
+  await page.waitForSelector('.lyr-line');
+  assert.equal((await page.locator('.lyr-tx').allTextContents()).join(''), oryginal, 'oryginał zapisany');
+
+  // usunięta piosenka bazowa wraca przyciskiem pod listą
+  await page.click('button:has-text("Usuń piosenkę")');
+  await page.waitForSelector('button:has-text("Przywróć usunięte bazowe (1)")');
+  await page.click('button:has-text("Przywróć usunięte bazowe")');
+  await page.waitForSelector('.song-list .item:has-text("Bliżej")');
+  assert.equal(await page.locator('button:has-text("Przywróć usunięte bazowe")').count(), 0);
+  // własna piosenka nie ma paska bazowej
+  await page.click('text=+ Nowa piosenka');
+  await page.waitForFunction(() => document.querySelector('input[aria-label="Tytuł"]')?.value === 'Nowa piosenka');
+  assert.equal(await page.locator('.baza').isVisible(), false);
+  assert.deepEqual(errors, []);
+  await close();
+});
+
+test('Piosenki: zmiana tonacji przenosi akordy w tekście, a ♯ zmienia tonację', async () => {
+  const {page, errors, close} = await open('#piosenki/seed-blizej');
+  await page.waitForSelector('.lyr-line');
+  const akordy = () => page.locator('.lyr-ch[data-c]').allTextContents();
+  assert.deepEqual((await akordy()).slice(0, 4), ['A', 'B', 'C♯m', 'B']);
+  await page.selectOption('.card select >> nth=0', 'D');
+  await page.waitForTimeout(100);
+  assert.deepEqual((await akordy()).slice(0, 4), ['G', 'A', 'Bm', 'A'], 'E → D: cały ton w dół');
+  assert.equal(await page.locator('.lyr-ch.o').count(), 0, 'akordy dalej pasują do tonacji');
+  await page.click('button[title="Cały tekst pół tonu wyżej"]');
+  await page.waitForTimeout(100);
+  assert.equal(await page.inputValue('.card select >> nth=0'), 'Eb', '♯ przesuwa też tonację');
+  await page.selectOption('.card select >> nth=0', 'Cm');
+  await page.waitForTimeout(100);
+  assert.deepEqual((await akordy()).slice(0, 4), ['A♭', 'B♭', 'Cm', 'B♭'], 'równoległa moll: akordy bez zmian');
+  assert.deepEqual(errors, []);
+  await close();
+});
+
 test('Druk: tekst piosenki trafia na kartkę razem z chwytami', async () => {
   const {page, errors, close} = await open('#piosenki');
   await page.waitForSelector('.song-list .item');
-  await go(page, '#druk/song/seed-kotek');
+  await go(page, '#druk/song/seed-blizej');
   await page.waitForSelector('.sheet .lyr-line');
   const sheet = await page.textContent('.sheet');
-  assert.match((await page.locator('.sheet .lyr-tx').allTextContents()).join(''), /Wlazł kotek na płotek/);
+  assert.match((await page.locator('.sheet .lyr-tx').allTextContents()).join(''), /Przyciągnij mnie do siebie/);
   assert.match(sheet, /Tekst/);
   assert.match(sheet, /Chwyty/);
   // chwyty zbierają też akordy, które są tylko w tekście
@@ -702,52 +767,52 @@ test('Gamy: przełącznik „w kółko" gra progresję dalej po końcu', async (
 test('Setlista: układanie, zmiana tonacji, przejście i granie po kolei', async () => {
   const {page, errors, close} = await open('#setlista');
   await page.waitForSelector('.sl-dodaj select');
-  // trzy startowe piosenki: Bliżej (E), Widzę dom (D), Wlazł kotek (C)
+  // startowe piosenki: Bliżej (E-dur) i Wtulę się (B-dur)
   const dodaj = async tytul => {
     const v = await page.locator('.sl-dodaj option', {hasText: tytul}).getAttribute('value');
     await page.selectOption('.sl-dodaj select', v);
     await page.click('.sl-dodaj button');
   };
-  await dodaj('Wlazł kotek');
-  await dodaj('Widzę dom');
+  await dodaj('Bliżej');
+  await dodaj('Wtulę się');
   assert.equal(await page.locator('.sl-item').count(), 2);
 
-  // C-dur → D-dur: przejście z akordami, wariant da się zmienić
+  // E-dur → B-dur: przejście z akordami, wariant da się zmienić
   assert.equal(await page.locator('.sl-przejscie').count(), 1);
-  assert.match(await page.textContent('.sl-przejscie'), /C-dur.*D-dur/);
+  assert.match(await page.textContent('.sl-przejscie'), /E-dur.*B-dur/);
   assert.ok(await page.locator('.sl-przejscie .chord-chip').count() >= 1, 'są akordy przejścia');
   await page.click('.sl-przejscie .sl-warianty button:has-text("Szybko")');
   assert.equal(await page.locator('.sl-przejscie .sl-warianty button[aria-pressed="true"]').textContent(), 'Szybko');
-  assert.deepEqual(await page.locator('.sl-przejscie .chord-chip').allTextContents(), ['AV']);
+  assert.deepEqual(await page.locator('.sl-przejscie .chord-chip').allTextContents(), ['F♯V']);
 
-  // „dopasuj do poprzedniej" przenosi Widzę dom do C-dur → przejście niepotrzebne
+  // „dopasuj do poprzedniej" przenosi Wtulę się do E-dur → przejście niepotrzebne
   await page.click('.sl-item >> nth=1 >> button:has-text("dopasuj do poprzedniej")');
   assert.match(await page.textContent('.sl-przejscie'), /ta sama gama/);
-  assert.match(await page.locator('.sl-item').nth(1).textContent(), /wróć do D-dur/);
+  assert.match(await page.locator('.sl-item').nth(1).textContent(), /wróć do B-dur/);
 
   // kolejność
   await page.click('.sl-item >> nth=1 >> button[aria-label="Wyżej"]');
-  assert.match(await page.locator('.sl-item').first().textContent(), /Widzę dom/);
+  assert.match(await page.locator('.sl-item').first().textContent(), /Wtulę się/);
 
   // zapis przeżywa przeładowanie
   await page.reload();
   await page.waitForSelector('.sl-item');
   assert.equal(await page.locator('.sl-item').count(), 2);
-  assert.match(await page.locator('.sl-item').first().textContent(), /Widzę dom/);
+  assert.match(await page.locator('.sl-item').first().textContent(), /Wtulę się/);
 
   // granie: duży tekst, strzałka w prawo przechodzi dalej
   await page.click('a:has-text("Graj setlistę")');
   await page.waitForSelector('.sl-scena');
-  assert.match(await page.textContent('.sl-scena h1'), /Widzę dom/);
-  assert.match(await page.textContent('.sl-scena'), /Gram w C-dur/);
-  assert.match(await page.textContent('.sl-scena'), /oryginalnie D-dur/);
-  assert.match(await page.textContent('.sl-dalej'), /Wlazł kotek/);
+  assert.match(await page.textContent('.sl-scena h1'), /Wtulę się/);
+  assert.match(await page.textContent('.sl-scena'), /Gram w E-dur/);
+  assert.match(await page.textContent('.sl-scena'), /oryginalnie B-dur/);
+  assert.match(await page.textContent('.sl-dalej'), /Bliżej/);
   await page.keyboard.press('ArrowRight');
   await page.waitForFunction(() => /graj\/1$/.test(location.hash));
-  await page.waitForSelector('.sl-scena h1:has-text("Wlazł kotek")');
+  await page.waitForSelector('.sl-scena h1:has-text("Bliżej")');
   assert.match(await page.textContent('.sl-pasek'), /2 \/ 2/);
   await page.keyboard.press('PageUp');
-  await page.waitForSelector('.sl-scena h1:has-text("Widzę dom")');
+  await page.waitForSelector('.sl-scena h1:has-text("Wtulę się")');
   assert.deepEqual(errors, []);
   await close();
 });

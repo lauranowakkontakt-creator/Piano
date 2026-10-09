@@ -79,19 +79,6 @@ test('nic, śmieci i dziwne typy nie wysypują parsera', () => {
   assert.ok(parseLyrics('[]pusty nawias').length);
 });
 
-test('przykładowa piosenka z tekstem jest poprawna i gra w swojej tonacji', () => {
-  const kotek = SEED_SONGS.find(s => s.id === 'seed-kotek');
-  assert.ok(kotek, 'brakuje piosenki pokazowej z tekstem');
-  assert.ok(kotek.lyrics.includes('[C]'), 'tekst ma akordy w nawiasach');
-  const akordy = plain(lyricsChords(kotek.lyrics));
-  assert.ok(akordy.length >= 8, 'akordów w tekście: ' + akordy.length);
-  for(const c of lyricsChords(kotek.lyrics))
-    assert.notEqual(functionIn(c, kotek.key).fn, 'o', `${c.text} nie pasuje do ${kotek.key}`);
-  // nagłówki części są, więc widać gdzie zwrotka, a gdzie refren
-  const etykiety = plain(parseLyrics(kotek.lyrics)).filter(l => l.label).map(l => l.label);
-  assert.deepEqual(etykiety, ['Zwrotka', 'Refren']);
-});
-
 test('Bliżej i Wtulę się: polski tekst z akordami, które rozpoznaje appka', () => {
   for(const id of ['seed-blizej', 'seed-lean-back']){
     const s = SEED_SONGS.find(x => x.id === id);
@@ -103,4 +90,18 @@ test('Bliżej i Wtulę się: polski tekst z akordami, które rozpoznaje appka', 
     assert.ok(lyricsChords(s.lyrics).length >= 30, id);
     assert.ok(linie.some(l => l.label && l.label.startsWith('Refren')), id + ': brak refrenu');
   }
+});
+
+test('lyricsChordSheet: akordy z tekstu z podziałem na części', () => {
+  const {lyricsChordSheet} = L;
+  const t = '[Zwrotka]\n[C]raz [G7]dwa\n[Am]trzy\n\n[Refren]\n[F]cztery\nbez akordów';
+  assert.equal(lyricsChordSheet(t), '[Zwrotka] C G7 | Am\n[Refren] F');
+  assert.equal(lyricsChordSheet('[Hm]raz'), 'Bm');
+  assert.equal(lyricsChordSheet('sam tekst'), '');
+  assert.equal(lyricsChordSheet(null), '');
+});
+
+test('lyricsChordSheet: po transpozycji tekstu arkusz idzie za tekstem', () => {
+  const {lyricsChordSheet} = L;
+  assert.equal(lyricsChordSheet(transposeLyrics('[Zwrotka]\n[C]raz [G]dwa', 2)), '[Zwrotka] D A');
 });

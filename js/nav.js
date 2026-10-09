@@ -10,7 +10,6 @@
 
 const NAV_GROUPS = [
   {name:'Nauka', items:[
-    {id:'dzis',    name:'Dziś',         opis:'Start: seria dni, trening dnia i lekcja, do której wracasz.'},
     {id:'teoria',  name:'Teoria',       opis:'10 lekcji od zera: klawiatura, gama, akordy, kadencje.'},
     {id:'nuty',    name:'Nuty',         opis:'Czytanie nut + trener „jaka to nuta".'},
     {id:'trening', name:'Trening',      opis:'Codzienna runda ćwiczeń ze słuchu. Pamięta, co Ci nie wyszło.'},
@@ -106,19 +105,19 @@ function navMenu(){
 }
 /* Zaznacz w menu zakładkę, na której jesteśmy. */
 function navMarkCurrent(panel){
-  const teraz = (location.hash.replace(/^#/,'') || 'dzis').split('/')[0];
+  const teraz = (location.hash.replace(/^#/,'') || 'piosenki').split('/')[0];
   panel.querySelectorAll('a[data-id]').forEach(a=>
     a.setAttribute('aria-current', String(a.dataset.id === teraz)));
 }
 
 /* ---------- dolny pasek na telefonie ----------
-   Pięć miejsc pod kciukiem. „Nauka" świeci się też w Nutach i Treningu,
+   Pięć miejsc pod kciukiem (cztery zakładki + „Więcej”). „Nauka" świeci się też w Nutach i Treningu,
    „Więcej" otwiera pełne menu i świeci się w pozostałych zakładkach. */
 const NAV_DOL = [
-  {id:'dzis',     name:'Dziś',     ikona:'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z'},
+  {id:'piosenki', name:'Piosenki', teZ:['setlista'], ikona:'M9 18V6l11-2v12M9 18a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0zM20 16a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0z'},
   {id:'teoria',   name:'Nauka',    ikona:'M4 5h7a2 2 0 0 1 2 2v13a2 2 0 0 0-2-2H4zM20 5h-5a2 2 0 0 0-2 2v13a2 2 0 0 1 2-2h5z', teZ:['nuty','trening']},
   {id:'klawisze', name:'Klawisze', ikona:'M3 5h18v14H3zM8 5v8M12 5v8M16 5v8'},
-  {id:'piosenki', name:'Piosenki', teZ:['setlista'], ikona:'M9 18V6l11-2v12M9 18a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0zM20 16a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0z'},
+  {id:'petla',    name:'Pętla',    ikona:'M4 12a8 8 0 0 1 14-5.3M20 4v4h-4M20 12a8 8 0 0 1-14 5.3M4 20v-4h4'},
 ];
 /* Która pozycja dolnego paska jest aktywna dla danej zakładki ('wiecej' = reszta). */
 function navDolAktywny(id){
@@ -139,7 +138,7 @@ function navDol(menu){
   wiecej.onclick = ()=>{ menu.przelacz(); };
   pasek.append(wiecej);
   const odswiez = ()=>{
-    const akt = navDolAktywny((location.hash.replace(/^#/,'') || 'dzis').split('/')[0]);
+    const akt = navDolAktywny((location.hash.replace(/^#/,'') || 'piosenki').split('/')[0]);
     pasek.querySelectorAll('[data-dol]').forEach(el=>el.toggleAttribute('data-akt', el.dataset.dol === akt));
     pasek.querySelectorAll('a[data-dol]').forEach(el=>el.setAttribute('aria-current', el.dataset.dol === akt ? 'page' : 'false'));
   };
