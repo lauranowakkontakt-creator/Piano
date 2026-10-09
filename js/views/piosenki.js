@@ -148,6 +148,928 @@ HARMONIA: B (I, dom), F# (V, napięcie), G#m (vi, dom smutniejszy), D#m7 (iii, m
 • Zwrotka B → D#m7 → C#sus kręci się wokół domu i nie ląduje — jak spokojny oddech.
 • Bridge: C# → D#m7 → B → F#. C#-dur nie należy do H-dur (tam jest C#m) — to „pożyczony" akord, dominanta do F#. Dlatego bridge brzmi jaśniej i bardziej do przodu.
 • Appka może podpowiadać inną tonację, bo zwrotka kończy się na C#sus, a bridge na C#. Dom tej piosenki to jednak B.`},
+{ id:'seed-surrender', title:'Ulegam (I Surrender)', artist:'Hillsong Worship · tł. Winnica Worship', key:'F', bpm:77, beats:4,
+  chords:`[Intro] Dm F C Bb
+[Zwrotka 1] Dm F C Bb | Dm F C Bb
+[Tag] Dm
+[Interludium] Dm F C Bb
+[Zwrotka 2] Dm F C Bb | Dm F C Bb
+[Refren] Dm F Gm Bb
+[Interludium 2] Bb F C | Gm Dm C
+[Bridge] Bb F C Gm Dm C | Bb F C Gm Dm C`,
+  lyrics:`[Intro — każdy akord 2 takty]
+[Dm] [F] [C] [Bb]
+
+[Zwrotka 1]
+[Dm]Jestem tu, na moich [F]kolanach znów.
+Poddaję [C]się, poddaję [Bb]się.
+[Dm]Szukam Cię, Ty wciąż [F]przyciągasz mnie,
+Tak pragnę [C]Cię, tak pragnę [Bb]Cię
+
+[Tag]
+Ja [Dm]ulegam
+
+[Interludium — każdy akord 2 takty]
+[Dm] [F] [C] [Bb]
+
+[Zwrotka 2]
+[Dm]Obmyj mnie w łasce i [F]w prawdzie Twej,
+Ciebie dziś [C]chcę
+Ciebie dziś [Bb]chcę
+
+[Dm]Wpadam w ramiona Twe
+Gdy płaczę [F]słyszysz mnie
+Więc do mnie [C]mów
+Ty do mnie [Bb]mów
+
+[Refren]
+Ja [Dm]ulegam
+Ja [F]ulegam
+Chcę bardziej [Gm]poznać Cię
+Chcę bardziej [Bb]poznać Cię
+
+[Interludium 2]
+[Bb] [F] [C] [C] [Gm] [Dm] [C] [C]
+
+[Bridge]
+Jak [Bb]gwałtowny [F]wiatr
+Duchu [C]we mnie wiej,
+Poprowadź [Gm]tak, poprowadź [Dm]tak, jak [C]chcesz
+
+Jak [Bb]potężny [F]sztorm
+Obudź [C]duszę mą
+Używaj [Gm]tak, używaj [Dm]tak, jak [C]chcesz`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Hillsong Worship). Akordy z angielskiej wersji, przeniesione nad odpowiednie słowa.
+Tonacja F-dur (oryginalna wg WorshipTogether), choć piosenka zaczyna się i kręci wokół Dm · 4/4 · 77 BPM.
+
+KOLEJNOŚĆ: Intro → Zwrotka 1 → Tag „Ja ulegam" → Interludium → Zwrotka 2 → Refren → Interludium 2 → Bridge (×2 lub więcej) → Refren.
+
+HARMONIA: F (I, dom), C (V, napięcie), B♭ (IV, ruch), Dm (vi, dom smutniejszy), Gm (ii, ruch).
+• Zwrotka to jedna pętla: Dm → F → C → B♭, każdy akord po 2 takty — vi – I – V – IV.
+• Start od Dm, nie od F — dlatego całość brzmi jak modlitwa na kolanach, a nie jak hymn. Appka może podpowiadać d-moll; dom to jednak F.
+• Refren: Dm → F → Gm → B♭. Gm zamiast C to nowy kolor — tu tekst mówi „chcę bardziej poznać Cię".
+• Bridge: B♭ → F → C → Gm → Dm → C. Startuje z B♭ i idzie w górę jak wiatr; kończy na C, więc chce się go powtarzać.
+• W pliku z akordami pierwsza linia bridge'u miała B♭m — w drugiej połowie jest B♭, więc tu też jest B♭. Jeśli w nagraniu słychać molowy, zmień.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — cicho, blisko, prawie mówione. Dużo powietrza.
+• „Ja ulegam" — miękko, z oddechem przed słowem.
+• Bridge — rośnie: „Jak gwałtowny wiatr" pełnym głosem, „Poprowadź tak" na podparciu, potem wyciszenie do refrenu.`},
+{ id:'seed-famous-for', title:'Wierzę Ci (Famous For)', artist:'Tauren Wells · tł. Winnica Worship', key:'Bb', bpm:86, beats:4,
+  chords:`[Zwrotka 1] Eb Gm F | Eb Gm F | Eb Bb F Eb | Eb Gm F | Eb Gm F | Eb Bb F Eb
+[Refren] Eb | F | Gm | F/A | Eb | F | Gm | F/A
+[Tag] Eb Gm F | Eb Gm F
+[Zwrotka 2] Eb Gm F | Bb/D Eb Gm F | Bb/D Eb Gm F | Eb Gm F
+[Bridge] Gm | Bb Eb | Bb F | Gm | Bb Eb | Bb | F`,
+  lyrics:`[Zwrotka 1]
+Nie [Eb]boję się, [Gm]bo [F]wierzę Ci
+Nie [Eb]wątpię, [Gm]bo wciąż [F]widzę, że
+Wier[Eb]nością [Bb]swą jak [F]tarczą ciągle [Eb]mnie chronisz
+
+Na[Eb]dzieję [Gm]mam w [F]Imieniu Twym
+A w [Eb]łasce [Gm]Twej jest [F]moja moc
+Wier[Eb]nością [Bb]swą jak [F]tarczą ciągle [Eb]mnie chronisz
+
+[Refren]
+Przeprowadź [Eb]przez wody
+Przeprowadź [F]przez ogień
+Zrób to, z [Gm]czego znamy Cię
+To, [F/A]z czego znamy Cię
+
+Ożyw [Eb]suche kości
+Ucisz [F]głos niewiary
+Zrób to, z [Gm]czego znamy Cię
+To, [F/A]z czego znamy Cię
+
+[Tag]
+[Eb]Wierzę [Gm]Ci, [F]Jezu
+Tak [Eb]wierzę [Gm]Ci, [F]Jezu
+
+[Zwrotka 2]
+Mi[Eb]łością [Gm]swą [F]wypełnij mnie
+[Bb/D]A Twoja [Eb]moc niech [Gm]objawia [F]się
+[Bb/D]Duchu [Eb]przyjdź, na[Gm]pełniaj [F]nas
+Ciągle [Eb]na [Gm]nowo [F](O Panie nasz)
+
+[Bridge — 2×]
+Mój [Gm]niezmierzony Bóg
+[Bb]Hojny w do[Eb]broci swej
+Ty [Bb]wciąż zachwycasz [F]mnie
+
+Twe [Gm]Imię mocą jest
+[Bb]Wiem, nie za[Eb]chwiejesz się
+Nic [Bb]nie zatrzyma Cię
+Wszystko [F]możliwe w Tobie jest`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Tauren Wells „Famous For (I Believe)"). Akordy z angielskiej wersji, przeniesione nad odpowiednie słowa.
+Tonacja B-dur (w appce Bb, oryginalna wg WorshipTogether) · 4/4 · 86 BPM.
+
+KOLEJNOŚĆ: Zwrotka 1 → Refren → Tag → Zwrotka 2 → Refren → Tag → Bridge ×2 → Refren → Tag.
+
+HARMONIA: B♭ (I, dom), E♭ (IV, ruch), F (V, napięcie), Gm (vi, dom smutniejszy).
+• Zwrotka kręci się wokół E♭ → Gm → F i prawie nie dotyka domu — B♭ pojawia się tylko na „wiernością swą". Stąd uczucie czekania.
+• Refren idzie w górę: E♭ → F → Gm, a potem F/A — F z A w basie. Bas wspina się E♭ → F → G → A i prowadzi z powrotem do E♭.
+• Bb/D w zwrotce 2 to B♭ z D w basie: bas idzie D → E♭, miękkie wejście w każdą linię.
+• Bridge: Gm → B♭ → E♭ → B♭ → F. Polski tekst ma w pierwszej części 3 linie, w drugiej 4 — akordy idą tak samo, rozkładasz je na słowa.
+• W zwrotce 1 akordy (także na WorshipTogether) mają samo „B" — w zwrotce 2 w tym samym miejscu jest Bb, a H-dur nie pasuje do tonacji, więc tu też jest Bb.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — spokojna pewność, nie strach: mówione, ciepłe.
+• Refren — odwaga: „Przeprowadź przez wody" pełnym głosem, fraza rośnie do „znamy Cię".
+• Tag „Wierzę Ci, Jezu" — prosto i szczerze, drugi raz mocniej.
+• Bridge — narasta przy każdym powtórzeniu, kulminacja na „Wszystko możliwe w Tobie jest".`},
+{ id:'seed-widze-zwyciestwo', title:'Widzę zwycięstwo', artist:'Michał Król, Melania Król', key:'A', bpm:61, beats:4,
+  chords:`[Zwrotka] D A F#m E | D A F#m E
+[Refren] D A F#m E | D A F#m E
+[Bridge] F#m E/G# A | A Bm A | Bm A E/G#`,
+  lyrics:`[Zwrotka 1]
+Kiedy świat się [D]chwieje [A]
+Ty dajesz [F#m]pewny grunt
+Trzymasz [E]mocno
+Zawsze ze mną [D]jesteś [A]
+Gdy nad[F#m]ciąga wróg
+Nie od[E]chodzisz
+
+[Zwrotka 2]
+Ty stoisz [D]przy mnie [A]
+I zamieniasz [F#m]mój lęk
+W chęć [E]do walki
+Dajesz mi [D]siłę [A]
+Twoje Słowo [F#m]to miecz
+Wiara [E]tarczą jest
+
+[Refren]
+[D]Widzę zwycięstwo gdy wi[A]dzę krzyż
+[F#m]Ty nie przegrałeś nigdy [E]żadnej z bitw
+[D]Bez względu na to co wy[A]darzy się
+Wiem, że ni[F#m]gdy nie zawie[E]dziesz mnie
+
+[D]Odwieczny plan wyko[A]nałeś już
+[F#m]Ten z którym walczę jest [E]u Twoich stóp
+[D]To Twoje imię moją [A]siłą jest
+Wiem, że ni[F#m]gdy nie zawie[E]dziesz mnie
+
+[Zwrotka 3]
+Wiem, że jesteś [D]wierny [A]
+Każde z [F#m]Twoich słów
+Się [E]wypełni
+Nigdy się nie [D]zmienisz [A]
+Wczoraj, [F#m]jutro i dziś
+Jesteś [E]Bogiem
+
+[Zwrotka 4]
+Ty możesz [D]wszystko [A]
+Nie zapo[F#m]mnę, że
+Jesteś [E]dobry
+I znasz moją [D]przyszłość [A]
+Będę [F#m]wierzyć Ci
+Nie [E]poddam się
+
+[Bridge]
+[F#m]Obietnice spełniają się
+[E/G#]w Tobie
+[A]Ostateczne
+[A]Zwycięstwo jest Twoje
+[Bm]Sło[A]wo
+Wyko[Bm]na[A]ło [E/G#]się`,
+  notes:`Tekst i akordy: Michał Król, Melania Król (michalkrol.com.pl).
+Tonacja A-dur · 4/4 · 61 BPM.
+
+W PDF akordy były tylko nad zwrotką 1, pierwszą połową refrenu i bridge'em. Zwrotki 2–4 i druga połowa refrenu mają ten sam układ linijek, więc akordy są przeniesione w te same miejsca — sprawdź z nagraniem.
+W bridge'u w PDF jest „E/G#m" — to E z G# w basie (E/G#), tak jest wpisane.
+
+HARMONIA: A (I, dom), D (IV, ruch), E (V, napięcie), F#m (vi, dom smutniejszy), Bm (ii, ruch).
+• Zwrotka i refren to ta sama pętla: D → A → F#m → E — IV – I – vi – V. Start od D, nie od A, więc fraza zawsze „podnosi się" do domu.
+• Każda linia kończy się na E (V) — napięcie, które ciągnie do następnej linii.
+• Bridge: F#m → E/G# → A — bas idzie schodkami w górę F# → G# → A, jak wspinanie się do „Ostateczne zwycięstwo".
+• „Słowo wykonało się": Bm → A dwa razy, potem E/G# — zawieszenie przed powrotem do refrenu.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — spokojna pewność, ciepło, bez forsowania.
+• Refren — zwycięsko, ale nie krzykiem: „Widzę zwycięstwo" na pełnym oddechu.
+• Bridge — rośnie od „Obietnice" do „Ostateczne zwycięstwo", „Słowo wykonało się" szeroko i powoli.`},
+{ id:'seed-nothing-else', title:'Nic innego (Nothing Else)', artist:'Cody Carnes · tł. Winnica Worship', key:'C', bpm:68, beats:4,
+  chords:`[Intro] Dm7add4 F C Csus C | Dm7add4 Fmaj7 C Csus C
+[Refren] Dm7add4 F2 C | Dm7add4 F2 C Csus C | Dm7add4 F2 C | Dm7add4 F2 C
+[Zwrotka] F2 | C/E | F2 | C Csus C
+[Bridge] Dm7add4 F2 Am7 Gsus4
+[Koniec] Gsus4`,
+  lyrics:`[Intro]
+[Dm7add4] [F] [C] [Csus] [C]
+[Dm7add4] [Fmaj7] [C] [Csus] [C]
+
+[Refren]
+Jestem tutaj z [Dm7add4]Tobą [F2]
+Chce przebywać [C]nisko u Twych stóp
+Czuję, że to [Dm7add4]święty mo[F2]ment
+Już zawsze chcę [C]tu [Csus]być [C]
+
+Nie jestem tu dla [Dm7add4]darów [F2]
+Jezu nic nie [C]jesteś dłużny mi
+Bardziej niż [Dm7add4]to co mi możesz [F2]dać
+Chcę ciebie [C]mieć
+
+[Zwrotka 1]
+Prze[F2]praszam, że tak wiele udawałem
+Prze[C/E]praszam, że śpiewałem inną pieśń
+Weź mnie [F2]tam, na sam początek
+Otwieram swoje serce [C]znów [Csus] [C]
+
+[Zwrotka 2]
+Prze[F2]praszam, za moje własne, wielkie plany
+Prze[C/E]praszam, zapomniałem, że wystarczysz
+Weź mnie [F2]tam, na sam początek
+Otwieram swoje serce [C]znów [Csus] [C]
+
+[Refren]
+Jestem tutaj z [Dm7add4]Tobą [F2]
+Chce przebywać [C]nisko u Twych stóp
+Czuję, że to [Dm7add4]święty mo[F2]ment
+Już zawsze chcę [C]tu [Csus]być [C]
+
+Nie jestem tu dla [Dm7add4]darów [F2]
+Jezu nic nie [C]jesteś dłużny mi
+Bardziej niż [Dm7add4]to co mi możesz [F2]dać
+Chcę ciebie [C]mieć [Csus] [C]
+
+[Bridge — 3×]
+Ja Ciebie [Dm7add4]chcę
+Ciebie [F2]chcę
+[Am7]Ciebie chcę
+Nic innego [Gsus4]już
+
+[Koniec]
+[Gsus4]`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Cody Carnes). Akordy z angielskiej wersji (WorshipTogether), przeniesione nad odpowiednie słowa.
+Tonacja C-dur · 4/4 · 68 BPM.
+
+KOLEJNOŚĆ: Intro → Refren → Zwrotka 1 → Zwrotka 2 → Refren → Bridge ×3 → akord końcowy Gsus4.
+
+ZAPIS AKORDÓW: w oryginale jest Dm7(4) i G(4). Tu są jako Dm7add4 (Dm7 z dodaną kwartą: D F A C + G) i Gsus4 (G bez tercji: G C D) — te same dźwięki, zapis, który appka rozpoznaje.
+
+HARMONIA: C (I, dom), F (IV, ruch), Dm (ii, ruch), Am (vi, dom smutniejszy), G (V, napięcie).
+• Refren: Dm7add4 → F2 → C — ii – IV – I. Bez dominanty G, więc wraca do domu miękko, bez „pchania".
+• Dm7add4 i F2 mają wspólne dźwięki (F, A, C, a do tego G) — dlatego przejście jest prawie niesłyszalne, jak jedno długie brzmienie.
+• Csus → C: zawieszenie i rozwiązanie na „być" i „znów" — mały oddech na końcu frazy.
+• Zwrotka: F2 → C/E — bas schodzi F → E, jak przeprosiny, bez nacisku.
+• Bridge: Dm7add4 → F2 → Am7 → Gsus4. Kończy na Gsus4 i nie wraca do C — piosenka zostaje otwarta.
+
+EMOCJE W GŁOSIE (plan):
+• Refren — intymnie, cicho, jak rozmowa sam na sam.
+• Zwrotki — szczerze, z pokorą, prawie mówione.
+• Bridge — za każdym razem trochę mocniej; „Nic innego już" na końcu znowu cicho.`},
+{ id:'seed-i-belong', title:'Należę do Jezusa (I Belong To Jesus)', artist:'Bethel Music · tł. Winnica Worship', key:'A', bpm:67, beats:4,
+  chords:`[Intro] D A/C# E | D A/C# E
+[Zwrotka] D A/C# E | D A/C# E | D F#m E | D A/C# E
+[Refren] A A/C# D | E F#m D A | A A/C# D | E F#m D A
+[Przejście] D A E | D F#m E
+[Bridge 1] D | A E | D F#m E | D | F#m E | D F#m E
+[Bridge 2] Bm | F#m E | D F#m E | Bm | F#m E A/C# | D F#m E
+[Tag] F#m | D A
+[Spontaniczny] F#m D | A`,
+  lyrics:`[Intro]
+[D] [A/C#] [E] [D] [A/C#] [E]
+
+[Zwrotka 1]
+Gdy strach mnie [D]ogarnie, [A/C#]nie wycofam [E]się
+Nawet w do[D]linie, wy[A/C#]starczysz mi Ty [E]sam
+Gdy grunt się za[D]trzęsie, [F#m]będę pewnie [E]stać
+[D]Wystarczysz [A/C#]mi Ty [E]sam
+
+[Refren]
+Ojcze w [A]niebie, [A/C#]Ty jesteś [D]ze mną
+[E]Strach już nie po[F#m]kona mnie, [D]należę do [A]Jezusa
+Już nie jestem [A]sam, [A/C#]Ty mnie nie o[D]puścisz
+[E]Strach już nie po[F#m]kona mnie, [D]należę do [A]Jezusa
+
+[Zwrotka 2]
+Gdy przyjdzie [D]presja, [A]nie wycofam [E]się
+Nawet w trud[D]nościach, wy[A]starczysz mi Ty [E]sam
+W obliczu [D]pytań, [F#m]nie zachwieję [E]się
+[D]Wystarczysz [A/C#]mi Ty [E]sam
+
+[Refren]
+Ojcze w [A]niebie, [A/C#]Ty jesteś [D]ze mną
+[E]Strach już nie po[F#m]kona mnie, [D]należę do [A]Jezusa
+Już nie jestem [A]sam, [A/C#]Ty mnie nie o[D]puścisz
+[E]Strach już nie po[F#m]kona mnie, [D]należę do [A]Jezusa
+
+[Przejście]
+[D] [A] [E] [D] [F#m] [E]
+
+[Bridge 1]
+W czasie [D]sztormu, w czasie deszczu
+W czasie [A]burzy, w czasie [E]lęku
+Byłeś [D]ze mną, zawsze [F#m]stałeś obok [E]mnie
+W [D]moim bólu i ciemności
+Gdy u[F#m]padnę w mej [E]słabości
+Będziesz [D]ze mną, zawsze [F#m]staniesz obok [E]mnie
+
+[Bridge 2]
+Mój [Bm]Pasterzu, mój Obrońco
+Ty się [F#m]troszczysz i [E]podnosisz
+W każdym [D]czasie jesteś [F#m]zawsze blisko [E]mnie
+Jesteś [Bm]dobry, jesteś wierny
+Moja [F#m]miłość, moja [E]przyszłość [A/C#]
+W każdym [D]czasie jesteś [F#m]zawsze blisko [E]mnie
+
+[Tag — 8×]
+Strach już nie po[F#m]kona mnie
+[D]Należę do [A]Jezusa
+
+[Spontaniczny refren]
+Choćbym nawet [F#m]szedł przez dolinę [D]cienia śmierci i łez
+Zła się [A]nie ulęknę`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Bethel Music, The McClures). Akordy z angielskiej wersji (WorshipTogether), przeniesione nad odpowiednie słowa.
+Tonacja A-dur · 4/4 · 67 BPM, wolno.
+
+KOLEJNOŚĆ: Intro → Zwrotka 1 → Refren → Zwrotka 2 → Refren → Przejście → Bridge 1 → Bridge 2 → Refren → Bridge 2 → Refren → Tag ×8 → Spontaniczny refren → Bridge 2 → Refren.
+
+Po angielsku w przejściu śpiewa się „Oh I belong, I belong" — polskie tłumaczenie tej części nie ma, więc są same akordy.
+W refrenie jedna polska linijka to dwie angielskie, dlatego na linię przypadają 3–4 akordy.
+
+HARMONIA: A (I, dom), D (IV, ruch), E (V, napięcie), F#m (vi, dom smutniejszy), Bm (ii, ruch).
+• A/C# to A z C# w basie. W zwrotce bas idzie D → C# → E: zwrotka startuje od D i nie ląduje w domu — dom przychodzi dopiero w refrenie.
+• Refren: A → A/C# → D — bas wspina się A → C# → D, jak podnoszenie głowy. Potem E → F#m → D → A: każda linia kończy się w domu, na „Jezusa".
+• Bridge 1 i 2 kończą każdą frazę na E (V) — napięcie, które ciągnie do następnej linii i do refrenu.
+• Bridge 2 startuje od Bm (ii) — nowy, ciemniejszy kolor po bridge'u 1.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — spokojnie, cicho, z pewnością, że nie ma się czego bać.
+• Refren — ciepło i pewnie, „należę do Jezusa" jak wyznanie.
+• Bridge 1 → Bridge 2 — narasta; Bridge 2 pełnym głosem.
+• Tag — zaczyna się cicho i rośnie z każdym powtórzeniem.`},
+{ id:'seed-house-of-prayer', title:'Dom modlitwy (House of Prayer)', artist:'Eddie James · tł. Winnica Worship', key:'Am', bpm:72, beats:4,
+  chords:`[Zwrotka] Am G/A Fmaj9 G2 | Am G/A Fmaj9 G2
+[Refren] Am7 | Fmaj9 | Dm7 | Am G/B Fmaj9 G2
+[Bridge] Am | Fmaj9 | Dm7 | Am G/B Fmaj9 G2`,
+  lyrics:`[Zwrotka 1 — 2×]
+[Am]Chcę na [G/A]zawsze [Fmaj9]już
+Domem modli[G2]twy być
+
+[Tag]
+[Am]Szukam [G/A]Twarzy [Fmaj9]Twej
+Twarzy [G2]Twej
+
+[Zwrotka 2]
+[Am]Tak, Ty [G/A]naucz [Fmaj9]mnie
+Naucz jak [G2]modlić się
+Jak modlić się
+
+[Refren]
+[Am7]Niech ogień twój nie gaśnie na ołtarzu mym
+[Fmaj9]Niech ogień twój nie gaśnie na ołtarzu mym
+[Dm7]Niech ogień twój nie gaśnie na ołtarzu mym
+[Am]Chcę [G/B]domem [Fmaj9]modlitwy być [G2]
+
+[Bridge]
+[Am]Dzień i noc
+Noc i dzień
+[Fmaj9]Dzień i noc
+Noc i dzień
+[Dm7]Dzień i noc
+Noc i dzień
+[Am]Ogniu [G/B]modli[Fmaj9]twy płoń [G2]`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Eddie James). Akordy z angielskiej wersji (Ultimate Guitar), przeniesione nad odpowiednie słowa.
+Tonacja a-moll (równoległa do C-dur) · 4/4 · 72 BPM.
+Bicie: ↓ ↓↑ ↓↑ ↓↑ (1, 2 i, 3 i, 4 i) — akcent na 1.
+
+KOLEJNOŚĆ (jak w polskim PDF): Zwrotka 1 ×2 → Tag → Zwrotka 2 → Refren → Bridge. W praktyce części powtarza się swobodnie.
+
+DO SPRAWDZENIA Z NAGRANIEM:
+• Tag „Szukam Twarzy Twej" i Zwrotka 2 „Tak, Ty naucz mnie" nie mają akordów w angielskiej wersji, którą mam — dostały pętlę zwrotki (Am → G/A → Fmaj9 → G2).
+• W refrenie i bridge'u pierwsza linia po angielsku jest śpiewana 3× (na Am7, Fmaj9, Dm7), więc po polsku też jest 3×.
+
+HARMONIA: Am (i, dom), G (VII), F (VI), Dm (iv). W C-dur to vi, V, IV, ii.
+• Zwrotka: Am → G/A → Fmaj9 → G2. G/A to G z A w basie — bas stoi na A, a akord nad nim się zmienia. Brzmi jak zawieszenie, modlitwa w miejscu.
+• Fmaj9 i G2 to miękkie, „otwarte" akordy z dodanymi nutami (nona, sekunda) — brzmią jasno, nie ciężko.
+• Refren: Am7 → Fmaj9 → Dm7, po jednej linii każdy — bas schodzi A → F → D. Potem Am → G/B → Fmaj9 → G2: bas A → B, i schodzi do F.
+• Kończy się na G2, nie na Am — dlatego chce się wracać od początku.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — cicho, prosto, jak szept modlitwy.
+• Refren — z każdym powtórzeniem linii trochę mocniej.
+• Bridge „Dzień i noc" — rytmicznie, coraz pełniej; „Ogniu modlitwy płoń" szeroko.`},
+{ id:'seed-no-one', title:'Kto jest jak Ty (No One)', artist:'Elevation Worship feat. Chandler Moore · tł. Winnica Worship', key:'D', bpm:70, beats:4,
+  chords:`[Intro] A/D D A/G G | A/D D A/G G
+[Zwrotka 1] D A | G | D | A G
+[Zwrotka 2] Bm | G | D/F# | A G
+[Refren] D A G | D A G | Bm | A | D/F# G | D A/C# G/B | G
+[Bridge] A/D D A/D G/D A/D | G/D D
+[Refrain] A | D | A G/B | D | G | D/F# Bm | A G | D`,
+  lyrics:`[Intro]
+[A/D] [D] [A/G] [G] [A/D] [D] [A/G] [G]
+
+[Zwrotka 1]
+[D]Jah[A]we
+[G]Jahwe
+[D]Święte Imię Twe
+[A]W bojaźni uwiel[G]biamy Cię
+
+[Zwrotka 2]
+[Bm]Jahwe
+[G]Jahwe
+[D/F#]Święte Imię Twe
+[A]Majestat Twój za[G]chwyca mnie
+
+[Refren]
+Czy jest ktoś, kto [D]może [A]Ci do[G]równać?
+Czy jest ktoś, kto [D]może [A]Ci do[G]równać?
+Jesteś [Bm]niezastąpiony
+[A]Jesteś najwyższy
+[D/F#]Niedoścignio[G]ny
+Jahwe, nikt nie [D]może [A/C#]Ci do[G/B]równać
+Kto [G]mógłby być jak Ty?
+
+[Tag]
+Kto [G]mógłby być jak Ty?
+
+[Instrumental]
+[A/D] [D] [A/G] [G] [A/D] [D] [A/G] [G]
+
+[Bridge 1]
+[A/D]Kto nas pro[D]wadzi do [A/D]miejsca wol[G/D]ności? [A/D]
+Nasz Bóg, [G/D]nasz Bóg, nasz [D]Bóg
+[A/D]Kto leczy [D]wszystkie [A/D]nasze cho[G/D]roby? [A/D]
+Nasz Bóg, [G/D]nasz Bóg, nasz [D]Bóg
+[A/D]Kto może [D]chodzić, [A/D]chodzić po [G/D]wodzie? [A/D]
+Nasz Bóg, [G/D]nasz Bóg, nasz [D]Bóg
+[A/D]Kto z mocą [D]zsyła, [A/D]zsyła swój [G/D]ogień? [A/D]
+Nasz Bóg, [G/D]nasz Bóg, nasz [D]Bóg
+
+[Bridge 2]
+[A/D]Kto wygra [D]bitwę z [A/D]największym go[G/D]liatem? [A/D]
+Nasz Bóg, [G/D]nasz Bóg, nasz [D]Bóg
+[A/D]Kto może [D]lwom za[A/D]mykać [G/D]paszcze? [A/D]
+Nasz Bóg, [G/D]nasz Bóg, nasz [D]Bóg
+[A/D]Kto może [D]przyjąć [A/D]najwyższą [G/D]chwałę? [A/D]
+Nasz Bóg, [G/D]nasz Bóg, nasz [D]Bóg
+[A/D]Kto może [D]przyjąć [A/D]najwyższą [G/D]chwałę? [A/D]
+Nasz Bóg, [G/D]nasz Bóg, nasz [D]Bóg
+
+[Refrain 1]
+Kto jest [A]jak Ty?
+Kto jest jak [D]Ty?
+Kto jest [A]jak [G/B]Ty?
+Kto jest jak [D]Ty?
+Nie ma [G]innego
+Nie ma [D/F#]inne[Bm]go
+Kto jest [A]jak [G]Ty?
+Kto jest jak [D]Ty?
+
+[Refrain 2]
+Miłość [A]duszy mej
+Miłość duszy [D]mej
+Miłość [A]duszy [G/B]mej
+Miłość duszy [D]mej
+Nie ma [G]innego
+Nie ma [D/F#]inne[Bm]go
+Kto jest [A]jak [G]Ty?
+Kto jest jak [D]Ty?
+
+[Tag 1]
+Wiem nie ma [A]nikogo ta[G]kiego, jak [D]Jezus
+
+[Tag 2]
+[A/D]Kto uz[D]drawia [A/D]jak [G/D]Jezus? [A/D]
+O, [G/D]nikt jak [D]Jezus
+[A/D]Kto [D]chroni [A/D]jak [G/D]Jezus? [A/D]
+O, [G/D]nikt jak [D]Jezus
+[A/D]Kto się [D]troszczy [A/D]jak [G/D]Jezus? [A/D]
+O, [G/D]nikt jak [D]Jezus
+[A/D]Kto [D]kocha [A/D]jak [G/D]Jezus? [A/D]
+O, [G/D]nikt jak [D]Jezus
+[A/D]Kto o [D]mnie zadba [A/D]tak jak [G/D]Jezus? [A/D]`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Elevation Worship feat. Chandler Moore). Akordy z angielskiej wersji (Ultimate Guitar), przeniesione nad odpowiednie słowa.
+Tonacja D-dur · 4/4 · tempo nie było podane — 70 BPM to szacunek, sprawdź z nagraniem.
+
+KOLEJNOŚĆ: Intro → Zwrotka 1 + 2 → Instrumental → Zwrotka 1 + 2 → Refren → Instrumental → Zwrotka 1 + 2 → Refren → Instrumental → Bridge 1 → Bridge 2 → Refrain 1 → Refrain 2 → Tagi.
+Po angielsku każda zwrotka to obie połowy (D… i Bm…), po polsku są to osobno Zwrotka 1 i Zwrotka 2.
+
+DO SPRAWDZENIA Z NAGRANIEM:
+• Tagu 1 i Tagu 2 („Kto uzdrawia jak Jezus?") nie ma w angielskich akordach. Tag 2 to pytanie–odpowiedź jak bridge, więc ma akordy bridge'u (A/D D A/D G/D | G/D D). Tag 1 ma koniec refrainu (A G D).
+• Tag „Kto mógłby być jak Ty?" dostał G, jak ostatnia linia refrenu.
+
+HARMONIA: D (I, dom), G (IV, ruch), A (V, napięcie), Bm (vi, dom smutniejszy).
+• Intro i instrumental: A/D → D → A/G → G. Bas stoi na D, potem na G, a akordy nad nim się zmieniają — jak dwa długie oddechy.
+• Bridge: cały na basie D (A/D, D, G/D) — bas „pedał" się nie rusza, a napięcie rośnie z każdym pytaniem. „Nasz Bóg" ląduje na D, w domu.
+• Refren: D → A → G, potem schodzenie basu D → C# → B w „Jahwe, nikt nie może Ci dorównać" (D, A/C#, G/B).
+• Refrain: A → D, A → G/B → D, G → D/F# → Bm — bas idzie G → F# → B, a całość krąży wokół domu.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki „Jahwe" — cicho, z szacunkiem, długie samogłoski.
+• Refren — rośnie do „Niedościgniony", szeroko na „Kto mógłby być jak Ty?".
+• Bridge — pytania pewnie, odpowiedź „Nasz Bóg" jak okrzyk; Bridge 2 mocniej niż 1.
+• Refrain „Miłość duszy mej" — ciepło, prawie szeptem, potem znów rośnie.`},
+{ id:'seed-his-name', title:'Jego imię Jezus (His Name Is Jesus)', artist:'Jeremy Riddle · tł. Winnica Worship', key:'Em', bpm:70, beats:4,
+  chords:`[Intro] Em Em Em Em
+[Zwrotka] Em G | Am | C D
+[Refren] Em | G | Am | C D
+[Interludium] Em G Am C D
+[Bridge] Em | G | Am | C D
+[Outro] Em | G | Am | C D Em`,
+  lyrics:`[Intro]
+[Em] [Em] [Em] [Em]
+
+[Zwrotka 1]
+[Em]Tylko On ma zbawienia [G]moc
+Tylko On przezwyciężył [Am]śmierć
+Tylko On godzien [C]chwały [D]jest
+
+[Zwrotka 2]
+[Em]Nikt i nic nie zatrzyma [G]Go
+Tylko w Nim pełnia życia [Am]jest
+Jego krew zmyła każdy [C]grzech [D]
+
+[Refren]
+Jego imię [Em]Jezus
+Jego imię [G]Jezus
+Panów Pan i [Am]Królów Król
+Dorad[C]ca nasz, po[D]tężny Bóg
+
+[Zwrotka 3]
+[Em]Cały świat wielbi Króla [G]chwał
+Kłania się widząc Jego [Am]tron
+Ziemia drży słysząc Jego [C]głos [D]
+
+[Zwrotka 4]
+[Em]Przyjdzie dzień, gdy ujrzymy [G]Go
+Zabrzmi dźwięk, każdy odda [Am]hołd
+I wyzna, że Jezus Panem [C]jest [D]
+
+[Refren — 2×]
+Jego imię [Em]Jezus
+Jego imię [G]Jezus
+Panów Pan i [Am]Królów Król
+Dorad[C]ca nasz, po[D]tężny Bóg
+
+[Interludium]
+[Em] [G] [Am] [C] [D]
+
+[Bridge]
+On [Em]prowadzi nas
+Wszechmogący Bóg
+To [G]pokoju Pan
+Wszechmogący Bóg
+Wspa[Am]niały Król
+Światłem świata On
+Po[C]tężny [D]Bóg
+
+[Tag]
+[Em]Wielbimy Cię
+[G]Składamy życie swe
+[Am]Śpiewamy
+[C]Wywyż[D]szamy [Em]`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Jeremy Riddle). Akordy z angielskiej wersji (Ultimate Guitar), przeniesione nad odpowiadające polskie słowa.
+Tonacja e-moll (równoległa do G-dur) · 4/4 · tempo nie było podane — 70 BPM to szacunek, sprawdź z nagraniem.
+
+KOLEJNOŚĆ: Intro → Zwrotka 1 → Zwrotka 2 → Refren → Zwrotka 3 → Zwrotka 4 → Refren ×2 → Interludium → Bridge → Refren ×2 → Tag / Outro.
+
+DO SPRAWDZENIA Z NAGRANIEM:
+• W zwrotkach akordy są na końcach linijek, tak jak w angielskiej wersji (G, Am, C → D na ostatnim słowie).
+• W polskim bridge'u jest 7 linijek, jak w angielskim — każdy akord stoi nad tą samą linijką co po angielsku.
+• Tagu („Wielbimy Cię") nie ma w angielskich akordach. Dostał pętlę refrenu i outro (Em → G → Am → C → D → Em).
+
+HARMONIA: Em (i, dom), G (III — jasny „brat" e-moll), Am (iv), C (VI), D (VII). W G-dur to vi, I, ii, IV, V.
+• Cała piosenka to jedna pętla: Em → G → Am → C → D. Bas idzie w górę E → G → A → C → D — jak wznoszenie się.
+• D na końcu każdej części (VII) ciągnie z powrotem do Em — dlatego pętla się nie kończy.
+• Zwrotki trzymają Em długo — spokojne wyliczanie, kim jest Jezus.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — pewnie i spokojnie, jak wyznanie wiary.
+• Refren — „Jego imię Jezus" pełnym głosem, rośnie do „potężny Bóg".
+• Bridge — wyliczanie imion coraz mocniej, kulminacja na „Potężny Bóg".
+• Tag — ciszej, uwielbienie.`},
+{ id:'seed-holy-forever', title:'Święty na zawsze (Holy Forever)', artist:'Chris Tomlin · tł. Winnica Worship', key:'Db', bpm:72, beats:4,
+  chords:`[Intro] Gb Bbm Absus | Db/F | Bbm Absus
+[Zwrotka] Db | Gb Db | Bbm Ab(add4) Gb2 | Db | Gb Db | Bbm Ab(add4) Gb2
+[Przedrefren] Gb2 Bbm | Ab(add4) | Bbm Gb2 | Gb2 Bbm | Ab(add4) | Bbm Ebm7
+[Refren] Gb2 Bbm Ab(add4) | Db/F Bbm | Ebm7 Ab(add4) | Db Dbsus Db
+[Refren cz. 2] Db/F Gb2 Bbm Ab(add4) | Db/F Bbm | Ebm7 Ab(add4) | Db Dbsus Db`,
+  lyrics:`[Intro]
+[Gb] [Bbm] [Absus] [Db/F] [Bbm] [Absus]
+
+[Zwrotka 1]
+Dziś [Db]wszystkie pokolenia
+[Gb]Stają w uwiel[Db]bieniu
+Śpie[Bbm]wając Baran[Ab(add4)]kowi chwały [Gb2]pieśń
+I [Db]Ci którzy odeszli
+I [Gb]Ci, którzy u[Db]wierzą
+Zaś[Bbm]piewają Baran[Ab(add4)]kowi chwały [Gb2]pieśń
+
+[Przedrefren]
+I[Gb2]mię Twe jest najwyższe [Bbm]
+I[Ab(add4)]mię Twe jest potężne
+I[Bbm]mię Twe ponad wszystko [Gb2]jest
+I[Gb2]mię Twe ponad trony [Bbm]
+I[Ab(add4)]mię Twe ponad władze
+I[Bbm]mię Twe ponad wszystko [Ebm7]jest
+
+[Refren]
+Chór aniołów [Gb2]brzmi - [Bbm]Świę[Ab(add4)]ty
+Wszystko wielbi [Db/F]Cię - Świę[Bbm]ty
+Wywyższony [Ebm7]Pan - Świę[Ab(add4)]ty
+Święty na [Db]zawsze [Dbsus] [Db]
+
+[Zwrotka 2]
+[Db]Jeśli uwierzyłeś
+Że [Gb]On wykupił [Db]Cię
+[Bbm]Śpiewaj Baran[Ab(add4)]kowi chwały [Gb2]pieśń
+[Db]Jeśli jesteś wolny
+I [Gb]nosisz Jego [Db]imię
+[Bbm]Śpiewaj Baran[Ab(add4)]kowi chwały [Gb2]pieśń
+Śpie[Bbm]wajmy Baran[Ab(add4)]kowi chwały [Gb2]pieśń
+
+[Refren]
+Chór aniołów [Gb2]brzmi - [Bbm]Świę[Ab(add4)]ty
+Wszystko wielbi [Db/F]Cię - Świę[Bbm]ty
+Wywyższony [Ebm7]Pan - Świę[Ab(add4)]ty
+Święty na [Db]zawsze [Dbsus] [Db]
+
+[Refren cz. 2 (w PDF: Bridge)]
+Śpiewa [Db/F]Kościół [Gb2]Twój - [Bbm]Świę[Ab(add4)]ty
+To dla Króla [Db/F]chwał - Świę[Bbm]ty
+Wywyższony [Ebm7]Pan - Świę[Ab(add4)]ty
+Święty na [Db]zawsze [Dbsus] [Db]`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Chris Tomlin — Brian Johnson, Chris Tomlin, Jason Ingram, Jenn Johnson, Phil Wickham). Akordy z angielskiej wersji (WorshipTogether), przeniesione nad odpowiadające polskie sylaby.
+Tonacja D♭-dur (w appce Db) · 4/4 · 72 BPM, wolno.
+
+KOLEJNOŚĆ: Intro → Zwrotka 1 → Przedrefren → Refren (pierwsza połowa) → Zwrotka 2 → Refren + Refren cz. 2 → Przedrefren ×2 → Refren + Refren cz. 2 → Tag („Wywyższony Pan - Święty / Święty na zawsze").
+
+JAK DOPASOWANE:
+• Zwrotki: polskie linijki mają tyle sylab co angielskie, więc akordy są na tych samych sylabach (np. „Śpie-[Bbm]wając Baran-[Ab]kowi chwały [Gb2]pieśń" = „To [Bbm]sing the song of a-[Ab]ges to the [Gb2]Lamb").
+• „Święty" = „Ho-ly": akord na „Świę" i na „ty", tak jak na „Ho" i „ly".
+• To, co w polskim PDF jest „Bridge" („Śpiewa Kościół Twój"), to po angielsku druga połowa refrenu („Hear Your people sing").
+• Przedrefren: przed refrenem kończy się na Ebm7 (wersja 1). Za drugim razem, gdy idzie dwa razy z rzędu, pierwszy raz kończy się na Gb2.
+
+ZAPIS AKORDÓW: Ab(add4) to A♭ z dodaną kwartą (D♭), Gb2 to G♭ z sekundą — miękkie, „otwarte" brzmienia.
+
+HARMONIA: Db (I, dom), Gb (IV, ruch), Ab (V, napięcie), Bbm (vi, dom smutniejszy), Ebm7 (ii, ruch).
+• Zwrotka: Db → Gb → Db, potem Bbm → Ab → Gb — schodzenie vi – V – IV, jak pokłon.
+• Przedrefren krąży Gb → Bbm → Ab i nie wraca do domu — buduje oczekiwanie; Ebm7 na końcu otwiera drzwi do refrenu.
+• Refren: Db/F to Db z F w basie — bas idzie F → G♭ i w górę. „Święty na zawsze" ląduje w domu, Dbsus → Db to ostatni oddech.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — spokojnie, szeroko, jak opowieść o pokoleniach.
+• Przedrefren — narasta z każdą linijką „Imię Twe".
+• Refren — „Święty" długo i pełnym głosem; „Święty na zawsze" miękko w dół.`},
+{ id:'seed-used-to-this', title:'Codziennie więcej chcę (Used To This)', artist:'Elevation Worship & Maverick City Music · tł. Winnica Worship', key:'C', bpm:70, beats:4,
+  chords:`[Intro] C Em7 Am7 Fsus2
+[Zwrotka] C Em | Am | F C | Em | Am G | F
+[Przedrefren] C G | Dm F | C G | Dm F
+[Przejście] C Em Am F Dm
+[Refren] C | Em Am | G F | Fm
+[Interludium] C Em Am G F Fm | C Em Am G F Fm
+[Bridge 1] C G | Dm C/E | F | C G | Dm C/E | F
+[Bridge 2] C | G | Dm C/E | F
+[Outro] C Em Am G F Fm | C Em Am G F Fm C`,
+  lyrics:`[Intro]
+[C] [Em7] [Am7] [Fsus2]
+
+[Zwrotka 1]
+[C](Gdy) jesteś [Em]tu
+Czas stoi w [Am]miejscu
+Nic nie jest [F]ważne tak jak [C]Ty
+Jestem [Em]tu
+Nic mnie nie [Am]go[G]ni
+Już [F]nie muszę spieszyć się
+
+[Przedrefren]
+[C]Wieczność z Tobą jest jak [G]chwila
+Już nie liczę minut
+[Dm]Pragnę [F]Ciebie
+[C]Szukam Twojej obec[G]ności
+Duchu przyjdź w swej mocy
+[Dm]Pragnę [F]Ciebie
+
+[Przejście]
+[C] [Em] [Am] [F] [Dm]
+
+[Zwrotka 2]
+[C]Wybacz [Em]mi
+Ciągłe sta[Am]rania
+By nieza[F]leżnie od Ciebie [C]żyć
+Bliskość [Em]Twa
+Była mi [Am]obca
+Te[G]raz już [F]nie puszczę Cię
+
+[Refren]
+[C]Pragnę Ciebie
+[Em]Tylko [Am]Ciebie
+Nikt nie [G]dorówna [F]Ci
+Kto jest jak [Fm]Ty?
+
+[Interludium — 2×]
+[C] [Em] [Am] [G] [F] [Fm]
+
+[Bridge 1]
+[C]Jeśli to [G]przedsmak nieba
+[Dm]Codziennie więcej [C/E]chcę
+[F]Codziennie więcej chcę
+
+[C]Zapach Twej [G]obecności
+[Dm]Codziennie więcej [C/E]chcę
+[F]Codziennie więcej chcę
+
+[Bridge 2]
+[C]Codziennie więcej chcę
+[G]Codziennie więcej chcę
+[Dm]Codziennie więcej [C/E]chcę
+[F]Codziennie więcej chcę
+
+[Outro — 4×, na końcu C]
+[C] [Em] [Am] [G] [F] [Fm]`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Elevation Worship & Maverick City Music). Akordy z angielskiej wersji (Ultimate Guitar), przeniesione nad odpowiadające polskie linijki i sylaby.
+Tonacja C-dur · 4/4 · tempo nie było podane — 70 BPM to szacunek, sprawdź z nagraniem.
+
+KOLEJNOŚĆ: Intro → Zwrotka 1 → Przedrefren → Przejście → Zwrotka 2 → Przedrefren → Refren → Interludium ×2 → Bridge 1 → Bridge 2 → Przedrefren → Refren ×2 → Outro ×4.
+
+JAK DOPASOWANE:
+• Akordy idą za melodią, nie za znaczeniem. W zwrotce 1 polskie linijki są w innej kolejności niż angielskie („(Gdy) jesteś tu" to „Whenever I'm with You", a stoi tam, gdzie „Time stands still") — akordy są tam, gdzie wypadają w melodii: C → Em, Am, F → C, Em, Am → G, F.
+• „I just want [F]You" = „Pragnę [F]Ciebie" — F na ostatnim słowie.
+• „Nothing com[G]pares to [F]You" = „Nikt nie [G]dorówna [F]Ci" — G na trzeciej sylabie, F na ostatniej.
+• Bridge 2 po angielsku to 4× „I could get used to this" (C, G, Dm → C/E, F). W polskim PDF tej części nie ma osobno — to 4× „Codziennie więcej chcę".
+
+HARMONIA: C (I, dom), F (IV, ruch), G (V, napięcie), Am (vi), Em (iii), Dm (ii).
+• Fm to „pożyczony" akord z c-moll (iv molowe). F → Fm: zmienia się jedna nuta (A → A♭) — robi się nagle tęskno i miękko. To serce tej piosenki: „Kto jest jak [Fm]Ty?".
+• C/E w bridge'u to C z E w basie: bas idzie D → E → F, schodkami w górę.
+• Zwrotka i interludium: C → Em → Am — bas schodzi C → B → A, spokojnie, bez pośpiechu („nic mnie nie goni").
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — spokojnie, bez pośpiechu, jak rozmowa.
+• Przedrefren — tęsknota rośnie, „Pragnę Ciebie" ciepło.
+• Refren — prosto i szczerze, „Kto jest jak Ty?" miękko na Fm.
+• Bridge — narasta z każdym „Codziennie więcej chcę"; Bridge 2 najpełniej.`},
+{ id:'seed-more-i-seek', title:'Im więcej szukam (The More I Seek You)', artist:'Kari Jobe · tł. Winnica Worship', key:'F#', bpm:68, beats:4,
+  chords:`[Zwrotka] F# C# | D#m B | F# C# | D#m B
+[Refren] F# | C# | D#m | B | F# | C# | D#m | B
+[Bridge] F# C# | D#m B`,
+  lyrics:`[Zwrotka]
+[F#]Im więcej [C#]szukam, [D#m]tym bardziej [B]znajdę
+[F#]Im bardziej [C#]znajdę, [D#m]tym bardziej [B]kocham
+
+[Refren]
+[F#]Chcę siedzieć u Twoich stóp
+[C#]Z kielicha Twego chcę pić
+[D#m]Rytm serca Twojego czuć, [B]Twoją miłość
+[F#]Głęboka tak jest, [C#]niż mogę bardziej znieść
+[D#m]Rozpływam się w niej, [B]w Twym pokoju
+
+[Bridge]
+[F#]To co chcę, to [C#]zawsze być przy Tobie,
+[D#m]Słyszeć Cię, Twój [B]Panie słodki głos`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Kari Jobe). Akordy z angielskiej wersji (Ultimate Guitar), przeniesione nad odpowiadające polskie sylaby.
+Tonacja Fis-dur (w appce F#) · 4/4 · tempo nie było podane — 68 BPM to szacunek, sprawdź z nagraniem.
+Na Ultimate Guitar jest dopisek, że na nagraniu piosenka może brzmieć w innej tonacji — jeśli nie pasuje do głosu albo nagrania, przenieś ją przyciskami ♭/♯.
+
+KOLEJNOŚĆ: Zwrotka (×2 lub więcej) → Refren → Zwrotka → Refren → Bridge → Refren.
+
+JAK DOPASOWANE:
+• Zwrotka: jedna polska linijka to dwie angielskie („The more I [C#]seek You / The more I [B]find You"), więc są w niej po dwa akordy z każdej angielskiej linijki: „[F#]Im więcej [C#]szukam, [D#m]tym bardziej [B]znajdę".
+• Refren: polskich linijek jest 5, angielskich 8. Sylaby się zgadzają: „Rytm serca Twojego czuć, Twoją miłość" (7 + 4) śpiewa się w miejscu „Lay back against You and breathe / Feel Your heart beat" (7 + 4), więc D#m i B są tam, gdzie zaczynają się te dwie części. Tak samo „Głęboka tak jest, niż mogę bardziej znieść" (5 + 6) = „This love is so deep / It's more than I can stand" (F#, C#).
+• Bridge: tej części nie ma w angielskich akordach. Dostał tę samą pętlę F# → C# → D#m → B — sprawdź z nagraniem.
+
+HARMONIA: F# (I, dom), C# (V, napięcie), D#m (vi, dom smutniejszy), B (IV, ruch).
+• Cała piosenka to jedna pętla I – V – vi – IV, tylko akordy zmieniają się raz na linijkę albo dwa razy.
+• Na fortepianie F#-dur leży prawie cały na czarnych klawiszach — wygodnie dla ręki, choć wygląda strasznie w nutach.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotka — cicho i prosto, jak modlitwa powtarzana w kółko.
+• Refren — intymnie; „Głęboka tak jest" trochę mocniej, „Rozpływam się" znów miękko.
+• Bridge — tęsknie, „słodki głos" długo i delikatnie.`},
+{ id:'seed-jesus-center', title:'Najważniejszy jesteś Ty (Jesus At The Center)', artist:'Bethel Music · tł. Winnica Worship', key:'G', bpm:70, beats:4,
+  chords:`[Intro] G Am Bm C | G Am Bm C
+[Zwrotka] G Am Bm | C G D | C G | D Em D C | D
+[Refren] C | Am G | C | Am Em | D
+[Interludium] G Am Bm C | G Am Bm C
+[Instrumental] Em C D | Em C D
+[Bridge] D | Em | C | D
+[Po bridge'u] D Em C D | D Em C D | D Em C D`,
+  lyrics:`[Intro]
+[G] [Am] [Bm] [C] [G] [Am] [Bm] [C]
+
+[Zwrotka 1 — 2×]
+[G]Jezu, najważ[Am]niejszy jesteś [Bm]Ty
+[C]Jezu, najważ[G]niejszy jesteś [D]Ty
+Od [C]początku wszystkich [G]dni
+Aż do [D]końca świata [Em]jesteś [D]Królem [C]Jezu
+[D]Jezu
+
+[Refren — 2×]
+Kto zastąpi [C]Ciebie?
+[Am]Kto, jak Ty wystarczy [G]mi?
+Jesteś najważ[C]niejszy
+[Am]Liczysz się już tylko [Em]Ty
+Tylko [D]Ty
+
+[Interludium]
+[G] [Am] [Bm] [C] [G] [Am] [Bm] [C]
+
+[Zwrotka 2]
+[G]Królem mego [Am]serca jesteś [Bm]Ty
+[C]Królem mego [G]serca jesteś [D]Ty
+Od [C]początku wszystkich [G]dni
+Aż do [D]końca świata [Em]jesteś [D]Królem [C]Jezu
+[D]Jezu
+
+[Instrumental]
+[Em] [C] [D] [Em] [C] [D]
+
+[Bridge — kilka razy]
+Z głębi [D]serc wyznajemy,
+[Em]Jezu jesteś Panem
+[C]Chwała i cześć,
+Tobie [D]chwała i cześć
+
+[Po bridge'u — 3×]
+[D] [Em] [C] [D]`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Bethel Music). Akordy z angielskiej wersji (arkjuander.com), przeniesione nad odpowiadające polskie sylaby.
+Tonacja G-dur · 4/4 · tempo nie było podane — 70 BPM to szacunek, sprawdź z nagraniem.
+
+KOLEJNOŚĆ: Intro → Zwrotka 1 ×2 → Refren ×2 → Interludium → Zwrotka 2 → Refren ×2 → Instrumental → Bridge (kilka razy) → D Em C D ×3 → Bridge ×2 → D Em C D ×2.
+
+JAK DOPASOWANE:
+• Zwrotka: polskie linijki mają tyle samo sylab co angielskie, więc akordy są na tych samych sylabach. „Jesus at the [Am]center of it [Bm]all" (9 sylab) = „Jezu, najważ[Am]niejszy jesteś [Bm]Ty" (9). „It will [D]always be, it's [Em]always [D]been You, [C]Jesus" (12) = „Aż do [D]końca świata [Em]jesteś [D]Królem [C]Jezu" (12).
+• Refren: polskie linijki są czasem o sylabę dłuższe, więc akordy są liczone od końca frazy (tam, gdzie wypada akcent): „Nothing else [C]matters" = „Kto zastąpi [C]Ciebie?", „Jesus, you're the [C]center" = „Jesteś najważ[C]niejszy".
+• Bridge: „From my [D]heart to the heavens" = „Z głębi [D]serc wyznajemy", „Yes, it's [D]all about You" = „Tobie [D]chwała i cześć".
+• W angielskiej wersji po bridge'u jest jeszcze Zwrotka 3 („Jesus be the center") — w polskim tłumaczeniu jej nie ma.
+
+HARMONIA: G (I, dom), C (IV, ruch), D (V, napięcie), Em (vi, dom smutniejszy), Am (ii), Bm (iii).
+• Intro i początek zwrotki: G → Am → Bm → C — bas idzie po kolei w górę G → A → B → C, jak schody. To podpis tej piosenki.
+• Zwrotka kończy się na D (V) na „Jezu" — zawieszenie, które ciągnie do refrenu.
+• Refren startuje od C, nie od G — „Kto zastąpi Ciebie?" brzmi jak pytanie, nie jak odpowiedź.
+• Bridge: D → Em → C → D — krąży wokół napięcia i nie ląduje w domu, dlatego można go powtarzać długo.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — prosto i radośnie, rytmicznie.
+• Refren — szczerze, „Tylko Ty" jak wyznanie.
+• Bridge — narasta z każdym powtórzeniem, „Chwała i cześć" pełnym głosem.`},
+{ id:'seed-just-like-heaven', title:'Jak w niebie (Just Like Heaven)', artist:'Brandon Lake · tł. Winnica Worship', key:'Bb', bpm:72, beats:4,
+  chords:`[Intro] Bb Eb Bb F
+[Zwrotka] Bb | Eb | Bb | F | Bb | Eb | Gm7 | F
+[Refren] Eb Gm7 F Bb/D | Eb Gm7 F Bb/D
+[Przejście] F Gm7 F F
+[Bridge] Eb F | Gm7 | Bb/D | Eb F | Gm7 | Bb/D`,
+  lyrics:`[Intro]
+[Bb] [Eb] [Bb] [F]
+
+[Zwrotka 1]
+[Bb]Czy nie doświadczam nieba
+[Eb]Kiedy jesteś ze mną tu
+[Bb]Oczy skupiam na Tobie
+[F]Nic się nie ukryje już
+[Bb]Ciągły niedosyt Ciebie
+[Eb]To najlepsza z wszystkich dróg
+[Gm7]Pragnę doświadczać, doświadczać
+[F]doświadczać nieba
+
+[Refren]
+[Eb]Ooo [Gm7] [F]Podejdź trochę bliżej
+Zostań trochę [Bb/D]dłużej
+[Eb]Ooo [Gm7] [F]Nigdy nie mam
+dosyć [Bb/D]Ciebie
+
+[Przejście]
+[F] [Gm7] [F] [F]
+
+[Zwrotka 2]
+[Bb]Czy to nie dźwięki nieba
+[Eb]Twój głos nie zmienia się
+[Bb]Ciągle nade mną śpiewasz
+[F]melodia ta nie kończy się
+[Bb]Będę stać w Twej obecności
+[Eb]W niej tożsamość moja jest
+[Gm7]Twój głos jak dźwięki, dźwięki
+[F]Dźwięki nieba
+
+[Bridge — 2×]
+[Eb]Święty, jesteś [F]Święty
+Mój dosko[Gm7]nały Ojcze
+U[Bb/D]wielbiam Cię na wieki
+[Eb]Święty, jesteś [F]Święty
+Od[Gm7]daję wszystko Tobie
+Chcę [Bb/D]być z Tobą na zawsze`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Brandon Lake). Akordy z angielskiej wersji (Ultimate Guitar), przeniesione nad odpowiadające polskie linijki i sylaby.
+Tonacja B-dur (w appce Bb) · 4/4 · tempo nie było podane — 72 BPM to szacunek, sprawdź z nagraniem.
+
+ZAPIS AKORDÓW: na Ultimate Guitar akordy są z krzyżykami (A#, D#, A#/D). To te same dźwięki co Bb, Eb, Bb/D — tu są z bemolami, bo tak się je pisze w tonacji B-dur.
+
+KOLEJNOŚĆ: Intro → Zwrotka 1 → Refren → Przejście → Zwrotka 2 → Refren → Bridge ×2 → Refren → Outro (jak refren).
+
+JAK DOPASOWANE:
+• Zwrotki: polskich linijek jest tyle samo co angielskich (8), a akord zmienia się na początku każdej — więc każda polska linijka ma akord swojej angielskiej linijki.
+• Refren: „[F]Come a little closer, stay a little [Bb/D]longer" = „[F]Podejdź trochę bliżej / Zostań trochę [Bb/D]dłużej"; „[F]I can't get enough of [Bb/D]You" = „[F]Nigdy nie mam dosyć [Bb/D]Ciebie". „Ooo" na Eb → Gm7.
+• Bridge: „[Eb]Holy, You are [F]holy" = „[Eb]Święty, jesteś [F]Święty"; w pozostałych linijkach akord jest na tej samej sylabie co po angielsku („I'll [Bb/D]worship" = „U[Bb/D]wielbiam").
+• Po angielsku jest jeszcze Post-Chorus („I just want more of You… I can't get enough") — w polskim tłumaczeniu go nie ma.
+
+HARMONIA: Bb (I, dom), Eb (IV, ruch), F (V, napięcie), Gm7 (vi, dom smutniejszy).
+• Zwrotka: Bb ↔ Eb kołysze się jak oddech; dopiero Gm7 → F na końcu buduje napięcie przed refrenem.
+• Refren startuje od Eb, nie od domu — „Ooo" brzmi jak tęsknota. Bb/D to Bb z D w basie: bas idzie F → D → E♭ i refren kręci się dalej.
+• Bridge: Eb → F → Gm7 → Bb/D — bas idzie w górę E♭ → F → G, potem D — jak wznoszenie i powrót.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — lekko, z uśmiechem, jak zachwyt.
+• Refren — „Ooo" miękko, „Podejdź trochę bliżej" jak zaproszenie.
+• Bridge — za drugim razem pełnym głosem, „Chcę być z Tobą na zawsze" mocno.`},
 ];
 
 /* Zmiany w piosenkach startowych, które ktoś ma już zapisane. Ruszają tylko to, co było

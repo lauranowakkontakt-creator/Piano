@@ -735,7 +735,7 @@ span.lyr-ch{cursor:default}
 .sl-przejscie .play,.sl-dalej .play{width:40px;height:40px}
 .sl-dodaj{margin-top:18px}
 .sl-dodaj-row{display:flex;gap:8px;flex-wrap:wrap}
-.sl-dodaj-row select{flex:1 1 240px;width:auto}
+.sl-dodaj-row select{flex:1 1 240px;width:auto;min-width:0;max-width:100%}
 
 .sl-scena{max-width:760px}
 .sl-scena-head h1{margin:6px 0 10px}

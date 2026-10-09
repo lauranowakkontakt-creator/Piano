@@ -79,15 +79,15 @@ test('nic, śmieci i dziwne typy nie wysypują parsera', () => {
   assert.ok(parseLyrics('[]pusty nawias').length);
 });
 
-test('Bliżej i Wtulę się: polski tekst z akordami, które rozpoznaje appka', () => {
-  for(const id of ['seed-blizej', 'seed-lean-back']){
+test('Piosenki startowe: polski tekst z akordami, które rozpoznaje appka', () => {
+  for(const id of SEED_SONGS.map(s => s.id)){
     const s = SEED_SONGS.find(x => x.id === id);
     assert.ok(s && s.lyrics, id + ': brak tekstu');
     // każdy [..] to albo akord, albo nagłówek części w osobnej linii
     const linie = plain(parseLyrics(s.lyrics));
     const zle = linie.flatMap(l => (l.parts || []).map(p => p.text)).filter(t => /\[[^\]]*\]/.test(t));
     assert.deepEqual(zle, [], id + ': nierozpoznane akordy');
-    assert.ok(lyricsChords(s.lyrics).length >= 30, id);
+    assert.ok(lyricsChords(s.lyrics).length >= 20, id);
     assert.ok(linie.some(l => l.label && l.label.startsWith('Refren')), id + ': brak refrenu');
   }
 });
