@@ -936,6 +936,73 @@ EMOCJE W GŁOSIE (plan):
 • Zwrotka — cicho i prosto, jak modlitwa powtarzana w kółko.
 • Refren — intymnie; „Głęboka tak jest" trochę mocniej, „Rozpływam się" znów miękko.
 • Bridge — tęsknie, „słodki głos" długo i delikatnie.`},
+{ id:'seed-jesus-center', title:'Najważniejszy jesteś Ty (Jesus At The Center)', artist:'Bethel Music · tł. Winnica Worship', key:'G', bpm:70, beats:4,
+  chords:`[Intro] G Am Bm C | G Am Bm C
+[Zwrotka] G Am Bm | C G D | C G | D Em D C | D
+[Refren] C | Am G | C | Am Em | D
+[Interludium] G Am Bm C | G Am Bm C
+[Instrumental] Em C D | Em C D
+[Bridge] D | Em | C | D
+[Po bridge'u] D Em C D | D Em C D | D Em C D`,
+  lyrics:`[Intro]
+[G] [Am] [Bm] [C] [G] [Am] [Bm] [C]
+
+[Zwrotka 1 — 2×]
+[G]Jezu, najważ[Am]niejszy jesteś [Bm]Ty
+[C]Jezu, najważ[G]niejszy jesteś [D]Ty
+Od [C]początku wszystkich [G]dni
+Aż do [D]końca świata [Em]jesteś [D]Królem [C]Jezu
+[D]Jezu
+
+[Refren — 2×]
+Kto zastąpi [C]Ciebie?
+[Am]Kto, jak Ty wystarczy [G]mi?
+Jesteś najważ[C]niejszy
+[Am]Liczysz się już tylko [Em]Ty
+Tylko [D]Ty
+
+[Interludium]
+[G] [Am] [Bm] [C] [G] [Am] [Bm] [C]
+
+[Zwrotka 2]
+[G]Królem mego [Am]serca jesteś [Bm]Ty
+[C]Królem mego [G]serca jesteś [D]Ty
+Od [C]początku wszystkich [G]dni
+Aż do [D]końca świata [Em]jesteś [D]Królem [C]Jezu
+[D]Jezu
+
+[Instrumental]
+[Em] [C] [D] [Em] [C] [D]
+
+[Bridge — kilka razy]
+Z głębi [D]serc wyznajemy,
+[Em]Jezu jesteś Panem
+[C]Chwała i cześć,
+Tobie [D]chwała i cześć
+
+[Po bridge'u — 3×]
+[D] [Em] [C] [D]`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Bethel Music). Akordy z angielskiej wersji (arkjuander.com), przeniesione nad odpowiadające polskie sylaby.
+Tonacja G-dur · 4/4 · tempo nie było podane — 70 BPM to szacunek, sprawdź z nagraniem.
+
+KOLEJNOŚĆ: Intro → Zwrotka 1 ×2 → Refren ×2 → Interludium → Zwrotka 2 → Refren ×2 → Instrumental → Bridge (kilka razy) → D Em C D ×3 → Bridge ×2 → D Em C D ×2.
+
+JAK DOPASOWANE:
+• Zwrotka: polskie linijki mają tyle samo sylab co angielskie, więc akordy są na tych samych sylabach. „Jesus at the [Am]center of it [Bm]all" (9 sylab) = „Jezu, najważ[Am]niejszy jesteś [Bm]Ty" (9). „It will [D]always be, it's [Em]always [D]been You, [C]Jesus" (12) = „Aż do [D]końca świata [Em]jesteś [D]Królem [C]Jezu" (12).
+• Refren: polskie linijki są czasem o sylabę dłuższe, więc akordy są liczone od końca frazy (tam, gdzie wypada akcent): „Nothing else [C]matters" = „Kto zastąpi [C]Ciebie?", „Jesus, you're the [C]center" = „Jesteś najważ[C]niejszy".
+• Bridge: „From my [D]heart to the heavens" = „Z głębi [D]serc wyznajemy", „Yes, it's [D]all about You" = „Tobie [D]chwała i cześć".
+• W angielskiej wersji po bridge'u jest jeszcze Zwrotka 3 („Jesus be the center") — w polskim tłumaczeniu jej nie ma.
+
+HARMONIA: G (I, dom), C (IV, ruch), D (V, napięcie), Em (vi, dom smutniejszy), Am (ii), Bm (iii).
+• Intro i początek zwrotki: G → Am → Bm → C — bas idzie po kolei w górę G → A → B → C, jak schody. To podpis tej piosenki.
+• Zwrotka kończy się na D (V) na „Jezu" — zawieszenie, które ciągnie do refrenu.
+• Refren startuje od C, nie od G — „Kto zastąpi Ciebie?" brzmi jak pytanie, nie jak odpowiedź.
+• Bridge: D → Em → C → D — krąży wokół napięcia i nie ląduje w domu, dlatego można go powtarzać długo.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — prosto i radośnie, rytmicznie.
+• Refren — szczerze, „Tylko Ty" jak wyznanie.
+• Bridge — narasta z każdym powtórzeniem, „Chwała i cześć" pełnym głosem.`},
 ];
 
 /* Zmiany w piosenkach startowych, które ktoś ma już zapisane. Ruszają tylko to, co było
