@@ -627,18 +627,18 @@ Kto jest [A]jak [G]Ty?
 Kto jest jak [D]Ty?
 
 [Tag 1]
-Wiem nie ma nikogo takiego, jak Jezus
+Wiem nie ma [A]nikogo ta[G]kiego, jak [D]Jezus
 
 [Tag 2]
-Kto uzdrawia jak Jezus?
-O, nikt jak Jezus
-Kto chroni jak Jezus?
-O, nikt jak Jezus
-Kto się troszczy jak Jezus?
-O, nikt jak Jezus
-Kto kocha jak Jezus?
-O, nikt jak Jezus
-Kto o mnie zadba tak jak Jezus?`,
+[A/D]Kto uz[D]drawia [A/D]jak [G/D]Jezus? [A/D]
+O, [G/D]nikt jak [D]Jezus
+[A/D]Kto [D]chroni [A/D]jak [G/D]Jezus? [A/D]
+O, [G/D]nikt jak [D]Jezus
+[A/D]Kto się [D]troszczy [A/D]jak [G/D]Jezus? [A/D]
+O, [G/D]nikt jak [D]Jezus
+[A/D]Kto [D]kocha [A/D]jak [G/D]Jezus? [A/D]
+O, [G/D]nikt jak [D]Jezus
+[A/D]Kto o [D]mnie zadba [A/D]tak jak [G/D]Jezus? [A/D]`,
   notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Elevation Worship feat. Chandler Moore). Akordy z angielskiej wersji (Ultimate Guitar), przeniesione nad odpowiednie słowa.
 Tonacja D-dur · 4/4 · tempo nie było podane — 70 BPM to szacunek, sprawdź z nagraniem.
 
@@ -646,7 +646,7 @@ KOLEJNOŚĆ: Intro → Zwrotka 1 + 2 → Instrumental → Zwrotka 1 + 2 → Refr
 Po angielsku każda zwrotka to obie połowy (D… i Bm…), po polsku są to osobno Zwrotka 1 i Zwrotka 2.
 
 DO SPRAWDZENIA Z NAGRANIEM:
-• Tag 1 i Tag 2 („Kto uzdrawia jak Jezus?") nie mają akordów w angielskiej wersji, którą mam — są bez akordów.
+• Tagu 1 i Tagu 2 („Kto uzdrawia jak Jezus?") nie ma w angielskich akordach. Tag 2 to pytanie–odpowiedź jak bridge, więc ma akordy bridge'u (A/D D A/D G/D | G/D D). Tag 1 ma koniec refrainu (A G D).
 • Tag „Kto mógłby być jak Ty?" dostał G, jak ostatnia linia refrenu.
 
 HARMONIA: D (I, dom), G (IV, ruch), A (V, napięcie), Bm (vi, dom smutniejszy).
@@ -660,6 +660,85 @@ EMOCJE W GŁOSIE (plan):
 • Refren — rośnie do „Niedościgniony", szeroko na „Kto mógłby być jak Ty?".
 • Bridge — pytania pewnie, odpowiedź „Nasz Bóg" jak okrzyk; Bridge 2 mocniej niż 1.
 • Refrain „Miłość duszy mej" — ciepło, prawie szeptem, potem znów rośnie.`},
+{ id:'seed-his-name', title:'Jego imię Jezus (His Name Is Jesus)', artist:'Jeremy Riddle · tł. Winnica Worship', key:'Em', bpm:70, beats:4,
+  chords:`[Intro] Em Em Em Em
+[Zwrotka] Em G | Am | C D
+[Refren] Em | G | Am | C D
+[Interludium] Em G Am C D
+[Bridge] Em | G | Am | C D
+[Outro] Em | G | Am | C D Em`,
+  lyrics:`[Intro]
+[Em] [Em] [Em] [Em]
+
+[Zwrotka 1]
+[Em]Tylko On ma zbawienia [G]moc
+Tylko On przezwyciężył [Am]śmierć
+Tylko On godzien [C]chwały [D]jest
+
+[Zwrotka 2]
+[Em]Nikt i nic nie zatrzyma [G]Go
+Tylko w Nim pełnia życia [Am]jest
+Jego krew zmyła każdy [C]grzech [D]
+
+[Refren]
+Jego imię [Em]Jezus
+Jego imię [G]Jezus
+Panów Pan i [Am]Królów Król
+Dorad[C]ca nasz, po[D]tężny Bóg
+
+[Zwrotka 3]
+[Em]Cały świat wielbi Króla [G]chwał
+Kłania się widząc Jego [Am]tron
+Ziemia drży słysząc Jego [C]głos [D]
+
+[Zwrotka 4]
+[Em]Przyjdzie dzień, gdy ujrzymy [G]Go
+Zabrzmi dźwięk, każdy odda [Am]hołd
+I wyzna, że Jezus Panem [C]jest [D]
+
+[Refren — 2×]
+Jego imię [Em]Jezus
+Jego imię [G]Jezus
+Panów Pan i [Am]Królów Król
+Dorad[C]ca nasz, po[D]tężny Bóg
+
+[Interludium]
+[Em] [G] [Am] [C] [D]
+
+[Bridge]
+On [Em]prowadzi nas
+Wszechmogący Bóg
+To [G]pokoju Pan
+Wszechmogący Bóg
+Wspa[Am]niały Król
+Światłem świata On
+Po[C]tężny [D]Bóg
+
+[Tag]
+[Em]Wielbimy Cię
+[G]Składamy życie swe
+[Am]Śpiewamy
+[C]Wywyż[D]szamy [Em]`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Jeremy Riddle). Akordy z angielskiej wersji (Ultimate Guitar), przeniesione nad odpowiadające polskie słowa.
+Tonacja e-moll (równoległa do G-dur) · 4/4 · tempo nie było podane — 70 BPM to szacunek, sprawdź z nagraniem.
+
+KOLEJNOŚĆ: Intro → Zwrotka 1 → Zwrotka 2 → Refren → Zwrotka 3 → Zwrotka 4 → Refren ×2 → Interludium → Bridge → Refren ×2 → Tag / Outro.
+
+DO SPRAWDZENIA Z NAGRANIEM:
+• W zwrotkach akordy są na końcach linijek, tak jak w angielskiej wersji (G, Am, C → D na ostatnim słowie).
+• W polskim bridge'u jest 7 linijek, jak w angielskim — każdy akord stoi nad tą samą linijką co po angielsku.
+• Tagu („Wielbimy Cię") nie ma w angielskich akordach. Dostał pętlę refrenu i outro (Em → G → Am → C → D → Em).
+
+HARMONIA: Em (i, dom), G (III — jasny „brat" e-moll), Am (iv), C (VI), D (VII). W G-dur to vi, I, ii, IV, V.
+• Cała piosenka to jedna pętla: Em → G → Am → C → D. Bas idzie w górę E → G → A → C → D — jak wznoszenie się.
+• D na końcu każdej części (VII) ciągnie z powrotem do Em — dlatego pętla się nie kończy.
+• Zwrotki trzymają Em długo — spokojne wyliczanie, kim jest Jezus.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — pewnie i spokojnie, jak wyznanie wiary.
+• Refren — „Jego imię Jezus" pełnym głosem, rośnie do „potężny Bóg".
+• Bridge — wyliczanie imion coraz mocniej, kulminacja na „Potężny Bóg".
+• Tag — ciszej, uwielbienie.`},
 ];
 
 /* Zmiany w piosenkach startowych, które ktoś ma już zapisane. Ruszają tylko to, co było
