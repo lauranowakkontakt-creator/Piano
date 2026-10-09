@@ -277,6 +277,76 @@ EMOCJE W GŁOSIE (plan):
 • Refren — odwaga: „Przeprowadź przez wody" pełnym głosem, fraza rośnie do „znamy Cię".
 • Tag „Wierzę Ci, Jezu" — prosto i szczerze, drugi raz mocniej.
 • Bridge — narasta przy każdym powtórzeniu, kulminacja na „Wszystko możliwe w Tobie jest".`},
+{ id:'seed-widze-zwyciestwo', title:'Widzę zwycięstwo', artist:'Michał Król, Melania Król', key:'A', bpm:61, beats:4,
+  chords:`[Zwrotka] D A F#m E | D A F#m E
+[Refren] D A F#m E | D A F#m E
+[Bridge] F#m E/G# A | A Bm A | Bm A E/G#`,
+  lyrics:`[Zwrotka 1]
+Kiedy świat się [D]chwieje [A]
+Ty dajesz [F#m]pewny grunt
+Trzymasz [E]mocno
+Zawsze ze mną [D]jesteś [A]
+Gdy nad[F#m]ciąga wróg
+Nie od[E]chodzisz
+
+[Zwrotka 2]
+Ty stoisz [D]przy mnie [A]
+I zamieniasz [F#m]mój lęk
+W chęć [E]do walki
+Dajesz mi [D]siłę [A]
+Twoje Słowo [F#m]to miecz
+Wiara [E]tarczą jest
+
+[Refren]
+[D]Widzę zwycięstwo gdy wi[A]dzę krzyż
+[F#m]Ty nie przegrałeś nigdy [E]żadnej z bitw
+[D]Bez względu na to co wy[A]darzy się
+Wiem, że ni[F#m]gdy nie zawie[E]dziesz mnie
+
+[D]Odwieczny plan wyko[A]nałeś już
+[F#m]Ten z którym walczę jest [E]u Twoich stóp
+[D]To Twoje imię moją [A]siłą jest
+Wiem, że ni[F#m]gdy nie zawie[E]dziesz mnie
+
+[Zwrotka 3]
+Wiem, że jesteś [D]wierny [A]
+Każde z [F#m]Twoich słów
+Się [E]wypełni
+Nigdy się nie [D]zmienisz [A]
+Wczoraj, [F#m]jutro i dziś
+Jesteś [E]Bogiem
+
+[Zwrotka 4]
+Ty możesz [D]wszystko [A]
+Nie zapo[F#m]mnę, że
+Jesteś [E]dobry
+I znasz moją [D]przyszłość [A]
+Będę [F#m]wierzyć Ci
+Nie [E]poddam się
+
+[Bridge]
+[F#m]Obietnice spełniają się
+[E/G#]w Tobie
+[A]Ostateczne
+[A]Zwycięstwo jest Twoje
+[Bm]Sło[A]wo
+Wyko[Bm]na[A]ło [E/G#]się`,
+  notes:`Tekst i akordy: Michał Król, Melania Król (michalkrol.com.pl).
+Tonacja A-dur · 4/4 · 61 BPM.
+
+W PDF akordy były tylko nad zwrotką 1, pierwszą połową refrenu i bridge'em. Zwrotki 2–4 i druga połowa refrenu mają ten sam układ linijek, więc akordy są przeniesione w te same miejsca — sprawdź z nagraniem.
+W bridge'u w PDF jest „E/G#m" — to E z G# w basie (E/G#), tak jest wpisane.
+
+HARMONIA: A (I, dom), D (IV, ruch), E (V, napięcie), F#m (vi, dom smutniejszy), Bm (ii, ruch).
+• Zwrotka i refren to ta sama pętla: D → A → F#m → E — IV – I – vi – V. Start od D, nie od A, więc fraza zawsze „podnosi się" do domu.
+• Każda linia kończy się na E (V) — napięcie, które ciągnie do następnej linii.
+• Bridge: F#m → E/G# → A — bas idzie schodkami w górę F# → G# → A, jak wspinanie się do „Ostateczne zwycięstwo".
+• „Słowo wykonało się": Bm → A dwa razy, potem E/G# — zawieszenie przed powrotem do refrenu.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — spokojna pewność, ciepło, bez forsowania.
+• Refren — zwycięsko, ale nie krzykiem: „Widzę zwycięstwo" na pełnym oddechu.
+• Bridge — rośnie od „Obietnice" do „Ostateczne zwycięstwo", „Słowo wykonało się" szeroko i powoli.`},
 ];
 
 /* Zmiany w piosenkach startowych, które ktoś ma już zapisane. Ruszają tylko to, co było

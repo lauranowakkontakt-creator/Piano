@@ -80,7 +80,7 @@ test('nic, śmieci i dziwne typy nie wysypują parsera', () => {
 });
 
 test('Piosenki startowe: polski tekst z akordami, które rozpoznaje appka', () => {
-  for(const id of ['seed-blizej', 'seed-lean-back', 'seed-surrender', 'seed-famous-for']){
+  for(const id of ['seed-blizej', 'seed-lean-back', 'seed-surrender', 'seed-famous-for', 'seed-widze-zwyciestwo']){
     const s = SEED_SONGS.find(x => x.id === id);
     assert.ok(s && s.lyrics, id + ': brak tekstu');
     // każdy [..] to albo akord, albo nagłówek części w osobnej linii

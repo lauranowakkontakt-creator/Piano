@@ -74,7 +74,7 @@ test('Piosenki: startowe piosenki, wpisywanie akordów, role i zgadywanie tonacj
   const titles = await page.$$eval('.song-list .item', els => els.map(e => e.firstChild.textContent));
   assert.ok(titles.includes('Wtulę się (Lean Back)') && titles.includes('Bliżej (Closer)'), titles.join(', '));
   // piosenki startowe nie mają nierozpoznanych akordów
-  for(const id of ['seed-lean-back', 'seed-blizej', 'seed-surrender', 'seed-famous-for']){
+  for(const id of ['seed-lean-back', 'seed-blizej', 'seed-surrender', 'seed-famous-for', 'seed-widze-zwyciestwo']){
     await go(page, '#piosenki/' + id);
     await page.waitForSelector('.song-sheet .chord-chip');
     assert.equal(await page.locator('.song-sheet .faint.mono').count(), 0, id);
