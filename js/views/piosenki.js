@@ -812,6 +812,93 @@ EMOCJE W GŁOSIE (plan):
 • Zwrotki — spokojnie, szeroko, jak opowieść o pokoleniach.
 • Przedrefren — narasta z każdą linijką „Imię Twe".
 • Refren — „Święty" długo i pełnym głosem; „Święty na zawsze" miękko w dół.`},
+{ id:'seed-used-to-this', title:'Codziennie więcej chcę (Used To This)', artist:'Elevation Worship & Maverick City Music · tł. Winnica Worship', key:'C', bpm:70, beats:4,
+  chords:`[Intro] C Em7 Am7 Fsus2
+[Zwrotka] C Em | Am | F C | Em | Am G | F
+[Przedrefren] C G | Dm F | C G | Dm F
+[Przejście] C Em Am F Dm
+[Refren] C | Em Am | G F | Fm
+[Interludium] C Em Am G F Fm | C Em Am G F Fm
+[Bridge 1] C G | Dm C/E | F | C G | Dm C/E | F
+[Bridge 2] C | G | Dm C/E | F
+[Outro] C Em Am G F Fm | C Em Am G F Fm C`,
+  lyrics:`[Intro]
+[C] [Em7] [Am7] [Fsus2]
+
+[Zwrotka 1]
+[C](Gdy) jesteś [Em]tu
+Czas stoi w [Am]miejscu
+Nic nie jest [F]ważne tak jak [C]Ty
+Jestem [Em]tu
+Nic mnie nie [Am]go[G]ni
+Już [F]nie muszę spieszyć się
+
+[Przedrefren]
+[C]Wieczność z Tobą jest jak [G]chwila
+Już nie liczę minut
+[Dm]Pragnę [F]Ciebie
+[C]Szukam Twojej obec[G]ności
+Duchu przyjdź w swej mocy
+[Dm]Pragnę [F]Ciebie
+
+[Przejście]
+[C] [Em] [Am] [F] [Dm]
+
+[Zwrotka 2]
+[C]Wybacz [Em]mi
+Ciągłe sta[Am]rania
+By nieza[F]leżnie od Ciebie [C]żyć
+Bliskość [Em]Twa
+Była mi [Am]obca
+Te[G]raz już [F]nie puszczę Cię
+
+[Refren]
+[C]Pragnę Ciebie
+[Em]Tylko [Am]Ciebie
+Nikt nie [G]dorówna [F]Ci
+Kto jest jak [Fm]Ty?
+
+[Interludium — 2×]
+[C] [Em] [Am] [G] [F] [Fm]
+
+[Bridge 1]
+[C]Jeśli to [G]przedsmak nieba
+[Dm]Codziennie więcej [C/E]chcę
+[F]Codziennie więcej chcę
+
+[C]Zapach Twej [G]obecności
+[Dm]Codziennie więcej [C/E]chcę
+[F]Codziennie więcej chcę
+
+[Bridge 2]
+[C]Codziennie więcej chcę
+[G]Codziennie więcej chcę
+[Dm]Codziennie więcej [C/E]chcę
+[F]Codziennie więcej chcę
+
+[Outro — 4×, na końcu C]
+[C] [Em] [Am] [G] [F] [Fm]`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Elevation Worship & Maverick City Music). Akordy z angielskiej wersji (Ultimate Guitar), przeniesione nad odpowiadające polskie linijki i sylaby.
+Tonacja C-dur · 4/4 · tempo nie było podane — 70 BPM to szacunek, sprawdź z nagraniem.
+
+KOLEJNOŚĆ: Intro → Zwrotka 1 → Przedrefren → Przejście → Zwrotka 2 → Przedrefren → Refren → Interludium ×2 → Bridge 1 → Bridge 2 → Przedrefren → Refren ×2 → Outro ×4.
+
+JAK DOPASOWANE:
+• Akordy idą za melodią, nie za znaczeniem. W zwrotce 1 polskie linijki są w innej kolejności niż angielskie („(Gdy) jesteś tu" to „Whenever I'm with You", a stoi tam, gdzie „Time stands still") — akordy są tam, gdzie wypadają w melodii: C → Em, Am, F → C, Em, Am → G, F.
+• „I just want [F]You" = „Pragnę [F]Ciebie" — F na ostatnim słowie.
+• „Nothing com[G]pares to [F]You" = „Nikt nie [G]dorówna [F]Ci" — G na trzeciej sylabie, F na ostatniej.
+• Bridge 2 po angielsku to 4× „I could get used to this" (C, G, Dm → C/E, F). W polskim PDF tej części nie ma osobno — to 4× „Codziennie więcej chcę".
+
+HARMONIA: C (I, dom), F (IV, ruch), G (V, napięcie), Am (vi), Em (iii), Dm (ii).
+• Fm to „pożyczony" akord z c-moll (iv molowe). F → Fm: zmienia się jedna nuta (A → A♭) — robi się nagle tęskno i miękko. To serce tej piosenki: „Kto jest jak [Fm]Ty?".
+• C/E w bridge'u to C z E w basie: bas idzie D → E → F, schodkami w górę.
+• Zwrotka i interludium: C → Em → Am — bas schodzi C → B → A, spokojnie, bez pośpiechu („nic mnie nie goni").
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — spokojnie, bez pośpiechu, jak rozmowa.
+• Przedrefren — tęsknota rośnie, „Pragnę Ciebie" ciepło.
+• Refren — prosto i szczerze, „Kto jest jak Ty?" miękko na Fm.
+• Bridge — narasta z każdym „Codziennie więcej chcę"; Bridge 2 najpełniej.`},
 ];
 
 /* Zmiany w piosenkach startowych, które ktoś ma już zapisane. Ruszają tylko to, co było
