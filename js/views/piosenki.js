@@ -148,7 +148,7 @@ HARMONIA: B (I, dom), F# (V, napięcie), G#m (vi, dom smutniejszy), D#m7 (iii, m
 • Zwrotka B → D#m7 → C#sus kręci się wokół domu i nie ląduje — jak spokojny oddech.
 • Bridge: C# → D#m7 → B → F#. C#-dur nie należy do H-dur (tam jest C#m) — to „pożyczony" akord, dominanta do F#. Dlatego bridge brzmi jaśniej i bardziej do przodu.
 • Appka może podpowiadać inną tonację, bo zwrotka kończy się na C#sus, a bridge na C#. Dom tej piosenki to jednak B.`},
-{ id:'seed-surrender', title:'Ulegam (I Surrender)', artist:'Hillsong Worship · tł. Winnica Worship', key:'Dm', bpm:70, beats:4,
+{ id:'seed-surrender', title:'Ulegam (I Surrender)', artist:'Hillsong Worship · tł. Winnica Worship', key:'F', bpm:77, beats:4,
   chords:`[Intro] Dm F C Bb
 [Zwrotka 1] Dm F C Bb | Dm F C Bb
 [Tag] Dm
@@ -200,13 +200,13 @@ Jak [Bb]potężny [F]sztorm
 Obudź [C]duszę mą
 Używaj [Gm]tak, używaj [Dm]tak, jak [C]chcesz`,
   notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Hillsong Worship). Akordy z angielskiej wersji, przeniesione nad odpowiednie słowa.
-Tonacja d-moll (równoległa do F-dur) · 4/4 · tempo wolne, ok. 70 BPM — sprawdź z nagraniem.
+Tonacja F-dur (oryginalna wg WorshipTogether), choć piosenka zaczyna się i kręci wokół Dm · 4/4 · 77 BPM.
 
 KOLEJNOŚĆ: Intro → Zwrotka 1 → Tag „Ja ulegam" → Interludium → Zwrotka 2 → Refren → Interludium 2 → Bridge (×2 lub więcej) → Refren.
 
-HARMONIA: Dm (i, dom), F (III — jasny „brat" d-moll), C (VII), B♭ (VI), Gm (iv).
-• Zwrotka to jedna pętla: Dm → F → C → B♭, każdy akord po 2 takty. W F-dur to vi – I – V – IV.
-• Start od Dm, nie od F — dlatego całość brzmi jak modlitwa na kolanach, a nie jak hymn.
+HARMONIA: F (I, dom), C (V, napięcie), B♭ (IV, ruch), Dm (vi, dom smutniejszy), Gm (ii, ruch).
+• Zwrotka to jedna pętla: Dm → F → C → B♭, każdy akord po 2 takty — vi – I – V – IV.
+• Start od Dm, nie od F — dlatego całość brzmi jak modlitwa na kolanach, a nie jak hymn. Appka może podpowiadać d-moll; dom to jednak F.
 • Refren: Dm → F → Gm → B♭. Gm zamiast C to nowy kolor — tu tekst mówi „chcę bardziej poznać Cię".
 • Bridge: B♭ → F → C → Gm → Dm → C. Startuje z B♭ i idzie w górę jak wiatr; kończy na C, więc chce się go powtarzać.
 • W pliku z akordami pierwsza linia bridge'u miała B♭m — w drugiej połowie jest B♭, więc tu też jest B♭. Jeśli w nagraniu słychać molowy, zmień.
@@ -215,7 +215,7 @@ EMOCJE W GŁOSIE (plan):
 • Zwrotki — cicho, blisko, prawie mówione. Dużo powietrza.
 • „Ja ulegam" — miękko, z oddechem przed słowem.
 • Bridge — rośnie: „Jak gwałtowny wiatr" pełnym głosem, „Poprowadź tak" na podparciu, potem wyciszenie do refrenu.`},
-{ id:'seed-famous-for', title:'Wierzę Ci (Famous For)', artist:'Tauren Wells · tł. Winnica Worship', key:'Bb', bpm:72, beats:4,
+{ id:'seed-famous-for', title:'Wierzę Ci (Famous For)', artist:'Tauren Wells · tł. Winnica Worship', key:'Bb', bpm:86, beats:4,
   chords:`[Zwrotka 1] Eb Gm F | Eb Gm F | Eb Bb F Eb | Eb Gm F | Eb Gm F | Eb Bb F Eb
 [Refren] Eb | F | Gm | F/A | Eb | F | Gm | F/A
 [Tag] Eb Gm F | Eb Gm F
@@ -261,7 +261,7 @@ Twe [Gm]Imię mocą jest
 Nic [Bb]nie zatrzyma Cię
 Wszystko [F]możliwe w Tobie jest`,
   notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Tauren Wells „Famous For (I Believe)"). Akordy z angielskiej wersji, przeniesione nad odpowiednie słowa.
-Tonacja B-dur (w appce Bb) · 4/4 · ok. 72 BPM — sprawdź z nagraniem.
+Tonacja B-dur (w appce Bb, oryginalna wg WorshipTogether) · 4/4 · 86 BPM.
 
 KOLEJNOŚĆ: Zwrotka 1 → Refren → Tag → Zwrotka 2 → Refren → Tag → Bridge ×2 → Refren → Tag.
 
@@ -270,7 +270,7 @@ HARMONIA: B♭ (I, dom), E♭ (IV, ruch), F (V, napięcie), Gm (vi, dom smutniej
 • Refren idzie w górę: E♭ → F → Gm, a potem F/A — F z A w basie. Bas wspina się E♭ → F → G → A i prowadzi z powrotem do E♭.
 • Bb/D w zwrotce 2 to B♭ z D w basie: bas idzie D → E♭, miękkie wejście w każdą linię.
 • Bridge: Gm → B♭ → E♭ → B♭ → F. Polski tekst ma w pierwszej części 3 linie, w drugiej 4 — akordy idą tak samo, rozkładasz je na słowa.
-• W pliku z akordami w zwrotce 1 było „B" — w zwrotce 2 w tym samym miejscu jest Bb, więc tu też jest Bb.
+• W zwrotce 1 akordy (także na WorshipTogether) mają samo „B" — w zwrotce 2 w tym samym miejscu jest Bb, a H-dur nie pasuje do tonacji, więc tu też jest Bb.
 
 EMOCJE W GŁOSIE (plan):
 • Zwrotki — spokojna pewność, nie strach: mówione, ciepłe.
