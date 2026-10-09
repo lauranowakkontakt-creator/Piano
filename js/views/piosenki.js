@@ -1003,6 +1003,73 @@ EMOCJE W GŁOSIE (plan):
 • Zwrotki — prosto i radośnie, rytmicznie.
 • Refren — szczerze, „Tylko Ty" jak wyznanie.
 • Bridge — narasta z każdym powtórzeniem, „Chwała i cześć" pełnym głosem.`},
+{ id:'seed-just-like-heaven', title:'Jak w niebie (Just Like Heaven)', artist:'Brandon Lake · tł. Winnica Worship', key:'Bb', bpm:72, beats:4,
+  chords:`[Intro] Bb Eb Bb F
+[Zwrotka] Bb | Eb | Bb | F | Bb | Eb | Gm7 | F
+[Refren] Eb Gm7 F Bb/D | Eb Gm7 F Bb/D
+[Przejście] F Gm7 F F
+[Bridge] Eb F | Gm7 | Bb/D | Eb F | Gm7 | Bb/D`,
+  lyrics:`[Intro]
+[Bb] [Eb] [Bb] [F]
+
+[Zwrotka 1]
+[Bb]Czy nie doświadczam nieba
+[Eb]Kiedy jesteś ze mną tu
+[Bb]Oczy skupiam na Tobie
+[F]Nic się nie ukryje już
+[Bb]Ciągły niedosyt Ciebie
+[Eb]To najlepsza z wszystkich dróg
+[Gm7]Pragnę doświadczać, doświadczać
+[F]doświadczać nieba
+
+[Refren]
+[Eb]Ooo [Gm7] [F]Podejdź trochę bliżej
+Zostań trochę [Bb/D]dłużej
+[Eb]Ooo [Gm7] [F]Nigdy nie mam
+dosyć [Bb/D]Ciebie
+
+[Przejście]
+[F] [Gm7] [F] [F]
+
+[Zwrotka 2]
+[Bb]Czy to nie dźwięki nieba
+[Eb]Twój głos nie zmienia się
+[Bb]Ciągle nade mną śpiewasz
+[F]melodia ta nie kończy się
+[Bb]Będę stać w Twej obecności
+[Eb]W niej tożsamość moja jest
+[Gm7]Twój głos jak dźwięki, dźwięki
+[F]Dźwięki nieba
+
+[Bridge — 2×]
+[Eb]Święty, jesteś [F]Święty
+Mój dosko[Gm7]nały Ojcze
+U[Bb/D]wielbiam Cię na wieki
+[Eb]Święty, jesteś [F]Święty
+Od[Gm7]daję wszystko Tobie
+Chcę [Bb/D]być z Tobą na zawsze`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Brandon Lake). Akordy z angielskiej wersji (Ultimate Guitar), przeniesione nad odpowiadające polskie linijki i sylaby.
+Tonacja B-dur (w appce Bb) · 4/4 · tempo nie było podane — 72 BPM to szacunek, sprawdź z nagraniem.
+
+ZAPIS AKORDÓW: na Ultimate Guitar akordy są z krzyżykami (A#, D#, A#/D). To te same dźwięki co Bb, Eb, Bb/D — tu są z bemolami, bo tak się je pisze w tonacji B-dur.
+
+KOLEJNOŚĆ: Intro → Zwrotka 1 → Refren → Przejście → Zwrotka 2 → Refren → Bridge ×2 → Refren → Outro (jak refren).
+
+JAK DOPASOWANE:
+• Zwrotki: polskich linijek jest tyle samo co angielskich (8), a akord zmienia się na początku każdej — więc każda polska linijka ma akord swojej angielskiej linijki.
+• Refren: „[F]Come a little closer, stay a little [Bb/D]longer" = „[F]Podejdź trochę bliżej / Zostań trochę [Bb/D]dłużej"; „[F]I can't get enough of [Bb/D]You" = „[F]Nigdy nie mam dosyć [Bb/D]Ciebie". „Ooo" na Eb → Gm7.
+• Bridge: „[Eb]Holy, You are [F]holy" = „[Eb]Święty, jesteś [F]Święty"; w pozostałych linijkach akord jest na tej samej sylabie co po angielsku („I'll [Bb/D]worship" = „U[Bb/D]wielbiam").
+• Po angielsku jest jeszcze Post-Chorus („I just want more of You… I can't get enough") — w polskim tłumaczeniu go nie ma.
+
+HARMONIA: Bb (I, dom), Eb (IV, ruch), F (V, napięcie), Gm7 (vi, dom smutniejszy).
+• Zwrotka: Bb ↔ Eb kołysze się jak oddech; dopiero Gm7 → F na końcu buduje napięcie przed refrenem.
+• Refren startuje od Eb, nie od domu — „Ooo" brzmi jak tęsknota. Bb/D to Bb z D w basie: bas idzie F → D → E♭ i refren kręci się dalej.
+• Bridge: Eb → F → Gm7 → Bb/D — bas idzie w górę E♭ → F → G, potem D — jak wznoszenie i powrót.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — lekko, z uśmiechem, jak zachwyt.
+• Refren — „Ooo" miękko, „Podejdź trochę bliżej" jak zaproszenie.
+• Bridge — za drugim razem pełnym głosem, „Chcę być z Tobą na zawsze" mocno.`},
 ];
 
 /* Zmiany w piosenkach startowych, które ktoś ma już zapisane. Ruszają tylko to, co było
