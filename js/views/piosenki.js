@@ -899,6 +899,43 @@ EMOCJE W GŁOSIE (plan):
 • Przedrefren — tęsknota rośnie, „Pragnę Ciebie" ciepło.
 • Refren — prosto i szczerze, „Kto jest jak Ty?" miękko na Fm.
 • Bridge — narasta z każdym „Codziennie więcej chcę"; Bridge 2 najpełniej.`},
+{ id:'seed-more-i-seek', title:'Im więcej szukam (The More I Seek You)', artist:'Kari Jobe · tł. Winnica Worship', key:'F#', bpm:68, beats:4,
+  chords:`[Zwrotka] F# C# | D#m B | F# C# | D#m B
+[Refren] F# | C# | D#m | B | F# | C# | D#m | B
+[Bridge] F# C# | D#m B`,
+  lyrics:`[Zwrotka]
+[F#]Im więcej [C#]szukam, [D#m]tym bardziej [B]znajdę
+[F#]Im bardziej [C#]znajdę, [D#m]tym bardziej [B]kocham
+
+[Refren]
+[F#]Chcę siedzieć u Twoich stóp
+[C#]Z kielicha Twego chcę pić
+[D#m]Rytm serca Twojego czuć, [B]Twoją miłość
+[F#]Głęboka tak jest, [C#]niż mogę bardziej znieść
+[D#m]Rozpływam się w niej, [B]w Twym pokoju
+
+[Bridge]
+[F#]To co chcę, to [C#]zawsze być przy Tobie,
+[D#m]Słyszeć Cię, Twój [B]Panie słodki głos`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Kari Jobe). Akordy z angielskiej wersji (Ultimate Guitar), przeniesione nad odpowiadające polskie sylaby.
+Tonacja Fis-dur (w appce F#) · 4/4 · tempo nie było podane — 68 BPM to szacunek, sprawdź z nagraniem.
+Na Ultimate Guitar jest dopisek, że na nagraniu piosenka może brzmieć w innej tonacji — jeśli nie pasuje do głosu albo nagrania, przenieś ją przyciskami ♭/♯.
+
+KOLEJNOŚĆ: Zwrotka (×2 lub więcej) → Refren → Zwrotka → Refren → Bridge → Refren.
+
+JAK DOPASOWANE:
+• Zwrotka: jedna polska linijka to dwie angielskie („The more I [C#]seek You / The more I [B]find You"), więc są w niej po dwa akordy z każdej angielskiej linijki: „[F#]Im więcej [C#]szukam, [D#m]tym bardziej [B]znajdę".
+• Refren: polskich linijek jest 5, angielskich 8. Sylaby się zgadzają: „Rytm serca Twojego czuć, Twoją miłość" (7 + 4) śpiewa się w miejscu „Lay back against You and breathe / Feel Your heart beat" (7 + 4), więc D#m i B są tam, gdzie zaczynają się te dwie części. Tak samo „Głęboka tak jest, niż mogę bardziej znieść" (5 + 6) = „This love is so deep / It's more than I can stand" (F#, C#).
+• Bridge: tej części nie ma w angielskich akordach. Dostał tę samą pętlę F# → C# → D#m → B — sprawdź z nagraniem.
+
+HARMONIA: F# (I, dom), C# (V, napięcie), D#m (vi, dom smutniejszy), B (IV, ruch).
+• Cała piosenka to jedna pętla I – V – vi – IV, tylko akordy zmieniają się raz na linijkę albo dwa razy.
+• Na fortepianie F#-dur leży prawie cały na czarnych klawiszach — wygodnie dla ręki, choć wygląda strasznie w nutach.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotka — cicho i prosto, jak modlitwa powtarzana w kółko.
+• Refren — intymnie; „Głęboka tak jest" trochę mocniej, „Rozpływam się" znów miękko.
+• Bridge — tęsknie, „słodki głos" długo i delikatnie.`},
 ];
 
 /* Zmiany w piosenkach startowych, które ktoś ma już zapisane. Ruszają tylko to, co było
