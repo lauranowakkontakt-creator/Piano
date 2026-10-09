@@ -549,6 +549,117 @@ EMOCJE W GŁOSIE (plan):
 • Zwrotki — cicho, prosto, jak szept modlitwy.
 • Refren — z każdym powtórzeniem linii trochę mocniej.
 • Bridge „Dzień i noc" — rytmicznie, coraz pełniej; „Ogniu modlitwy płoń" szeroko.`},
+{ id:'seed-no-one', title:'Kto jest jak Ty (No One)', artist:'Elevation Worship feat. Chandler Moore · tł. Winnica Worship', key:'D', bpm:70, beats:4,
+  chords:`[Intro] A/D D A/G G | A/D D A/G G
+[Zwrotka 1] D A | G | D | A G
+[Zwrotka 2] Bm | G | D/F# | A G
+[Refren] D A G | D A G | Bm | A | D/F# G | D A/C# G/B | G
+[Bridge] A/D D A/D G/D A/D | G/D D
+[Refrain] A | D | A G/B | D | G | D/F# Bm | A G | D`,
+  lyrics:`[Intro]
+[A/D] [D] [A/G] [G] [A/D] [D] [A/G] [G]
+
+[Zwrotka 1]
+[D]Jah[A]we
+[G]Jahwe
+[D]Święte Imię Twe
+[A]W bojaźni uwiel[G]biamy Cię
+
+[Zwrotka 2]
+[Bm]Jahwe
+[G]Jahwe
+[D/F#]Święte Imię Twe
+[A]Majestat Twój za[G]chwyca mnie
+
+[Refren]
+Czy jest ktoś, kto [D]może [A]Ci do[G]równać?
+Czy jest ktoś, kto [D]może [A]Ci do[G]równać?
+Jesteś [Bm]niezastąpiony
+[A]Jesteś najwyższy
+[D/F#]Niedoścignio[G]ny
+Jahwe, nikt nie [D]może [A/C#]Ci do[G/B]równać
+Kto [G]mógłby być jak Ty?
+
+[Tag]
+Kto [G]mógłby być jak Ty?
+
+[Instrumental]
+[A/D] [D] [A/G] [G] [A/D] [D] [A/G] [G]
+
+[Bridge 1]
+[A/D]Kto nas pro[D]wadzi do [A/D]miejsca wol[G/D]ności? [A/D]
+Nasz Bóg, [G/D]nasz Bóg, nasz [D]Bóg
+[A/D]Kto leczy [D]wszystkie [A/D]nasze cho[G/D]roby? [A/D]
+Nasz Bóg, [G/D]nasz Bóg, nasz [D]Bóg
+[A/D]Kto może [D]chodzić, [A/D]chodzić po [G/D]wodzie? [A/D]
+Nasz Bóg, [G/D]nasz Bóg, nasz [D]Bóg
+[A/D]Kto z mocą [D]zsyła, [A/D]zsyła swój [G/D]ogień? [A/D]
+Nasz Bóg, [G/D]nasz Bóg, nasz [D]Bóg
+
+[Bridge 2]
+[A/D]Kto wygra [D]bitwę z [A/D]największym go[G/D]liatem? [A/D]
+Nasz Bóg, [G/D]nasz Bóg, nasz [D]Bóg
+[A/D]Kto może [D]lwom za[A/D]mykać [G/D]paszcze? [A/D]
+Nasz Bóg, [G/D]nasz Bóg, nasz [D]Bóg
+[A/D]Kto może [D]przyjąć [A/D]najwyższą [G/D]chwałę? [A/D]
+Nasz Bóg, [G/D]nasz Bóg, nasz [D]Bóg
+[A/D]Kto może [D]przyjąć [A/D]najwyższą [G/D]chwałę? [A/D]
+Nasz Bóg, [G/D]nasz Bóg, nasz [D]Bóg
+
+[Refrain 1]
+Kto jest [A]jak Ty?
+Kto jest jak [D]Ty?
+Kto jest [A]jak [G/B]Ty?
+Kto jest jak [D]Ty?
+Nie ma [G]innego
+Nie ma [D/F#]inne[Bm]go
+Kto jest [A]jak [G]Ty?
+Kto jest jak [D]Ty?
+
+[Refrain 2]
+Miłość [A]duszy mej
+Miłość duszy [D]mej
+Miłość [A]duszy [G/B]mej
+Miłość duszy [D]mej
+Nie ma [G]innego
+Nie ma [D/F#]inne[Bm]go
+Kto jest [A]jak [G]Ty?
+Kto jest jak [D]Ty?
+
+[Tag 1]
+Wiem nie ma nikogo takiego, jak Jezus
+
+[Tag 2]
+Kto uzdrawia jak Jezus?
+O, nikt jak Jezus
+Kto chroni jak Jezus?
+O, nikt jak Jezus
+Kto się troszczy jak Jezus?
+O, nikt jak Jezus
+Kto kocha jak Jezus?
+O, nikt jak Jezus
+Kto o mnie zadba tak jak Jezus?`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Elevation Worship feat. Chandler Moore). Akordy z angielskiej wersji (Ultimate Guitar), przeniesione nad odpowiednie słowa.
+Tonacja D-dur · 4/4 · tempo nie było podane — 70 BPM to szacunek, sprawdź z nagraniem.
+
+KOLEJNOŚĆ: Intro → Zwrotka 1 + 2 → Instrumental → Zwrotka 1 + 2 → Refren → Instrumental → Zwrotka 1 + 2 → Refren → Instrumental → Bridge 1 → Bridge 2 → Refrain 1 → Refrain 2 → Tagi.
+Po angielsku każda zwrotka to obie połowy (D… i Bm…), po polsku są to osobno Zwrotka 1 i Zwrotka 2.
+
+DO SPRAWDZENIA Z NAGRANIEM:
+• Tag 1 i Tag 2 („Kto uzdrawia jak Jezus?") nie mają akordów w angielskiej wersji, którą mam — są bez akordów.
+• Tag „Kto mógłby być jak Ty?" dostał G, jak ostatnia linia refrenu.
+
+HARMONIA: D (I, dom), G (IV, ruch), A (V, napięcie), Bm (vi, dom smutniejszy).
+• Intro i instrumental: A/D → D → A/G → G. Bas stoi na D, potem na G, a akordy nad nim się zmieniają — jak dwa długie oddechy.
+• Bridge: cały na basie D (A/D, D, G/D) — bas „pedał" się nie rusza, a napięcie rośnie z każdym pytaniem. „Nasz Bóg" ląduje na D, w domu.
+• Refren: D → A → G, potem schodzenie basu D → C# → B w „Jahwe, nikt nie może Ci dorównać" (D, A/C#, G/B).
+• Refrain: A → D, A → G/B → D, G → D/F# → Bm — bas idzie G → F# → B, a całość krąży wokół domu.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki „Jahwe" — cicho, z szacunkiem, długie samogłoski.
+• Refren — rośnie do „Niedościgniony", szeroko na „Kto mógłby być jak Ty?".
+• Bridge — pytania pewnie, odpowiedź „Nasz Bóg" jak okrzyk; Bridge 2 mocniej niż 1.
+• Refrain „Miłość duszy mej" — ciepło, prawie szeptem, potem znów rośnie.`},
 ];
 
 /* Zmiany w piosenkach startowych, które ktoś ma już zapisane. Ruszają tylko to, co było
