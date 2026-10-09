@@ -417,6 +417,87 @@ EMOCJE W GŁOSIE (plan):
 • Refren — intymnie, cicho, jak rozmowa sam na sam.
 • Zwrotki — szczerze, z pokorą, prawie mówione.
 • Bridge — za każdym razem trochę mocniej; „Nic innego już" na końcu znowu cicho.`},
+{ id:'seed-i-belong', title:'Należę do Jezusa (I Belong To Jesus)', artist:'Bethel Music · tł. Winnica Worship', key:'A', bpm:67, beats:4,
+  chords:`[Intro] D A/C# E | D A/C# E
+[Zwrotka] D A/C# E | D A/C# E | D F#m E | D A/C# E
+[Refren] A A/C# D | E F#m D A | A A/C# D | E F#m D A
+[Przejście] D A E | D F#m E
+[Bridge 1] D | A E | D F#m E | D | F#m E | D F#m E
+[Bridge 2] Bm | F#m E | D F#m E | Bm | F#m E A/C# | D F#m E
+[Tag] F#m | D A
+[Spontaniczny] F#m D | A`,
+  lyrics:`[Intro]
+[D] [A/C#] [E] [D] [A/C#] [E]
+
+[Zwrotka 1]
+Gdy strach mnie [D]ogarnie, [A/C#]nie wycofam [E]się
+Nawet w do[D]linie, wy[A/C#]starczysz mi Ty [E]sam
+Gdy grunt się za[D]trzęsie, [F#m]będę pewnie [E]stać
+[D]Wystarczysz [A/C#]mi Ty [E]sam
+
+[Refren]
+Ojcze w [A]niebie, [A/C#]Ty jesteś [D]ze mną
+[E]Strach już nie po[F#m]kona mnie, [D]należę do [A]Jezusa
+Już nie jestem [A]sam, [A/C#]Ty mnie nie o[D]puścisz
+[E]Strach już nie po[F#m]kona mnie, [D]należę do [A]Jezusa
+
+[Zwrotka 2]
+Gdy przyjdzie [D]presja, [A]nie wycofam [E]się
+Nawet w trud[D]nościach, wy[A]starczysz mi Ty [E]sam
+W obliczu [D]pytań, [F#m]nie zachwieję [E]się
+[D]Wystarczysz [A/C#]mi Ty [E]sam
+
+[Refren]
+Ojcze w [A]niebie, [A/C#]Ty jesteś [D]ze mną
+[E]Strach już nie po[F#m]kona mnie, [D]należę do [A]Jezusa
+Już nie jestem [A]sam, [A/C#]Ty mnie nie o[D]puścisz
+[E]Strach już nie po[F#m]kona mnie, [D]należę do [A]Jezusa
+
+[Przejście]
+[D] [A] [E] [D] [F#m] [E]
+
+[Bridge 1]
+W czasie [D]sztormu, w czasie deszczu
+W czasie [A]burzy, w czasie [E]lęku
+Byłeś [D]ze mną, zawsze [F#m]stałeś obok [E]mnie
+W [D]moim bólu i ciemności
+Gdy u[F#m]padnę w mej [E]słabości
+Będziesz [D]ze mną, zawsze [F#m]staniesz obok [E]mnie
+
+[Bridge 2]
+Mój [Bm]Pasterzu, mój Obrońco
+Ty się [F#m]troszczysz i [E]podnosisz
+W każdym [D]czasie jesteś [F#m]zawsze blisko [E]mnie
+Jesteś [Bm]dobry, jesteś wierny
+Moja [F#m]miłość, moja [E]przyszłość [A/C#]
+W każdym [D]czasie jesteś [F#m]zawsze blisko [E]mnie
+
+[Tag — 8×]
+Strach już nie po[F#m]kona mnie
+[D]Należę do [A]Jezusa
+
+[Spontaniczny refren]
+Choćbym nawet [F#m]szedł przez dolinę [D]cienia śmierci i łez
+Zła się [A]nie ulęknę`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Bethel Music, The McClures). Akordy z angielskiej wersji (WorshipTogether), przeniesione nad odpowiednie słowa.
+Tonacja A-dur · 4/4 · 67 BPM, wolno.
+
+KOLEJNOŚĆ: Intro → Zwrotka 1 → Refren → Zwrotka 2 → Refren → Przejście → Bridge 1 → Bridge 2 → Refren → Bridge 2 → Refren → Tag ×8 → Spontaniczny refren → Bridge 2 → Refren.
+
+Po angielsku w przejściu śpiewa się „Oh I belong, I belong" — polskie tłumaczenie tej części nie ma, więc są same akordy.
+W refrenie jedna polska linijka to dwie angielskie, dlatego na linię przypadają 3–4 akordy.
+
+HARMONIA: A (I, dom), D (IV, ruch), E (V, napięcie), F#m (vi, dom smutniejszy), Bm (ii, ruch).
+• A/C# to A z C# w basie. W zwrotce bas idzie D → C# → E: zwrotka startuje od D i nie ląduje w domu — dom przychodzi dopiero w refrenie.
+• Refren: A → A/C# → D — bas wspina się A → C# → D, jak podnoszenie głowy. Potem E → F#m → D → A: każda linia kończy się w domu, na „Jezusa".
+• Bridge 1 i 2 kończą każdą frazę na E (V) — napięcie, które ciągnie do następnej linii i do refrenu.
+• Bridge 2 startuje od Bm (ii) — nowy, ciemniejszy kolor po bridge'u 1.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — spokojnie, cicho, z pewnością, że nie ma się czego bać.
+• Refren — ciepło i pewnie, „należę do Jezusa" jak wyznanie.
+• Bridge 1 → Bridge 2 — narasta; Bridge 2 pełnym głosem.
+• Tag — zaczyna się cicho i rośnie z każdym powtórzeniem.`},
 ];
 
 /* Zmiany w piosenkach startowych, które ktoś ma już zapisane. Ruszają tylko to, co było
