@@ -739,6 +739,79 @@ EMOCJE W GŁOSIE (plan):
 • Refren — „Jego imię Jezus" pełnym głosem, rośnie do „potężny Bóg".
 • Bridge — wyliczanie imion coraz mocniej, kulminacja na „Potężny Bóg".
 • Tag — ciszej, uwielbienie.`},
+{ id:'seed-holy-forever', title:'Święty na zawsze (Holy Forever)', artist:'Chris Tomlin · tł. Winnica Worship', key:'Db', bpm:72, beats:4,
+  chords:`[Intro] Gb Bbm Absus | Db/F | Bbm Absus
+[Zwrotka] Db | Gb Db | Bbm Ab(add4) Gb2 | Db | Gb Db | Bbm Ab(add4) Gb2
+[Przedrefren] Gb2 Bbm | Ab(add4) | Bbm Gb2 | Gb2 Bbm | Ab(add4) | Bbm Ebm7
+[Refren] Gb2 Bbm Ab(add4) | Db/F Bbm | Ebm7 Ab(add4) | Db Dbsus Db
+[Refren cz. 2] Db/F Gb2 Bbm Ab(add4) | Db/F Bbm | Ebm7 Ab(add4) | Db Dbsus Db`,
+  lyrics:`[Intro]
+[Gb] [Bbm] [Absus] [Db/F] [Bbm] [Absus]
+
+[Zwrotka 1]
+Dziś [Db]wszystkie pokolenia
+[Gb]Stają w uwiel[Db]bieniu
+Śpie[Bbm]wając Baran[Ab(add4)]kowi chwały [Gb2]pieśń
+I [Db]Ci którzy odeszli
+I [Gb]Ci, którzy u[Db]wierzą
+Zaś[Bbm]piewają Baran[Ab(add4)]kowi chwały [Gb2]pieśń
+
+[Przedrefren]
+I[Gb2]mię Twe jest najwyższe [Bbm]
+I[Ab(add4)]mię Twe jest potężne
+I[Bbm]mię Twe ponad wszystko [Gb2]jest
+I[Gb2]mię Twe ponad trony [Bbm]
+I[Ab(add4)]mię Twe ponad władze
+I[Bbm]mię Twe ponad wszystko [Ebm7]jest
+
+[Refren]
+Chór aniołów [Gb2]brzmi - [Bbm]Świę[Ab(add4)]ty
+Wszystko wielbi [Db/F]Cię - Świę[Bbm]ty
+Wywyższony [Ebm7]Pan - Świę[Ab(add4)]ty
+Święty na [Db]zawsze [Dbsus] [Db]
+
+[Zwrotka 2]
+[Db]Jeśli uwierzyłeś
+Że [Gb]On wykupił [Db]Cię
+[Bbm]Śpiewaj Baran[Ab(add4)]kowi chwały [Gb2]pieśń
+[Db]Jeśli jesteś wolny
+I [Gb]nosisz Jego [Db]imię
+[Bbm]Śpiewaj Baran[Ab(add4)]kowi chwały [Gb2]pieśń
+Śpie[Bbm]wajmy Baran[Ab(add4)]kowi chwały [Gb2]pieśń
+
+[Refren]
+Chór aniołów [Gb2]brzmi - [Bbm]Świę[Ab(add4)]ty
+Wszystko wielbi [Db/F]Cię - Świę[Bbm]ty
+Wywyższony [Ebm7]Pan - Świę[Ab(add4)]ty
+Święty na [Db]zawsze [Dbsus] [Db]
+
+[Refren cz. 2 (w PDF: Bridge)]
+Śpiewa [Db/F]Kościół [Gb2]Twój - [Bbm]Świę[Ab(add4)]ty
+To dla Króla [Db/F]chwał - Świę[Bbm]ty
+Wywyższony [Ebm7]Pan - Świę[Ab(add4)]ty
+Święty na [Db]zawsze [Dbsus] [Db]`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Chris Tomlin — Brian Johnson, Chris Tomlin, Jason Ingram, Jenn Johnson, Phil Wickham). Akordy z angielskiej wersji (WorshipTogether), przeniesione nad odpowiadające polskie sylaby.
+Tonacja D♭-dur (w appce Db) · 4/4 · 72 BPM, wolno.
+
+KOLEJNOŚĆ: Intro → Zwrotka 1 → Przedrefren → Refren (pierwsza połowa) → Zwrotka 2 → Refren + Refren cz. 2 → Przedrefren ×2 → Refren + Refren cz. 2 → Tag („Wywyższony Pan - Święty / Święty na zawsze").
+
+JAK DOPASOWANE:
+• Zwrotki: polskie linijki mają tyle sylab co angielskie, więc akordy są na tych samych sylabach (np. „Śpie-[Bbm]wając Baran-[Ab]kowi chwały [Gb2]pieśń" = „To [Bbm]sing the song of a-[Ab]ges to the [Gb2]Lamb").
+• „Święty" = „Ho-ly": akord na „Świę" i na „ty", tak jak na „Ho" i „ly".
+• To, co w polskim PDF jest „Bridge" („Śpiewa Kościół Twój"), to po angielsku druga połowa refrenu („Hear Your people sing").
+• Przedrefren: przed refrenem kończy się na Ebm7 (wersja 1). Za drugim razem, gdy idzie dwa razy z rzędu, pierwszy raz kończy się na Gb2.
+
+ZAPIS AKORDÓW: Ab(add4) to A♭ z dodaną kwartą (D♭), Gb2 to G♭ z sekundą — miękkie, „otwarte" brzmienia.
+
+HARMONIA: Db (I, dom), Gb (IV, ruch), Ab (V, napięcie), Bbm (vi, dom smutniejszy), Ebm7 (ii, ruch).
+• Zwrotka: Db → Gb → Db, potem Bbm → Ab → Gb — schodzenie vi – V – IV, jak pokłon.
+• Przedrefren krąży Gb → Bbm → Ab i nie wraca do domu — buduje oczekiwanie; Ebm7 na końcu otwiera drzwi do refrenu.
+• Refren: Db/F to Db z F w basie — bas idzie F → G♭ i w górę. „Święty na zawsze" ląduje w domu, Dbsus → Db to ostatni oddech.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — spokojnie, szeroko, jak opowieść o pokoleniach.
+• Przedrefren — narasta z każdą linijką „Imię Twe".
+• Refren — „Święty" długo i pełnym głosem; „Święty na zawsze" miękko w dół.`},
 ];
 
 /* Zmiany w piosenkach startowych, które ktoś ma już zapisane. Ruszają tylko to, co było
