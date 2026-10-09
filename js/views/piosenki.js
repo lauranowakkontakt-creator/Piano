@@ -498,6 +498,57 @@ EMOCJE W GŁOSIE (plan):
 • Refren — ciepło i pewnie, „należę do Jezusa" jak wyznanie.
 • Bridge 1 → Bridge 2 — narasta; Bridge 2 pełnym głosem.
 • Tag — zaczyna się cicho i rośnie z każdym powtórzeniem.`},
+{ id:'seed-house-of-prayer', title:'Dom modlitwy (House of Prayer)', artist:'Eddie James · tł. Winnica Worship', key:'Am', bpm:72, beats:4,
+  chords:`[Zwrotka] Am G/A Fmaj9 G2 | Am G/A Fmaj9 G2
+[Refren] Am7 | Fmaj9 | Dm7 | Am G/B Fmaj9 G2
+[Bridge] Am | Fmaj9 | Dm7 | Am G/B Fmaj9 G2`,
+  lyrics:`[Zwrotka 1 — 2×]
+[Am]Chcę na [G/A]zawsze [Fmaj9]już
+Domem modli[G2]twy być
+
+[Tag]
+[Am]Szukam [G/A]Twarzy [Fmaj9]Twej
+Twarzy [G2]Twej
+
+[Zwrotka 2]
+[Am]Tak, Ty [G/A]naucz [Fmaj9]mnie
+Naucz jak [G2]modlić się
+Jak modlić się
+
+[Refren]
+[Am7]Niech ogień twój nie gaśnie na ołtarzu mym
+[Fmaj9]Niech ogień twój nie gaśnie na ołtarzu mym
+[Dm7]Niech ogień twój nie gaśnie na ołtarzu mym
+[Am]Chcę [G/B]domem [Fmaj9]modlitwy być [G2]
+
+[Bridge]
+[Am]Dzień i noc
+Noc i dzień
+[Fmaj9]Dzień i noc
+Noc i dzień
+[Dm7]Dzień i noc
+Noc i dzień
+[Am]Ogniu [G/B]modli[Fmaj9]twy płoń [G2]`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Eddie James). Akordy z angielskiej wersji (Ultimate Guitar), przeniesione nad odpowiednie słowa.
+Tonacja a-moll (równoległa do C-dur) · 4/4 · 72 BPM.
+Bicie: ↓ ↓↑ ↓↑ ↓↑ (1, 2 i, 3 i, 4 i) — akcent na 1.
+
+KOLEJNOŚĆ (jak w polskim PDF): Zwrotka 1 ×2 → Tag → Zwrotka 2 → Refren → Bridge. W praktyce części powtarza się swobodnie.
+
+DO SPRAWDZENIA Z NAGRANIEM:
+• Tag „Szukam Twarzy Twej" i Zwrotka 2 „Tak, Ty naucz mnie" nie mają akordów w angielskiej wersji, którą mam — dostały pętlę zwrotki (Am → G/A → Fmaj9 → G2).
+• W refrenie i bridge'u pierwsza linia po angielsku jest śpiewana 3× (na Am7, Fmaj9, Dm7), więc po polsku też jest 3×.
+
+HARMONIA: Am (i, dom), G (VII), F (VI), Dm (iv). W C-dur to vi, V, IV, ii.
+• Zwrotka: Am → G/A → Fmaj9 → G2. G/A to G z A w basie — bas stoi na A, a akord nad nim się zmienia. Brzmi jak zawieszenie, modlitwa w miejscu.
+• Fmaj9 i G2 to miękkie, „otwarte" akordy z dodanymi nutami (nona, sekunda) — brzmią jasno, nie ciężko.
+• Refren: Am7 → Fmaj9 → Dm7, po jednej linii każdy — bas schodzi A → F → D. Potem Am → G/B → Fmaj9 → G2: bas A → B, i schodzi do F.
+• Kończy się na G2, nie na Am — dlatego chce się wracać od początku.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — cicho, prosto, jak szept modlitwy.
+• Refren — z każdym powtórzeniem linii trochę mocniej.
+• Bridge „Dzień i noc" — rytmicznie, coraz pełniej; „Ogniu modlitwy płoń" szeroko.`},
 ];
 
 /* Zmiany w piosenkach startowych, które ktoś ma już zapisane. Ruszają tylko to, co było
