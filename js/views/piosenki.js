@@ -347,6 +347,76 @@ EMOCJE W GŁOSIE (plan):
 • Zwrotki — spokojna pewność, ciepło, bez forsowania.
 • Refren — zwycięsko, ale nie krzykiem: „Widzę zwycięstwo" na pełnym oddechu.
 • Bridge — rośnie od „Obietnice" do „Ostateczne zwycięstwo", „Słowo wykonało się" szeroko i powoli.`},
+{ id:'seed-nothing-else', title:'Nic innego (Nothing Else)', artist:'Cody Carnes · tł. Winnica Worship', key:'C', bpm:68, beats:4,
+  chords:`[Intro] Dm7add4 F C Csus C | Dm7add4 Fmaj7 C Csus C
+[Refren] Dm7add4 F2 C | Dm7add4 F2 C Csus C | Dm7add4 F2 C | Dm7add4 F2 C
+[Zwrotka] F2 | C/E | F2 | C Csus C
+[Bridge] Dm7add4 F2 Am7 Gsus4
+[Koniec] Gsus4`,
+  lyrics:`[Intro]
+[Dm7add4] [F] [C] [Csus] [C]
+[Dm7add4] [Fmaj7] [C] [Csus] [C]
+
+[Refren]
+Jestem tutaj z [Dm7add4]Tobą [F2]
+Chce przebywać [C]nisko u Twych stóp
+Czuję, że to [Dm7add4]święty mo[F2]ment
+Już zawsze chcę [C]tu [Csus]być [C]
+
+Nie jestem tu dla [Dm7add4]darów [F2]
+Jezu nic nie [C]jesteś dłużny mi
+Bardziej niż [Dm7add4]to co mi możesz [F2]dać
+Chcę ciebie [C]mieć
+
+[Zwrotka 1]
+Prze[F2]praszam, że tak wiele udawałem
+Prze[C/E]praszam, że śpiewałem inną pieśń
+Weź mnie [F2]tam, na sam początek
+Otwieram swoje serce [C]znów [Csus] [C]
+
+[Zwrotka 2]
+Prze[F2]praszam, za moje własne, wielkie plany
+Prze[C/E]praszam, zapomniałem, że wystarczysz
+Weź mnie [F2]tam, na sam początek
+Otwieram swoje serce [C]znów [Csus] [C]
+
+[Refren]
+Jestem tutaj z [Dm7add4]Tobą [F2]
+Chce przebywać [C]nisko u Twych stóp
+Czuję, że to [Dm7add4]święty mo[F2]ment
+Już zawsze chcę [C]tu [Csus]być [C]
+
+Nie jestem tu dla [Dm7add4]darów [F2]
+Jezu nic nie [C]jesteś dłużny mi
+Bardziej niż [Dm7add4]to co mi możesz [F2]dać
+Chcę ciebie [C]mieć [Csus] [C]
+
+[Bridge — 3×]
+Ja Ciebie [Dm7add4]chcę
+Ciebie [F2]chcę
+[Am7]Ciebie chcę
+Nic innego [Gsus4]już
+
+[Koniec]
+[Gsus4]`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Cody Carnes). Akordy z angielskiej wersji (WorshipTogether), przeniesione nad odpowiednie słowa.
+Tonacja C-dur · 4/4 · 68 BPM.
+
+KOLEJNOŚĆ: Intro → Refren → Zwrotka 1 → Zwrotka 2 → Refren → Bridge ×3 → akord końcowy Gsus4.
+
+ZAPIS AKORDÓW: w oryginale jest Dm7(4) i G(4). Tu są jako Dm7add4 (Dm7 z dodaną kwartą: D F A C + G) i Gsus4 (G bez tercji: G C D) — te same dźwięki, zapis, który appka rozpoznaje.
+
+HARMONIA: C (I, dom), F (IV, ruch), Dm (ii, ruch), Am (vi, dom smutniejszy), G (V, napięcie).
+• Refren: Dm7add4 → F2 → C — ii – IV – I. Bez dominanty G, więc wraca do domu miękko, bez „pchania".
+• Dm7add4 i F2 mają wspólne dźwięki (F, A, C, a do tego G) — dlatego przejście jest prawie niesłyszalne, jak jedno długie brzmienie.
+• Csus → C: zawieszenie i rozwiązanie na „być" i „znów" — mały oddech na końcu frazy.
+• Zwrotka: F2 → C/E — bas schodzi F → E, jak przeprosiny, bez nacisku.
+• Bridge: Dm7add4 → F2 → Am7 → Gsus4. Kończy na Gsus4 i nie wraca do C — piosenka zostaje otwarta.
+
+EMOCJE W GŁOSIE (plan):
+• Refren — intymnie, cicho, jak rozmowa sam na sam.
+• Zwrotki — szczerze, z pokorą, prawie mówione.
+• Bridge — za każdym razem trochę mocniej; „Nic innego już" na końcu znowu cicho.`},
 ];
 
 /* Zmiany w piosenkach startowych, które ktoś ma już zapisane. Ruszają tylko to, co było
