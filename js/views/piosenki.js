@@ -148,6 +148,135 @@ HARMONIA: B (I, dom), F# (V, napięcie), G#m (vi, dom smutniejszy), D#m7 (iii, m
 • Zwrotka B → D#m7 → C#sus kręci się wokół domu i nie ląduje — jak spokojny oddech.
 • Bridge: C# → D#m7 → B → F#. C#-dur nie należy do H-dur (tam jest C#m) — to „pożyczony" akord, dominanta do F#. Dlatego bridge brzmi jaśniej i bardziej do przodu.
 • Appka może podpowiadać inną tonację, bo zwrotka kończy się na C#sus, a bridge na C#. Dom tej piosenki to jednak B.`},
+{ id:'seed-surrender', title:'Ulegam (I Surrender)', artist:'Hillsong Worship · tł. Winnica Worship', key:'Dm', bpm:70, beats:4,
+  chords:`[Intro] Dm F C Bb
+[Zwrotka 1] Dm F C Bb | Dm F C Bb
+[Tag] Dm
+[Interludium] Dm F C Bb
+[Zwrotka 2] Dm F C Bb | Dm F C Bb
+[Refren] Dm F Gm Bb
+[Interludium 2] Bb F C | Gm Dm C
+[Bridge] Bb F C Gm Dm C | Bb F C Gm Dm C`,
+  lyrics:`[Intro — każdy akord 2 takty]
+[Dm] [F] [C] [Bb]
+
+[Zwrotka 1]
+[Dm]Jestem tu, na moich [F]kolanach znów.
+Poddaję [C]się, poddaję [Bb]się.
+[Dm]Szukam Cię, Ty wciąż [F]przyciągasz mnie,
+Tak pragnę [C]Cię, tak pragnę [Bb]Cię
+
+[Tag]
+Ja [Dm]ulegam
+
+[Interludium — każdy akord 2 takty]
+[Dm] [F] [C] [Bb]
+
+[Zwrotka 2]
+[Dm]Obmyj mnie w łasce i [F]w prawdzie Twej,
+Ciebie dziś [C]chcę
+Ciebie dziś [Bb]chcę
+
+[Dm]Wpadam w ramiona Twe
+Gdy płaczę [F]słyszysz mnie
+Więc do mnie [C]mów
+Ty do mnie [Bb]mów
+
+[Refren]
+Ja [Dm]ulegam
+Ja [F]ulegam
+Chcę bardziej [Gm]poznać Cię
+Chcę bardziej [Bb]poznać Cię
+
+[Interludium 2]
+[Bb] [F] [C] [C] [Gm] [Dm] [C] [C]
+
+[Bridge]
+Jak [Bb]gwałtowny [F]wiatr
+Duchu [C]we mnie wiej,
+Poprowadź [Gm]tak, poprowadź [Dm]tak, jak [C]chcesz
+
+Jak [Bb]potężny [F]sztorm
+Obudź [C]duszę mą
+Używaj [Gm]tak, używaj [Dm]tak, jak [C]chcesz`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Hillsong Worship). Akordy z angielskiej wersji, przeniesione nad odpowiednie słowa.
+Tonacja d-moll (równoległa do F-dur) · 4/4 · tempo wolne, ok. 70 BPM — sprawdź z nagraniem.
+
+KOLEJNOŚĆ: Intro → Zwrotka 1 → Tag „Ja ulegam" → Interludium → Zwrotka 2 → Refren → Interludium 2 → Bridge (×2 lub więcej) → Refren.
+
+HARMONIA: Dm (i, dom), F (III — jasny „brat" d-moll), C (VII), B♭ (VI), Gm (iv).
+• Zwrotka to jedna pętla: Dm → F → C → B♭, każdy akord po 2 takty. W F-dur to vi – I – V – IV.
+• Start od Dm, nie od F — dlatego całość brzmi jak modlitwa na kolanach, a nie jak hymn.
+• Refren: Dm → F → Gm → B♭. Gm zamiast C to nowy kolor — tu tekst mówi „chcę bardziej poznać Cię".
+• Bridge: B♭ → F → C → Gm → Dm → C. Startuje z B♭ i idzie w górę jak wiatr; kończy na C, więc chce się go powtarzać.
+• W pliku z akordami pierwsza linia bridge'u miała B♭m — w drugiej połowie jest B♭, więc tu też jest B♭. Jeśli w nagraniu słychać molowy, zmień.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — cicho, blisko, prawie mówione. Dużo powietrza.
+• „Ja ulegam" — miękko, z oddechem przed słowem.
+• Bridge — rośnie: „Jak gwałtowny wiatr" pełnym głosem, „Poprowadź tak" na podparciu, potem wyciszenie do refrenu.`},
+{ id:'seed-famous-for', title:'Wierzę Ci (Famous For)', artist:'Tauren Wells · tł. Winnica Worship', key:'Bb', bpm:72, beats:4,
+  chords:`[Zwrotka 1] Eb Gm F | Eb Gm F | Eb Bb F Eb | Eb Gm F | Eb Gm F | Eb Bb F Eb
+[Refren] Eb | F | Gm | F/A | Eb | F | Gm | F/A
+[Tag] Eb Gm F | Eb Gm F
+[Zwrotka 2] Eb Gm F | Bb/D Eb Gm F | Bb/D Eb Gm F | Eb Gm F
+[Bridge] Gm | Bb Eb | Bb F | Gm | Bb Eb | Bb | F`,
+  lyrics:`[Zwrotka 1]
+Nie [Eb]boję się, [Gm]bo [F]wierzę Ci
+Nie [Eb]wątpię, [Gm]bo wciąż [F]widzę, że
+Wier[Eb]nością [Bb]swą jak [F]tarczą ciągle [Eb]mnie chronisz
+
+Na[Eb]dzieję [Gm]mam w [F]Imieniu Twym
+A w [Eb]łasce [Gm]Twej jest [F]moja moc
+Wier[Eb]nością [Bb]swą jak [F]tarczą ciągle [Eb]mnie chronisz
+
+[Refren]
+Przeprowadź [Eb]przez wody
+Przeprowadź [F]przez ogień
+Zrób to, z [Gm]czego znamy Cię
+To, [F/A]z czego znamy Cię
+
+Ożyw [Eb]suche kości
+Ucisz [F]głos niewiary
+Zrób to, z [Gm]czego znamy Cię
+To, [F/A]z czego znamy Cię
+
+[Tag]
+[Eb]Wierzę [Gm]Ci, [F]Jezu
+Tak [Eb]wierzę [Gm]Ci, [F]Jezu
+
+[Zwrotka 2]
+Mi[Eb]łością [Gm]swą [F]wypełnij mnie
+[Bb/D]A Twoja [Eb]moc niech [Gm]objawia [F]się
+[Bb/D]Duchu [Eb]przyjdź, na[Gm]pełniaj [F]nas
+Ciągle [Eb]na [Gm]nowo [F](O Panie nasz)
+
+[Bridge — 2×]
+Mój [Gm]niezmierzony Bóg
+[Bb]Hojny w do[Eb]broci swej
+Ty [Bb]wciąż zachwycasz [F]mnie
+
+Twe [Gm]Imię mocą jest
+[Bb]Wiem, nie za[Eb]chwiejesz się
+Nic [Bb]nie zatrzyma Cię
+Wszystko [F]możliwe w Tobie jest`,
+  notes:`Tekst: tłumaczenie Winnica Worship (oryginał: Tauren Wells „Famous For (I Believe)"). Akordy z angielskiej wersji, przeniesione nad odpowiednie słowa.
+Tonacja B-dur (w appce Bb) · 4/4 · ok. 72 BPM — sprawdź z nagraniem.
+
+KOLEJNOŚĆ: Zwrotka 1 → Refren → Tag → Zwrotka 2 → Refren → Tag → Bridge ×2 → Refren → Tag.
+
+HARMONIA: B♭ (I, dom), E♭ (IV, ruch), F (V, napięcie), Gm (vi, dom smutniejszy).
+• Zwrotka kręci się wokół E♭ → Gm → F i prawie nie dotyka domu — B♭ pojawia się tylko na „wiernością swą". Stąd uczucie czekania.
+• Refren idzie w górę: E♭ → F → Gm, a potem F/A — F z A w basie. Bas wspina się E♭ → F → G → A i prowadzi z powrotem do E♭.
+• Bb/D w zwrotce 2 to B♭ z D w basie: bas idzie D → E♭, miękkie wejście w każdą linię.
+• Bridge: Gm → B♭ → E♭ → B♭ → F. Polski tekst ma w pierwszej części 3 linie, w drugiej 4 — akordy idą tak samo, rozkładasz je na słowa.
+• W pliku z akordami w zwrotce 1 było „B" — w zwrotce 2 w tym samym miejscu jest Bb, więc tu też jest Bb.
+
+EMOCJE W GŁOSIE (plan):
+• Zwrotki — spokojna pewność, nie strach: mówione, ciepłe.
+• Refren — odwaga: „Przeprowadź przez wody" pełnym głosem, fraza rośnie do „znamy Cię".
+• Tag „Wierzę Ci, Jezu" — prosto i szczerze, drugi raz mocniej.
+• Bridge — narasta przy każdym powtórzeniu, kulminacja na „Wszystko możliwe w Tobie jest".`},
 ];
 
 /* Zmiany w piosenkach startowych, które ktoś ma już zapisane. Ruszają tylko to, co było

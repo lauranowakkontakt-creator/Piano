@@ -79,8 +79,8 @@ test('nic, śmieci i dziwne typy nie wysypują parsera', () => {
   assert.ok(parseLyrics('[]pusty nawias').length);
 });
 
-test('Bliżej i Wtulę się: polski tekst z akordami, które rozpoznaje appka', () => {
-  for(const id of ['seed-blizej', 'seed-lean-back']){
+test('Piosenki startowe: polski tekst z akordami, które rozpoznaje appka', () => {
+  for(const id of ['seed-blizej', 'seed-lean-back', 'seed-surrender', 'seed-famous-for']){
     const s = SEED_SONGS.find(x => x.id === id);
     assert.ok(s && s.lyrics, id + ': brak tekstu');
     // każdy [..] to albo akord, albo nagłówek części w osobnej linii
